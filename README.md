@@ -2,11 +2,9 @@
 
 <!-- MarkdownTOC -->
 
-   faq-cs
-   help-cs
-   docs-cs 
 
-Coconut (`coconut-lang.org`__) je varianta jazyka Python_ vytvořená pro **jednoduché, elegantní Pythonické funkcionální programování**.
+
+Coconut (`coconut-lang.org`_) je varianta jazyka Python_ vytvořená pro **jednoduché, elegantní Pythonické funkcionální programování**.
 
 Coconut je vyvíjen na GitHub_ a hostován na PyPI_. Instalace Coconu je stejně snadná jako otevření konzoly s promptem a zadání::
 
