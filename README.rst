@@ -1,8 +1,12 @@
-# Coconut
+Coconut
+=======
 
-<!-- MarkdownTOC -->
+.. toctree::
+   :maxdepth: 3
 
-
+   faq-cs
+   help-cs
+   docs-cs 
 
 Coconut (`coconut-lang.org`_) je varianta jazyka Python_ vytvořená pro **jednoduché, elegantní Pythonické funkcionální programování**.
 
