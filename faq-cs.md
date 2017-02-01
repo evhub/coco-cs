@@ -24,11 +24,11 @@ Yes and yes! Coconut kompiluje do Pythonu, takže moduly Coconut jsou přístupn
 
 ### Které verze Pythonu Coconut podporuje? <a id="2"></a>
 
-Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/en/master/DOCS.html#compatible-python-versions).
+Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coco-cs.readthedocs.io/es/master/DOCS.html#compatible-python-versions).
 
 ### Help! Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)! <a id="3"></a>
 
-Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coconut.readthedocs.io/en/master/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
+Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coco-cs.readthedocs.io/cs/master/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
 
 ### Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut? <a id="4"></a>
 

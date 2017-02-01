@@ -116,7 +116,7 @@ hello, world!
 
 Ovšemže, být schopen za běhu interpretovat kód Coconut je velká věc ale bez schopnosti psát a kompilovat programy by naše programování nebylo příliš užitečné. Pojďme si proto napsat první program v Coconut: "Hello, world!".
 
-Nejprve vytvoříte soubor, do něhož náš kód vložíte. Doporučená extenze pro zdrojové soubory Coconut je `.coco`, vytvořte tedy soubor s názvem `hello_world.coco`. Poté, co to uděláte, měli byste nastavit svůj textový editor na správné zvýrazňování zdrojového kódu. Příslušné instrukce naleznete v dokumentaci  [Coconut syntax highlighting](http://coconut.readthedocs.io/en/master/DOCS.html#syntax-highlighting).
+Nejprve vytvoříte soubor, do něhož náš kód vložíte. Doporučená extenze pro zdrojové soubory Coconut je `.coco`, vytvořte tedy soubor s názvem `hello_world.coco`. Poté, co to uděláte, měli byste nastavit svůj textový editor na správné zvýrazňování zdrojového kódu. Příslušné instrukce naleznete v dokumentaci  [Coconut syntax highlighting](http://coco-cs.readthedocs.io/cs/master/DOCS.html#syntax-highlighting).
 
 Nyní vložíme kód do souboru `hello_world.coco`. Na rozdíl od Pythonu, kde záhlaví a různé importy jsou obvyklé a velmi často velmi nezbytné,
 ```coconut_python
@@ -194,7 +194,7 @@ nebo
 
 Protože byl Coconut vytvořen se záměrem aby byl užitečný, bude nejlépe jej předvést v akci při řešení konkrétních problémů, které jsou v tomto tutoriálu označeny jako případové studie.
 
-Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [documentaci](http://coconut.readthedocs.io/en/master/DOCS.html). 
+Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [documentaci](http://coco-cs.readthedocs.io/cs/master/DOCS.html). 
 
 ## Případová studie 1: `factorial` <a id="case-study-1-factorial"></a>
 
@@ -1142,7 +1142,7 @@ iter$[]
 
 ### Další čtení <a id="further-reading"></a>
 
-Všechny vlastnosti popsané v tomto tutoriálu, stejně jako řada dalších, jsou podrobně dokumentovány v podrobné dokumentaci Coconut [DOCS.html](http://coconut.readthedocs.io/en/master/DOCS.html).
+Všechny vlastnosti popsané v tomto tutoriálu, stejně jako řada dalších, jsou podrobně dokumentovány v podrobné dokumentaci Coconut [DOCS.html](http://coco-cs.readthedocs.io/es/master/DOCS.html).
 
 Also, if you have any other questions not covered in this tutorial, feel free to ask around at Coconut's [Gitter](https://gitter.im/evhub/coconut), a GitHub-integrated chat room for Coconut developers.
 
