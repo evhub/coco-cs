@@ -83,7 +83,7 @@
 
 ## Úvod <a id="overview"></a>
 
-Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlana spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coco-cs.readthedocs.io/cs/master/HELP.html)
+Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlana spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/en/master/HELP.html)
 
 Coconut je varianta jazyka [Python](https://www.python.org/), vytvořená pro **jednoduché, elegantní a funkcionální programování v Pythonu**. Skladba Coconut je podmnožna skladby Pythonu 3. To znamená, že uživatel, obeznámený s Pythonem, bude již obeznámený s většinou obsahu Coconut.
 
