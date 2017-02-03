@@ -109,9 +109,9 @@ size(Node(Empty(), Leaf(10))) == 1
 
 Podporu pro své první kroky v prostředí Coconut naleznete na těchto odkazech:
 
-* [Tutoriál](http://coconut.readthedocs.org/en/master/HELP.html): Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
-* [Documentace](http://coconut.readthedocs.org/en/master/DOCS.html): Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
-* [FAQ](http://coconut.readthedocs.org/en/master/FAQ.html): Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
+* [Tutoriál](http://coco-cs.readthedocs.org/cs/master/HELP.html): Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
+* [Documentace](http://coco-cs.readthedocs.org/cs/master/DOCS.html): Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
+* [FAQ](http://coco-cs.readthedocs.org/cs/master/FAQ.html): Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
 * [Create a New Issue](https://github.com/evhub/coconut/issues/new): If you're having a problem with Coconut, creating a new issue detailing the problem will allow it to be addressed as soon as possible.
 * [Gitter](https://gitter.im/evhub/coconut): For any questions, concerns, or comments about anything Coconut-related, ask around at Coconut's Gitter, a GitHub-integrated chat room for Coconut developers.
 
