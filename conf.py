@@ -41,7 +41,7 @@ author = "Evan Hubinger"
 version = VERSION
 release = VERSION_STR_TAG
 
-master_doc = "index"
+master_doc = "README"
 source_suffix = [".rst", ".md"]
 source_parsers = {
     ".md": CommonMarkParser
