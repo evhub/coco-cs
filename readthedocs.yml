@@ -1,0 +1,9 @@
+requirements: "requirements.txt"
+
+python:
+    version: 3
+
+formats:
+    - htmlzip
+    - pdf
+    - epub

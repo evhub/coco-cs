@@ -6,7 +6,7 @@
 #-----------------------------------------------------------------------------------------------------------------------
 
 """
-Author: Evan Hubinger
+Author: Evan Hubinger, Jaroslav Kubias
 License: Apache 2.0
 Description: Sphinx configuration file for the Coconut Programming Language.
 """
@@ -36,12 +36,12 @@ html_theme_path = get_html_theme_path()
 highlight_language = "coconut"
 
 project = "Coconut"
-copyright = "2015-2016, Evan Hubinger, licensed under Apache 2.0"
+copyright = "2015-2017, Evan Hubinger, licensed under Apache 2.0; Czech translation by Jaroslav Kubias"
 author = "Evan Hubinger"
 version = VERSION
 release = VERSION_STR_TAG
 
-master_doc = 'index'
+master_doc = "index"
 source_suffix = [".rst", ".md"]
 source_parsers = {
     ".md": CommonMarkParser
