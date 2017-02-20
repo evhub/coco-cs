@@ -2,39 +2,39 @@
 
 <!-- MarkdownTOC -->
 
-1. [Úvod](#introduction)
-    1. [Instalace](#installation)
-1. [Začínáme](#starting-out)
-    1. [Použití překladače](#using-the-interpreter)
-    1. [Použití kompilátoru](#using-the-compiler)
-    1. [Použití IPythonu/ Jupyter](#using-ipython-jupyter)
-    1. [Případové studie](#case-studies)
-1. [Případová studie 1: `factorial`](#case-study-1-factorial)
-    1. [Imperativní metoda](#imperative-method)
-    1. [Rekurzivní metoda](#recursive-method)
-    1. [Iterativní metoda](#iterative-method)
-    1. [Metoda `addpattern`](#addpattern-method)
-1. [Případová studie 2: `quick_sort`](#case-study-2-quicksort)
-    1. [Třídění sekvence](#sorting-a-sequence)
-    1. [Třídění iterátoru](#sorting-an-iterator)
-1. [Případová studie 3: `vector` - část I](#case-study-3-vector-part-i)
+1. [Úvod](#úvod)
+    1. [Instalace](#instalace)
+1. [Začínáme](#začínáme)
+    1. [Použití překladače](#použití-překladače)
+    1. [Použití kompilátoru](#použití-kompilátoru)
+    1. [Použití IPython / Jupyter](#použití-ipython--jupyter)
+    1. [Případové studie](#případové-studie)
+1. [Případová studie 1: `factorial`](#případová-studie-1-factorial)
+    1. [Imperativní metoda](#imperativní-metoda)
+    1. [Rekurzivní metoda](#rekurzivní-metoda)
+    1. [Iterativní metoda](#iterativní-metoda)
+    1. [Metoda `addpattern`](#metoda-addpattern)
+1. [Případová studie 2: `quick_sort`](#případová-studie-2-quicksort)
+    1. [Třídění sekvence](#třídění-sekvence)
+    1. [Třídění iterátoru](#třídění-iterátoru)
+1. [Případová studie 3: `vector` - část I](#případová-studie-3-vector---část-i)
     1. [2-Vector](#2-vector)
-    1. [Konstruktor pro n-Vector](#n-vector-constructor)
-    1. [Metody pro n-Vector](#n-vector-methods)
-1. [Případová studie 4: `vector_field`](#case-study-4-vectorfield)
+    1. [Konstruktor pro n-Vector](#konstruktor-pro-n-vector)
+    1. [Metody pro n-vector](#metody-pro-n-vector)
+1. [Případová studie 4: `vector_field`](#případová-studie-4-vectorfield)
     1. [`diagonal_line`](#diagonalline)
     1. [`linearized_plane`](#linearizedplane)
     1. [`vector_field`](#vectorfield)
-    1. [Aplikace](#applications)
-1. [Případová studie 5: `vector` -část II](#case-study-5-vector-part-ii)
+    1. [Applikace](#applikace)
+1. [Případová studie 5: `vector` - část II](#případová-studie-5-vector---část-ii)
     1. [`__truediv__`](#truediv)
     1. [`.unit`](#unit)
     1. [`.angle`](#angle)
-1. [Vyplnění mezer](#filling-in-the-gaps)
-    1. [Líné seznamy](#lazy-lists)
-    1. [Skladba funkcí](#function-composition)
-    1. [Implicitní parciály](#implicit-partials)
-    1. [Další čtení](#further-reading)
+1. [Vyplnění mezer](#vyplnění-mezer)
+    1. [Líné seznamy](#líné-seznamy)
+    1. [Skladba funkcí](#skladba-funkcí)
+    1. [Implicitní parciály](#implicitní-parciály)
+    1. [Další čtení](#další-čtení)
 
 <!-- /MarkdownTOC -->
 
@@ -47,13 +47,13 @@ Proč používat Coconut? Coconut rozšiřuje repertoár programátora v Pythonu
 Coconut přidává do Pythonu _syntaktickou podporu_ pro:
 
 - pattern-matching - porovnávání předlohy
-- algebraic data types - ADT 
+- algebraic data types - ADT
 - destructuring assignment - rozložené přiřazení
 - partial application - částečnou aplikaci
 - lazy lists - líné seznamy
 - function composition - skládání funkcí
 - prettier lambdas - úhlednější lambdy
-- infix notation 
+- infix notation
 - pipeline-style programming - směrované programování
 - operator functions - operátorové funkce
 - tail recursion optimization - optimalizace koncové rekurze
@@ -134,7 +134,7 @@ a stejně tak i v Coconut, kde navíc je možné použít potrubní (pipeline) u
 ```coconut
 "hello, world!" |> print
 ```
-z něhož je zřetelně vidět, jak operátor `|>` způsobí předání řetězce coby argument následné funkci, jíž je v tomto případě příkaz k tisku. Nyní náž jednoduchý program "hello_world" uložíme a zkusíme jej spustit. 
+z něhož je zřetelně vidět, jak operátor `|>` způsobí předání řetězce coby argument následné funkci, jíž je v tomto případě příkaz k tisku. Nyní náž jednoduchý program "hello_world" uložíme a zkusíme jej spustit.
 
 Kompilování souborů a projektů utilitou Coconut je vemi jednoduché. Zapíšeme pouze
 ```
@@ -145,7 +145,7 @@ což vytvoří výstup
 Coconut: Compiling       hello_world.coco ...
 Coconut: Compiled to       hello_world.py .
 ```
-Soubor `hello_world.py` uložte do stejného adresáře jako `hello_world.coco` a měl byste být schopen spustit soubor příkazem 
+Soubor `hello_world.py` uložte do stejného adresáře jako `hello_world.coco` a měl byste být schopen spustit soubor příkazem
 ```
 python hello_world.py
 ```
@@ -194,11 +194,11 @@ nebo
 
 Protože byl Coconut vytvořen se záměrem aby byl užitečný, bude nejlépe jej předvést v akci při řešení konkrétních problémů, které jsou v tomto tutoriálu označeny jako případové studie.
 
-Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [documentaci](http://coco-cs.readthedocs.io/cs/master/DOCS.html). 
+Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [documentaci](http://coco-cs.readthedocs.io/cs/master/DOCS.html).
 
 ## Případová studie 1: `factorial` <a id="case-study-1-factorial"></a>
 
-V první ukázce budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`. 
+V první ukázce budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`.
 To je poněkud dětinský příklad, protože tuto úlohu zvládne Python snadno také ale poslouží k demonstraci některých základních vlastnoctí Coconut a jejich výhodného použití.
 
 Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři kategorie: imperativní, recurzivní, iterativní a s použitím `addpattern`.
@@ -254,7 +254,7 @@ Proberme si specifika syntaxe v tomto příkladu. První věcí je `case n`. Ten
 
 Konkretně v tomto příkladě ověřuje první příkaz `match`, zda je `n` shodné s `0`. Pakliže ano, provede se `return 1`. Následně druhý příkaz `match` ověřuje, zda se `n` shoduje s `_ is int`, což je adekvátní idiomu `n je instancí int` a zda je `n > 0`. Jsou-li všechny kontroly pozitivní, provede se příkaz `return n * factorial(n-1)`. Nedojde-li k provedení žádného příkazu, přichází ke slovu příkaz `else`, který spustí a provede `raise TypeError("argument faktoriálu musí být celé číslo >= 0")`.
 
-I když je tento příklad velmi prostý, je postup v něm použitý, zvaný  **pattern-matching** (porovnání předlohy), jedním z nejmocnějších i nejsložitějších postupů v Coconut. Jako obecné vodítko poslouží asociativní spojení pojmu _přiřazení_ s klíčovým slovem `match`. 
+I když je tento příklad velmi prostý, je postup v něm použitý, zvaný  **pattern-matching** (porovnání předlohy), jedním z nejmocnějších i nejsložitějších postupů v Coconut. Jako obecné vodítko poslouží asociativní spojení pojmu _přiřazení_ s klíčovým slovem `match`.
 
 Svým způsobem ještě složitější je inverzní postup k `pattern matching`, jímž je **destructuring assignment** (rozložené přiřazení), jež v našem případě pro funkci `factorial` má skladbu:
 ```coconut
@@ -485,7 +485,7 @@ else:
 ```
 která eliminuje potřebu další úrovně identace při porovnávání pouze jedné předlohy.
 
-Třetím novým konstruktem je vestavěná funkce `tee`. Funkce `tee` 
+Třetím novým konstruktem je vestavěná funkce `tee`. Funkce `tee`
 řeší problém funkcionálního programování vytvořený použitím Pythonních iterátorů: kdykoliv je prvek iterátoru evokován, je také zároveň ztracen. Funce `tee` rozdělí iterátor na dva (nebo více, je-li zadán volitelný argument) nezávislé iterátory, které oba pro přístup k datům používají týž skrytý iterátor, takže je-li evokován prvek jednoho iterátoru, zůstává zachován ve druhém.
 
 Konečně, byť se nejedná o nový konstrukt, protože existuje v Python 3, naše použití `yield from` si zasluhuje zmínky. V Pythonu se příkaz `yield`, který pracuje podobně jako `return`, používá k vytváření iterátorů - s tou výjimkou, že se `yield` může vyskytnout vícekrát , pokaždé vraceje jiný element. Forma `yield from` je velmi podobná, až na to, že místo přidání jediného elementu do vytvářeného iterátoru přidává jiný celý iterátor.
@@ -520,7 +520,7 @@ Ve funkcionálním programování je často žádoucí definovat _neměnitelné_
 
 ### 2-Vector <a id="2-vector"></a>
 
-Příkaz `data` v Coconut přivádí do Pythonu mocnou utilitu _neměnitelných algebraických datových typů_. Skladbu příkazu `data` si ukážeme na definici jednoduchého dvouprvkového vektoru. Tento vektor bude mít specielní metodu `__abs__`, která spočítá jeho délku, definovanou jako odmocninu součtu čtverců jeho prvků. Zde je: 
+Příkaz `data` v Coconut přivádí do Pythonu mocnou utilitu _neměnitelných algebraických datových typů_. Skladbu příkazu `data` si ukážeme na definici jednoduchého dvouprvkového vektoru. Tento vektor bude mít specielní metodu `__abs__`, která spočítá jeho délku, definovanou jako odmocninu součtu čtverců jeho prvků. Zde je:
 ```coconut
 data vector2(x, y):
     """Immutable 2-vector."""
@@ -540,10 +540,10 @@ Copy, paste! Tento příklad ukazuje základní skladbu příkazů `data`:
 data <name>(<attributes>):
     <body>
 ```
-kde `<name>` a `<body>` znamenají totéž jako v ekvivalentní definici `class`, avšak `<attributes>` jsou zde různé atributy definovaného datového typu, jež může konstruktor přijmout jako argumenty. V tomto případě je `vector2` datový typ se dvěma atributy `x` a `y`, s jednou metodou `__abs__`, která počítá jeho délku. 
+kde `<name>` a `<body>` znamenají totéž jako v ekvivalentní definici `class`, avšak `<attributes>` jsou zde různé atributy definovaného datového typu, jež může konstruktor přijmout jako argumenty. V tomto případě je `vector2` datový typ se dvěma atributy `x` a `y`, s jednou metodou `__abs__`, která počítá jeho délku.
 Jak ukazují testovací případy, instance datového typu `vector2` lze vytvářet, tisknout, nikoliv však měnit.
 
-### Konstruktor pro n-Vector <a id="n-vector-constructor"></a> 
+### Konstruktor pro n-Vector <a id="n-vector-constructor"></a>
 
 Nyní, když jsme dostali za opasek `2-vector`, vraťme se zpět k našemu původnímu, více komplikovanému problému s n-vektory, to jest s vektory libovolné délky. Pokusíme se, aby náš n-vector podporoval všechny základní vektorové operace ale začneme pouze s definicí `data` a konstruktorem:
 ```coconut
@@ -565,7 +565,7 @@ Copy, paste! Velkou novou věcí zde je, jak psát konstruktory `data`. Protože
 
 V tomto případě konstruktor kontroluje, zda nebylo zadáno nic jiného než další `vector`, v kterémžto případě jej vrací. Jinak vrací výsledek vytvoření entice argumentů a její předání výchozímu konstruktoru, jehož forma je `vector(pts)`; takto přiřazujíc entici k atributu `pts`.
 
-### Metody pro n-vector <a id="n-vector-methods"></a> 
+### Metody pro n-vector <a id="n-vector-methods"></a>
 
 Nyní, když máme konstruktor pro náš n-vektor, je čas napsat jeho metody. První je metoda `__abs__`, která má počítat délku vektoru. Tentokrát to bude mírně složitější než u 2-vektoru, protože musí chodit pro libovolný počet `pts`. Naštěstí můžeme použít korýtkový (pipeline) styl Coconutu a jeho částečnou aplikaci funkce:
 ```coconut
@@ -630,7 +630,7 @@ Poslední metodou, kterou zavedeme, je násobení vektorů. To je poněkud kompl
         return self * other
 ```
 
-Za pozornost zde stojí za prvé, že na rozdíl od součtu a podílu, kde jsme chtěli hlásit chybu při selhání shody vektoru, zde chceme při selhání shody provést násobení skalárem - takže místo použití rozloženého přiřazení použijeme příkaz `match`. 
+Za pozornost zde stojí za prvé, že na rozdíl od součtu a podílu, kde jsme chtěli hlásit chybu při selhání shody vektoru, zde chceme při selhání shody provést násobení skalárem - takže místo použití rozloženého přiřazení použijeme příkaz `match`.
 
 Za druhé si povšimneme použití kombinace korýtkového (pipeline) stylu programování, částečné aplikace, operátorových funkcí a funkcí vyššího řádu pro výpočet skalárního součinu a pro násobení skalárem. U skalárového součinu mapujeme násobení na dva vektory a sečteme výsledky. U násobení skalárem vytváříme nový vektor násobením všech prvků původního vektoru stejným číslem.
 
@@ -732,7 +732,7 @@ Protože chceme být schopni přes toto pole procházet (iterovat), potřebujeme
 
 ### `diagonal_line` <a id="diagonalline"></a>
 
-Naše první funkce `diagonal_line(n)` by tedy měla vytvořít iterátor všech bodů, reprezentovaných jako souřadnicové entice v `n-té` diagonále, počínaje v bodě `(0, 0)` `nulté` diagonály. Jak jsme si řekli na počátku případové studie, o řešení se pokusíte nejdřív sami s použitím všech nástrojů funkcionálního programování, které Coconut poskytuje. 
+Naše první funkce `diagonal_line(n)` by tedy měla vytvořít iterátor všech bodů, reprezentovaných jako souřadnicové entice v `n-té` diagonále, počínaje v bodě `(0, 0)` `nulté` diagonály. Jak jsme si řekli na počátku případové studie, o řešení se pokusíte nejdřív sami s použitím všech nástrojů funkcionálního programování, které Coconut poskytuje.
 Zde je několik testů, které můžete použít:
 ```coconut
 diagonal_line(0) `isinstance` (list, tuple) |> print # False (should be an iterator)
@@ -771,7 +771,7 @@ Prostinké, což? Vezmeme `range(n+1)` a použijeme `map` k její transformaci n
 
 ### `linearized_plane` <a id="linearizedplane"></a>
 
-Nyní, když jsme vytvořili naše diagonální čáry, potřebujeme je spojit dohromady abychom sestavili plně linearizovanou rovinu a za tím účelem napíšeme funkci `linearized_plane()`. Funkce `linearized_plane` by měla vytvořit iterátor, který prochází všemi body roviny po diagonálách, počínaje nultou, prvou, atd. Tento iterátor musí být nekonečný, protože musí procházet všemi body dané roviny. 
+Nyní, když jsme vytvořili naše diagonální čáry, potřebujeme je spojit dohromady abychom sestavili plně linearizovanou rovinu a za tím účelem napíšeme funkci `linearized_plane()`. Funkce `linearized_plane` by měla vytvořit iterátor, který prochází všemi body roviny po diagonálách, počínaje nultou, prvou, atd. Tento iterátor musí být nekonečný, protože musí procházet všemi body dané roviny.
 
 Nápovědou pro sestavování funkce budiž připomínka, že operátor `::` je líný a nevyhodnotí své operandy bez požádání, což znamená, že může být použit k vytvoření nekonečných iterátorů. Až budete hotovi, posuňte se v textu dále.
 
@@ -914,7 +914,7 @@ vector_field()$[2:3] |> list |> print # [vector(pts=(1, 0))]
 
 Copy, paste! Poté, co jste se ujistili, že po dosazení svých funkcí chodí vše jak má, zaměřte se na poslední čtyři testy. Zjistíte, že používají novou notaci, podobnou notaci pro částečnou aplikaci, již jsme viděli dříve - ale s hranatými závorkami místo kulatých. To je notace pro krájení (slicing) iterátoru. Podobně jako byla částečná aplikace líným voláním funkce, je dělení iterátoru _línym dělením sekvence_. Podobně jako u částečné aplikace, je užitečné považovat znak `$` za _zlenivějící_  (lazy-ify) operátor, v tomto případě přetvářející normální (ihned prováděné) krájení (slicing) Pythonu na líné krájení iterátoru, které se provádí jen tehdy, jsou-li prvky v řízcích (slice) potřebné.
 
-Maje toto na mysli, nyní když jsme sestavili naše vektorové pole, je čas si s krájením iterátoru trochu pohrát. Zkuste něco smělého, jako například 
+Maje toto na mysli, nyní když jsme sestavili naše vektorové pole, je čas si s krájením iterátoru trochu pohrát. Zkuste něco smělého, jako například
 - vytvořit `magnitude-field`, kde každý bod reprezentuje délku příslušného vektoru
 - zkombinovat celá vektorová pole aplikací funkce `match` na dříve vytvořené metody dělení a násobení
 
@@ -924,7 +924,7 @@ potom použít krájení iterátoru pro vynětí a přezkoušení úseků.
 
 U některých aplikací, používajících naše `vector_fields`, může být žádoucí přidat k našemu `vektoru` nějaké užitečné metody. V této případové studii se zaměříme na metodu, zvanou `.angle`.
 
-Metoda `.angle` přijme dva vektory a spočítá úhel mezi nimi. Matematicky je úhel dvou vektorů skalárním součinem jejich příslušných jednotkových vektorů. Takže před tím, než budeme moci použít metodu `.angle`, budeme potřebovat metodu `.unit`. Matematicky je výraz pro jednotkový vektor daného vektoru dán jako podíl tohoto vektoru a jeho velikosti. Tudíž, před použitím `.unit` a potažmo `.angle`, musíme začít zavedením dělení. 
+Metoda `.angle` přijme dva vektory a spočítá úhel mezi nimi. Matematicky je úhel dvou vektorů skalárním součinem jejich příslušných jednotkových vektorů. Takže před tím, než budeme moci použít metodu `.angle`, budeme potřebovat metodu `.unit`. Matematicky je výraz pro jednotkový vektor daného vektoru dán jako podíl tohoto vektoru a jeho velikosti. Tudíž, před použitím `.unit` a potažmo `.angle`, musíme začít zavedením dělení.
 
 ### `__truediv__` <a id="truediv"></a>
 
@@ -1107,7 +1107,7 @@ Copy, paste! Jestliže všechno chodí jak má, doporučuji se vrátit ke hrátk
 
 Tímto vyčerpal tento tutoriál své případové studie, avšak to neznamená, že Coconut předvedl všechny své možnosti! V tomto posledním odstavci se dotkneme tří nejdůležitějších struktur, jež se nám podařilo opominout v případových studiích: líné seznamy, skladba funkcí a implicitní parciály (partials).
 
-### Líné seznamy <a id="lazy-lists"></a> 
+### Líné seznamy <a id="lazy-lists"></a>
 
 Líné seznamy jsou líně vyhodnocované iterátorové literály, podobné ve své lenosti operátoru `::` - a to v tom, že jakýkoli výraz uvnitř líného seznamu není vyhodnocen, dokud jej není zapotřebí. Syntaxe pro líné seznamy je přesně táž jako syntaxe pro normální seznamy, až na "banánové závorky" (`(|` and `|)`) místo normálních závorek, takto:
 ```coconut

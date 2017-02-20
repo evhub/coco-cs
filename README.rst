@@ -131,9 +131,9 @@ Užitečné odkazy
 
 Podporu pro své první kroky v prostředí Coconut naleznete na těchto odkazech:
 
-* `Tutoriál <http://coco-cs.readthedocs.org/cs/master/HELP.html>`_: Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
-* `Documentace <http://coco-cs.readthedocs.org/cs/master/DOCS.html>`_: Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
-* `FAQ <http://coco-cs.readthedocs.org/cs/master/FAQ.html>`_: Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
+* `Tutoriál <http://coconut.readthedocs.io/cs/master/HELP.html>`_: Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
+* `Documentace <http://coconut.readthedocs.io/cs/master/DOCS.html>`_: Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
+* `FAQ <http://coconut.readthedocs.io/cs/master/FAQ.html>`_: Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
 * `Create a New Issue <https://github.com/evhub/coconut/issues/new>`_: If you're having a problem with Coconut, creating a new issue detailing the problem will allow it to be addressed as soon as possible.
 * `Gitter <https://gitter.im/evhub/coconut>`_: For any questions, concerns, or comments about anything Coconut-related, ask around at Coconut's Gitter, a GitHub-integrated chat room for Coconut developers.
 

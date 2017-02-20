@@ -2,19 +2,19 @@
 
 <!-- MarkdownTOC -->
 
-1. [Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu?](#1)
-1. [Které verze Pythonu Coconut podporuje?](#2)
-1. [Help! Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)!](#3)
-1. [Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut?](#4)
-1. [Přináší Coconut také nějakou pomůcku pro ladění kódu?](#5)
-1. [Nemám rád funkcionální programování, měl bych se přesto učit Coconut?](#6)
-1. [Neznám funkcionální programování, mám se přesto pustit do Coconut?](#7)
-1. [Neznám Python moc dobře, měl bych se přesto učit Coconut?](#8)
-1. [Proč není Coconut čistě funkcionální?](#9)
-1. [Neuškodí transpilovaný jazyk jako Coconut komunitě Pythonu?](#10)
-1. [Chci přispívat do Coconut, jak mohu začít?](#11)
-1. [Proč název Coconut?](#12)
-1. [Kdo vytvořil Coconut?](#13)
+1. [Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu?](#mohu-použít-moduly-pythonu-z-coconut-a-moduly-coconut-z-pythonu)
+1. [Které verze Pythonu Coconut podporuje?](#které-verze-pythonu-coconut-podporuje)
+1. [Help! Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace \(segfault\)!](#help-pokoušel-jsem-se-napsat-rekurzivní-iterátor-a-můj-python-způsobil-chybu-segmentace-segfault)
+1. [Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut?](#jsem-li-perfektně-spokojený-s-pythonem-proč-bych-se-měl-učit-coconut)
+1. [Přináší Coconut také nějakou pomůcku pro ladění kódu?](#přináší-coconut-také-nějakou-pomůcku-pro-ladění-kódu)
+1. [Nemám rád funkcionální programování, měl bych se přesto učit Coconut?](#nemám-rád-funkcionální-programování-měl-bych-se-přesto-učit-coconut)
+1. [Neznám funkcionální programování, mám se přesto pustit do Coconut?](#neznám-funkcionální-programování-mám-se-přesto-pustit-do-coconut)
+1. [Neznám Python moc dobře, měl bych se přesto učit Coconut?](#neznám-python-moc-dobře-měl-bych-se-přesto-učit-coconut)
+1. [Proč není Coconut čistě funkcionální?](#proč-není-coconut-čistě-funkcionální)
+1. [Neuškodí transpilovaný jazyk jako Coconut komunitě Pythonu?](#neuškodí-transpilovaný-jazyk-jako-coconut-komunitě-pythonu)
+1. [Chci přispívat do Coconut, jak mohu začít?](#chci-přispívat-do-coconut-jak-mohu-začít)
+1. [Proč název Coconut?](#proč-název-coconut)
+1. [Kdo vytvořil Coconut?](#kdo-vytvořil-coconut)
 
 <!-- /MarkdownTOC -->
 
@@ -24,11 +24,11 @@ Yes and yes! Coconut kompiluje do Pythonu, takže moduly Coconut jsou přístupn
 
 ### Které verze Pythonu Coconut podporuje? <a id="2"></a>
 
-Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coco-cs.readthedocs.io/es/master/DOCS.html#compatible-python-versions).
+Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/master/DOCS.html#compatible-python-versions).
 
 ### Help! Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)! <a id="3"></a>
 
-Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coco-cs.readthedocs.io/cs/master/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
+Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coconut.readthedocs.io/cs/master/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
 
 ### Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut? <a id="4"></a>
 
@@ -44,7 +44,7 @@ Definitely! Kromě toho, že je Coconut skvělý pro funkcionální programován
 
 ### Neznám funkcionální programování, mám se přesto pustit do Coconut? <a id="7"></a>
 
-Yes, absolutely! [Tutorial](http://coconut.readthedocs.io/en/master/HELP.html) pro Coconut nepředpokládá absolutně žádnou předchozí znalost funkcionálního programování, pouze Pythonu. Protože Coconut není čistě funkcionálním programovacím jazykem a veškerý platný Python je platný Coconut, je Coconut skvělým úvodem do funkcionálního programování. Osvojíte-li si Coconut, budete si moci vyzkoušet nový styl programování bez ztráty jakékoli znalosti Pythonu, který znáte a milujete.
+Yes, absolutely! [Tutorial](http://coconut.readthedocs.io/cs/master/HELP.html) pro Coconut nepředpokládá absolutně žádnou předchozí znalost funkcionálního programování, pouze Pythonu. Protože Coconut není čistě funkcionálním programovacím jazykem a veškerý platný Python je platný Coconut, je Coconut skvělým úvodem do funkcionálního programování. Osvojíte-li si Coconut, budete si moci vyzkoušet nový styl programování bez ztráty jakékoli znalosti Pythonu, který znáte a milujete.
 
 ### Neznám Python moc dobře, měl bych se přesto učit Coconut? <a id="8"></a>
 
@@ -52,7 +52,7 @@ Maybe. Znáte-li aspoň základy Pythonu a jste dobře obeznámen s funkcionáln
 
 ### Proč není Coconut čistě funkcionální? <a id="9"></a>
 
-Stučně řečeno proto, že Coconut je nadstavba Pythonu, který má sice některé funkcionální vlastnosti ale jako celek je záměrně nefunkcionální. Coconut není čistě funkcionální ze stejných důvodů, ze kterých není Python čistě imperativní - různé problémy vyžadují různé přístupy. 
+Stučně řečeno proto, že Coconut je nadstavba Pythonu, který má sice některé funkcionální vlastnosti ale jako celek je záměrně nefunkcionální. Coconut není čistě funkcionální ze stejných důvodů, ze kterých není Python čistě imperativní - různé problémy vyžadují různé přístupy.
 
 Coconut je záměrně vytvořen tak aby umožnil vytváření kódu v čistě funkcionálním stylu ale lze jej použít i pro jiná paradigmata.
 

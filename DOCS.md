@@ -2,57 +2,57 @@
 
 <!-- MarkdownTOC -->
 
-1. [Úvod](#overview)
-1. [Kompilace](#compilation)
-    1. [Instalace](#installation)
-    1. [Použití](#usage)
-        1. [Poziční argumenty](#positional-arguments)
-        1. [Volitelné argumenty](#optional-arguments)
-    1. [Názvy zdrojových souborů](#naming-source-files)
-    1. [Kompilační režimy](#compilation-modes)
-    1. [Kompatibilní verze Pythonu](#compatible-python-versions)
-    1. [Přípustné cíle](#allowable-targets)
-    1. [Režim `strict`](#strict-mode)
-    1. [Podpora pro IPython/ Jupyter](#ipython-jupyter-support)
-        1. [Extenze](#extension)
-        1. [Jádro](#kernel)
-1. [Operátory](#operators)
-    1. [Lambda](#lambdas)
-    1. [Částečná aplikace](#partial-application)
-    1. [Vedení pipeline](#pipeline)
-    1. [Skladba](#compose)
-    1. [Řetězení](#chain)
-    1. [Krájení iterátoru](#iterator-slicing)
-    1. [Alternativy Unicode](#unicode-alternatives)
-1. [Klíčová slova](#keywords)
+1. [Úvod](#úvod)
+1. [Kompilace](#kompilace)
+    1. [Instalace](#instalace)
+    1. [Použití](#použití)
+        1. [Poziční argumenty](#poziční-argumenty)
+        1. [Volitelné argumenty](#volitelné-argumenty)
+    1. [Názvy zdrojových souborů](#názvy-zdrojových-souborů)
+    1. [Kompilační režimy](#kompilační-režimy)
+    1. [Kompatibilní verze Pythonu](#kompatibilní-verze-pythonu)
+    1. [Přípustné cíle](#přípustné-cíle)
+    1. [`strict` Mode](#strict-mode)
+    1. [Podpora IPython / Jupyter](#podpora-ipython--jupyter)
+        1. [Extenze](#extenze)
+        1. [Jádro](#jádro)
+1. [Operátory](#operátory)
+    1. [Lambda](#lambda)
+    1. [Částečná aplikace](#částečná-aplikace)
+    1. [Vedení pipeline](#vedení-pipeline)
+    1. [Skladba](#skladba)
+    1. [Řetěz](#řetěz)
+    1. [Krájení iterátoru](#krájení-iterátoru)
+    1. [Alternativy Unicode](#alternativy-unicode)
+1. [Klíčová slova](#klíčová-slova)
     1. [`data`](#data)
     1. [`match`](#match)
     1. [`case`](#case)
     1. [Backslash-Escaping](#backslash-escaping)
-    1. [Vyhrazené proměnné](#reserved-variables)
-1. [Výrazy](#expressions)
-    1. [Příkaz lambda](#statement-lambdas)
-    1. [Líné seznamy](#lazy-lists)
-    1. [Implicitní částečná aplikace](#implicit-partial-application)
-    1. [Literály množiny](#set-literals)
-    1. [Literály imaginárního čísla](#imaginary-literals)
-    1. [Podtržítkové separátory](#underscore-separators)
-1. [Zápis funkce](#function-notation)
-    1. [Optimalizace koncového volání ](#tail-call-optimization)
-    1. [Operátorové funkce](#operator-functions)
-    1. [Přiřazovací funkce](#assignment-functions)
-    1. [Infixové funkce](#infix-functions)
-    1. [Porovnávací funkce](#pattern-matching-functions)
-1. [Příkazy](#statements)
-    1. [Rozložené přiřazení](#destructuring-assignment)
-    1. [Dekorátory](#decorators)
-    1. [Příkazy `else`](#else-statements)
-    1. [Příkazy `except`](#except-statements)
-    1. [Implicitní `pass`](#implicit-pass)
-    1. [Pokračování v závorkách](#parenthetical-continuation)
-    1. [Zjednodušené určení `global` a `nonlocal`](#in-line-global-and-nonlocal-assignment)
-    1. [Průchod kódu](#code-passthrough)
-1. [Vestavěné funkce](#built-ins)
+    1. [Vyhrazené proměnné](#vyhrazené-proměnné)
+1. [Výrazy](#výrazy)
+    1. [Příkaz lambda](#příkaz-lambda)
+    1. [Líné seznamy](#líné-seznamy)
+    1. [Implicitní částečná aplikace](#implicitní-částečná-aplikace)
+    1. [Literály množiny](#literály-množiny)
+    1. [Literály imaginárního čísla](#literály-imaginárního-čísla)
+    1. [Podtržítkové separátory](#podtržítkové-separátory)
+1. [Zápis funkce](#zápis-funkce)
+    1. [Optimalizace koncového volání](#optimalizace-koncového-volání)
+    1. [Operátorové fukce](#operátorové-fukce)
+    1. [Přiřazovací funkce](#přiřazovací-funkce)
+    1. [Infixové funkce](#infixové-funkce)
+    1. [Porovnávací \(pattern-matching\) funkce](#porovnávací-pattern-matching-funkce)
+1. [Příkazy](#příkazy)
+    1. [Rozložené přiřazení](#rozložené-přiřazení)
+    1. [Dekorátory](#dekorátory)
+    1. [Příkazy `else`](#příkazy-else)
+    1. [Příkazy `except`](#příkazy-except)
+    1. [Implicitní `pass`](#implicitní-pass)
+    1. [Pokračování v závorkách](#pokračování-v-závorkách)
+    1. [Zjednodušené určení `global` a `nonlocal`](#zjednodušené-určení-global-a-nonlocal)
+    1. [Průchod kódu](#průchod-kódu)
+1. [Vestavěné funkce](#vestavěné-funkce)
     1. [`addpattern`](#addpattern)
     1. [`prepattern`](#prepattern)
     1. [`reduce`](#reduce)
@@ -61,14 +61,14 @@
     1. [`tee`](#tee)
     1. [`consume`](#consume)
     1. [`count`](#count)
-    1. [`map` and `zip`](#map-and-zip)
+    1. [`map` a `zip`](#map-a-zip)
     1. [`datamaker`](#datamaker)
     1. [`recursive_iterator`](#recursiveiterator)
     1. [`parallel_map`](#parallelmap)
     1. [`concurrent_map`](#concurrentmap)
     1. [`MatchError`](#matcherror)
-1. [Utility Coconut](#coconut-utilities)
-    1. [Zvýraznění syntaxe](#syntax-highlighting)
+1. [Utility Coconut](#utility-coconut)
+    1. [Zvýraznění skladby](#zvýraznění-skladby)
         1. [SublimeText](#sublimetext)
         1. [Pygments](#pygments)
     1. [`coconut.__coconut__`](#coconutcoconut)
@@ -83,7 +83,7 @@
 
 ## Úvod <a id="overview"></a>
 
-Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlana spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/en/master/HELP.html)
+Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlana spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/cs/master/HELP.html)
 
 Coconut je varianta jazyka [Python](https://www.python.org/), vytvořená pro **jednoduché, elegantní a funkcionální programování v Pythonu**. Skladba Coconut je podmnožna skladby Pythonu 3. To znamená, že uživatel, obeznámený s Pythonem, bude již obeznámený s většinou obsahu Coconut.
 
@@ -99,7 +99,7 @@ Protože je Coconut hostován v [Python Package Index](https://pypi.python.org/p
 ```
 pip install coconut
 ```
-což nainstaluje Coconut a jeho požadované závislosti. Coconut sám má několik závislostí (dependencies), které lze instalovat zápisem 
+což nainstaluje Coconut a jeho požadované závislosti. Coconut sám má několik závislostí (dependencies), které lze instalovat zápisem
 ```
 pip install coconut[all]
 ```
@@ -109,7 +109,7 @@ Případně, chcete-li si vyzkoušet poslední a nejlepší Coconut, zapište
 ```
 pip install coconut-develop
 ```
-což nainstaluje nejposlednější chodící [development build](https://github.com/evhub/coconut/tree/develop) (volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše). Více informací o aktuální vývojové sestavě najdete na [development version of this documentation](http://coconut.readthedocs.org/en/develop/DOCS.html). Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji [vytvořením nového issue](https://github.com/evhub/coconut/issues/new).
+což nainstaluje nejposlednější chodící [development build](https://github.com/evhub/coconut/tree/develop) (volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše). Více informací o aktuální vývojové sestavě najdete na [development version of this documentation](http://coconut.readthedocs.io/cs/develop/DOCS.html). Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji [vytvořením nového issue](https://github.com/evhub/coconut/issues/new).
 
 ### Použití <a id="usage"></a>
 
@@ -296,7 +296,7 @@ def partial(func, *args, **keywords):
     newfunc.keywords = keywords
     return newfunc
 ```
-Objekt `partial` je použit pro částečnou (partial) aplikaci funkce, která “zmrazí” (freezes) některé argumenty a/nebo keywords funkce, vytvářejíc tak nový objket se zjednodušenou signaturou. 
+Objekt `partial` je použit pro částečnou (partial) aplikaci funkce, která “zmrazí” (freezes) některé argumenty a/nebo keywords funkce, vytvářejíc tak nový objket se zjednodušenou signaturou.
 
 ##### Příklad
 
@@ -407,7 +407,7 @@ _Nelze provést bez komplikované funkce pro iterátorové členění a inspekce
 
 ### Alternativy Unicode <a id="unicode-alternatives"></a>
 
-Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternativy jsou poměrně nápovědné, se záměrem reflektovat vzhled nebo účel originálního symbolu. 
+Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternativy jsou poměrně nápovědné, se záměrem reflektovat vzhled nebo účel originálního symbolu.
 
 ##### Full List
 
@@ -539,7 +539,7 @@ size(Node(Empty(), Leaf(10))) == 1
 
 Coconut poskytuje plnohodotné, funkcionální `pattern-matching` prostřednictvím svých příkazů `match`.
 
-##### Úvod 
+##### Úvod
 
 Příkazy `match` konvenují se základní skladbou `match <pattern> in <value>`. Příkaz match se pokusí porovnat hodnotu se vzorkem a v případě shody sváže proměnnou ve vzorku s odpovídající pozicí v hodnotě a provede následný kód za příkazem match. Příkazy match také ve své základní skladbě podporují podmínku `if <cond>`, která se vyhodnotí po nalezení shody před provedením následného kódu a příkaz `else`, který se provede, pokud ke shodě nedojde. Všechny možnosti příkazu match nemají ekvivalent v Pythonu a proto následuje vysvětlení jednotlivých specifikací.
 
@@ -557,7 +557,7 @@ kde `<value>` je položka, v níž se hledá shoda, `<cond>` je volitelná dodat
 ```coconut
 pattern ::= (
     "(" pattern ")"                 # závorky
-    | "None" | "True" | "False"     # konstanty 
+    | "None" | "True" | "False"     # konstanty
     | "=" NAME                      # ověření (checks)
     | NUMBER                        # čísla
     | STRING                        # řetězce
@@ -995,7 +995,7 @@ print(list(map(operator.add, range(0, 5), range(5, 10))))
 
 ### Přiřazovací funkce <a id="assignment-functions"></a>
 
-Coconut umožňuje definování přiřazovací funkce tak, aby automaticky vrátila poslední řádek těla funkce. Přiřazovací funkce je vyjádřena náhradou `=` za `:`, takže složení přiřazovací funkce je buď 
+Coconut umožňuje definování přiřazovací funkce tak, aby automaticky vrátila poslední řádek těla funkce. Přiřazovací funkce je vyjádřena náhradou `=` za `:`, takže složení přiřazovací funkce je buď
 ```coconut
 def <name>(<args>) = <expr>
 ```
@@ -1693,7 +1693,7 @@ v souboru `conf.py` Coconutu.
 
 Toto je občas užitečné pro přístup k vestavěným objektům Coconutu z čistého Pythonu. Za tím účelem Coconut poskytuje `coconut.__coconut__`, jenž se chová přesně jako hlavičkový soubor `__coconut__.py`, připojený když je Coconut kompilován v režimu 'package'.
 
-Všechny nativní objekty Coconutu jsou přístupné z `coconut.__coconut__`. Doporučený způsob jejich importu je použití `from coconut.__coconut__ import`. 
+Všechny nativní objekty Coconutu jsou přístupné z `coconut.__coconut__`. Doporučený způsob jejich importu je použití `from coconut.__coconut__ import`.
 
 ##### Example
 
@@ -1760,7 +1760,7 @@ Každý _mode_ má dvě komponenty: jaký parser používá a jaké záhlaví p�
 
 **coconut.convenience.cmd**(_args_, **[**_interact_**]**)
 
-Zpracuje dané _args_, jakoby byly zadáný z příkazového řádku, s tou výjimkou, že pokud _interact_ není `true` nebo nebylo-li zadáno `-i`, interpret se nespustí. Navíc, protože `parse` a `cmd` sdílejí tentýž 'convenience parsing' objekt, 
+Zpracuje dané _args_, jakoby byly zadáný z příkazového řádku, s tou výjimkou, že pokud _interact_ není `true` nebo nebylo-li zadáno `-i`, interpret se nespustí. Navíc, protože `parse` a `cmd` sdílejí tentýž 'convenience parsing' objekt,
 jakékoli změny pro parsing zadané přes `cmd`, budou pracovat stejně, jakoby byly zavedeny přes `setup`.
 
 #### `version` <a id="version"></a>
