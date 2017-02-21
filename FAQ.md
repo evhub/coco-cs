@@ -24,7 +24,7 @@ Yes and yes! Coconut kompiluje do Pythonu, takže moduly Coconut jsou přístupn
 
 ### Které verze Pythonu Coconut podporuje? <a id="2"></a>
 
-Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/master/DOCS.html#compatible-python-versions).
+Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/master/DOCS.html#compatibilni-verze-pythonu).
 
 ### Help! Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)! <a id="3"></a>
 
@@ -68,8 +68,7 @@ That's great! Coconut is completely open-source, and new contributors are always
 
 ![Monty Python and the Holy Grail](http://i.imgur.com/PoFot.jpg)
 
-Pokud vám to není známo, obrázek nahoře pochází z komedie [Monty Python and the Holy Grail](https://en.wikipedia.org/wiki/Monty_Python_and_the_Holy_Grail), ve které Rytíři Kulatého Stolu tlučou kokosovými ořechy o sebe aby napodobili zvuk jezdce na koni. Jméno Coconut bylo zvoleno jako odkaz na skutečnost, že
-in which the Knights of the Round Table bang Coconuts together to mimic the sound of riding a horse. The name was chosen to reference the fact that [Python je nazván podle Monty Python](https://www.python.org/doc/essays/foreword/) as well.
+Pokud vám to není známo, obrázek nahoře pochází z komedie [Monty Python and the Holy Grail](https://en.wikipedia.org/wiki/Monty_Python_and_the_Holy_Grail), ve které Rytíři Kulatého stolu tlučou kokosovými ořechy o sebe aby napodobili zvuk jezdce na koni. Jméno Coconut bylo zvoleno jako odkaz na skutečnost, že [Python je rovněž nazván podle Monty Python](https://www.python.org/doc/essays/foreword/).
 
 ### Kdo vytvořil Coconut? <a id="13"></a>
 

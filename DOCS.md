@@ -12,8 +12,8 @@
     1. [Kompilační režimy](#kompilační-režimy)
     1. [Kompatibilní verze Pythonu](#kompatibilní-verze-pythonu)
     1. [Přípustné cíle](#přípustné-cíle)
-    1. [`strict` Mode](#strict-mode)
-    1. [Podpora IPython / Jupyter](#podpora-ipython--jupyter)
+    1. [Režim `strict`](#režim-strict)
+    1. [Podpora pro IPython Jupyter](#podpora-pro-ipython-jupyter)
         1. [Extenze](#extenze)
         1. [Jádro](#jádro)
 1. [Operátory](#operátory)
@@ -21,7 +21,7 @@
     1. [Částečná aplikace](#částečná-aplikace)
     1. [Vedení pipeline](#vedení-pipeline)
     1. [Skladba](#skladba)
-    1. [Řetěz](#řetěz)
+    1. [Řetězení](#řetězení)
     1. [Krájení iterátoru](#krájení-iterátoru)
     1. [Alternativy Unicode](#alternativy-unicode)
 1. [Klíčová slova](#klíčová-slova)
@@ -39,7 +39,7 @@
     1. [Podtržítkové separátory](#podtržítkové-separátory)
 1. [Zápis funkce](#zápis-funkce)
     1. [Optimalizace koncového volání](#optimalizace-koncového-volání)
-    1. [Operátorové fukce](#operátorové-fukce)
+    1. [Operátorové funkce](#operátorové-funkce)
     1. [Přiřazovací funkce](#přiřazovací-funkce)
     1. [Infixové funkce](#infixové-funkce)
     1. [Porovnávací \(pattern-matching\) funkce](#porovnávací-pattern-matching-funkce)
@@ -67,7 +67,7 @@
     1. [`parallel_map`](#parallelmap)
     1. [`concurrent_map`](#concurrentmap)
     1. [`MatchError`](#matcherror)
-1. [Utility Coconut](#utility-coconut)
+1. [Utilita Coconut](#utilita-coconut)
     1. [Zvýraznění skladby](#zvýraznění-skladby)
         1. [SublimeText](#sublimetext)
         1. [Pygments](#pygments)
@@ -210,7 +210,7 @@ Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, mě
 
 _Poznámka: Čárky jsou ve specifikacích cíle ignorovány, takže cíl `2.7` je ekvivalentní cíli `27`._
 
-### `strict` Mode <a id="strict-mode"></a>
+### Režim `strict` <a id="strict-mode"></a>
 
 Je-li povolen flag `--strict` (or `-s`), ohlásí Coconut chyby pro různé problémy stylu. Jsou jimi
 - mixing of tabs and spaces (without `--strict` will show a Warning),
@@ -224,7 +224,7 @@ Je-li povolen flag `--strict` (or `-s`), ohlásí Coconut chyby pro různé prob
 
 Doporučuje se při práci na novém projektu používat flag `--strict` (nebo `-s`) protože vám bude nápomocen při psaní čistšího kódu.
 
-### Podpora IPython / Jupyter <a id="ipython-jupyter-support"></a>
+### Podpora pro IPython Jupyter <a id="ipython-jupyter-support"></a>
 
 Dáváte-li přednost prostředí [IPython](http://ipython.org/) (jádro Pythonu pro framework [Jupyter](http://jupyter.org/) framework) před normální konzolou Pythonu, lze použít Coconut jako extenzi IPythonu nebo jádro Jupyteru.
 
@@ -245,7 +245,7 @@ Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příka
 
 Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty i když je vyžadován jeden argument (vyjádřený znakem `_`).
 
-_Note: Je-li normální skladba lambdy nedostatečná, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [statement lambdas](#statement-lambdas)._
+_Note: Je-li normální skladba lambdy nedostatečná, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [statement lambdas](#prikaz-lambda)._
 
 ##### Zdůvodnění
 
@@ -355,7 +355,7 @@ fog = f..g
 fog = lambda *args, **kwargs: f(g(*args, **kwargs))
 ```
 
-### Řetěz <a id="chain"></a>
+### Řetězení <a id="chain"></a>
 
 Coconut používá operátor `::` pro řetězení iterátoru. Toto řetězení je prováděno líně - to jest tak, že argumenty se nevyhodnocují, pokud jich není zapotřebí. Tato forma má precedenci 'in-between bitwise or and infix calls'. 'In-place' operátorem je `::=`.
 
@@ -391,7 +391,7 @@ _Nelze provést bez komplikované komprehence iterátoru namísto líného řet�
 
 K provedení iterátorového členění používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. It has the same precedence as subscription.
 
-Iterátorové členění pracuje stejně jako sekvenční členění, včetně podpory negativních indexů a úseků (slices) a podpory pro objekty `úseků` stejně jako u normálního členění. Iterátorové členění však nezaručuje, že bude zachován původní iterátor (pro jeho zachování použijte [`tee` function](#tee)).
+Iterátorové členění pracuje stejně jako sekvenční členění, včetně podpory negativních indexů a úseků (slices) a podpory pro objekty `úseků` stejně jako u normálního členění. Iterátorové členění však nezaručuje, že bude zachován původní iterátor (pro jeho zachování použijte [funkci `tee`](#tee)).
 
 Iterátorové členění v Coconut je velmi podobné `itertools.islice` v Pythonu, avšak na rozdíl od `itertools.islice`, podporuje iterátorové členění negativní index a přednostně použije  `__getitem__` objektu, pokud existuje. Iterátorové členění je také optimalizované pro práci s objekty `map`, `zip`, `range` a `count`, počítaje pouze ty prvky, které jsou nezbytné pro vynětí žádaného úseku.
 
@@ -618,7 +618,7 @@ Příkaz `match` přijme vzorek a pokusí se k němu nalézt shodu v zadaných a
 - Head-Last Splits (`<list/tuple> + <var> + <list/tuple>`): kombinace předchozích dvou operací.
 - Iterator Splits (`<list/tuple/lazy list> :: <var>` nebo `<lazy list>`): porovná počátek iteráblu (`collections.abc.Iterable`) s `<list/tuple/lazy list>`, potom připojí zbytek k `<var>` nebo ověří, že je iteráble proveden.
 
-_Poznámka: Podobně jako u [krájení iterátoru](#iterator-slicing), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte [funkcí `tee`](#tee)._
+_Poznámka: Podobně jako u [krájení iterátoru](#krajeni-iteratoru), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte [funkci `tee`](#tee)._
 
 Při ověřování zda může být objekt porovnáván určitým způsobem používá Coconut abstraktní bázové třídy Pythonu. Je tedy nutné registrovat uživatelský objekt jako příslušnou bázovou třídu.
 
@@ -771,7 +771,7 @@ Není povoleno aby název proměnné začínal `_coconut`, protože tyto proměn
 
 ### Příkaz lambda <a id="statement-lambdas"></a>
 
-Skladba příkazu lambda je rozšířením skladby [normální lambdy syntax](#lambdas) pro podporu příkazů, nikoliv pouze výrazů.
+Skladba příkazu lambda je rozšířením skladby normální skladby [lambda](#lambda) pro podporu příkazů, nikoliv pouze výrazů.
 
 Skadba pro příkaz lambda je:
 ```
@@ -909,7 +909,7 @@ Pro snadnější čitelnost umožňuje Coconut použití podtržítka pro optick
 
 Coconut provede automatickou optimalizaci koncovým voláním u každé funkce, která vyhoví následujícím kriteriím:
 
-1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#assignment-functions)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
+1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#prirazovaci-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
 2. nesmí to být generátor (používající `yield`) nebo asynchronní funkce (používající`async`).
 
 _Poznámka: Optimalizace koncovým voláním pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern) nebo [`prepattern`](#prepattern)._
@@ -934,7 +934,7 @@ def factorial(n, acc=1):
 
 _Nelze provést bez přepsání funkce._
 
-### Operátorové fukce <a id="operator-functions"></a>
+### Operátorové funkce <a id="operator-functions"></a>
 
 Coconut používá jednoduchou výrazovou zkratku: uzavření do závorek činí z operátoru funkci. Podobně jako u iterátorových komprehencí, je-li operátorová funkce jediný argument funkce, mohou závorky volání funkce sloužit jako závorky operátorové funkce.
 
@@ -1076,7 +1076,7 @@ def <name>(*args):
         err.value = args
         raise err
 ```
-Selže-li průběh porovnávací funkce, vyvolá [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#destructuring-assignment).
+Selže-li průběh porovnávací funkce, vyvolá [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#rozlozene-prirazeni).
 
 _Poznámka: Definice porovnávací funkce může být kombinována s definicí přiřazovací a/nebo infixové funkce._
 
@@ -1288,7 +1288,7 @@ cdef f(x):
 
 ### `addpattern` <a id="addpattern"></a>
 
-Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#pattern-matching-functions) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Její skladba je zhruba ekvivalentní k:
+Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#porovnavaci-funkce) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Její skladba je zhruba ekvivalentní k:
 ```
 def addpattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked last."""
@@ -1317,7 +1317,7 @@ _Nelze provést bez komplikované definice dekorátoru a dlouhé řady kontrol p
 
 ### `prepattern` <a id="prepattern"></a>
 
-Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#pattern-matching-functions) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Je zhruba ekvivalentní k:
+Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#porovnavaci-funkce) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Je zhruba ekvivalentní k:
 ```
 def prepattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked first."""
@@ -1576,7 +1576,7 @@ Coconut poskytuje dekorátor `recursive_iterator`, který poskytuje výraznou op
 3. vaše funkce volá samu sebe pro tytéž argumenty,
 4. všechny argumenty, zadávané funkci jsou serializovatelné (pickleable).
 
-Setkáte-li se s `RuntimeError` následkem maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#tail-call-optimization), jež obojí by mělo takovým chybám zabránit.
+Setkáte-li se s `RuntimeError` následkem maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncoveho-volani), jež obojí by mělo takovým chybám zabránit.
 
 Nadto, `recursive_iterator` také umožňuje řešení [of nasty segmentation fault in Python's iterator logic that has never been fixed](http://bugs.python.org/issue14010). Konkrétně, místo zápisu
 ```coconut
@@ -1655,9 +1655,9 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
 ### `MatchError` <a id="matcherror"></a>
 
-Objekt `MatchError` je vyvolán, když selže [destructuring assignment](#destructuring-assignment), načež je `MatchError` poskytnut jako vestavěná procedura pro odchycení takovýchto chyb. Objekty `MatchError` podporují dva atributy, `pattern`, což je řetězec, popisující selhávající předlohu a `value`, což je objekt, který selhal při porovnávání s předlohou.
+Objekt `MatchError` je vyvolán, když selže [destructuring assignment](#rozlozene-prirazeni), načež je `MatchError` poskytnut jako vestavěná procedura pro odchycení takovýchto chyb. Objekty `MatchError` podporují dva atributy, `pattern`, což je řetězec, popisující selhávající předlohu a `value`, což je objekt, který selhal při porovnávání s předlohou.
 
-## Utility Coconut <a id="coconut-utilities"></a>
+## Utilita Coconut <a id="coconut-utilities"></a>
 
 ### Zvýraznění skladby <a id="syntax-highlighting"></a>
 
@@ -1750,7 +1750,7 @@ Každý _mode_ má dvě komponenty: jaký parser používá a jaké záhlaví p�
 
 `setup` lze použít k zadání flagů příkazového řádku, použitých v akci `parse`. Možné hodnoty flagů jsou:
 
-- _target_: `None` (default), or any [allowable target](#allowable-targets)
+- _target_: `None` (default), or any [allowable target](#pripustne-cile)
 - _strict_: `False` (default) or `True`
 - _minify_: `False` (default) or `True`
 - _line\_numbers_: `False` (default) or `True`

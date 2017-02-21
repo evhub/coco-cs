@@ -6,8 +6,8 @@
 #-----------------------------------------------------------------------------------------------------------------------
 
 """
-Author: Evan Hubinger, Jaroslav Kubias
-License: Apache 2.0
+Autor: Evan Hubinger, překlad Jaroslav Kubias
+Licence: Apache 2.0
 Description: Sphinx configuration file for the Coconut Programming Language.
 """
 

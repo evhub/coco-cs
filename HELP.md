@@ -116,7 +116,7 @@ hello, world!
 
 Ovšemže, být schopen za běhu interpretovat kód Coconut je velká věc ale bez schopnosti psát a kompilovat programy by naše programování nebylo příliš užitečné. Pojďme si proto napsat první program v Coconut: "Hello, world!".
 
-Nejprve vytvoříte soubor, do něhož náš kód vložíte. Doporučená extenze pro zdrojové soubory Coconut je `.coco`, vytvořte tedy soubor s názvem `hello_world.coco`. Poté, co to uděláte, měli byste nastavit svůj textový editor na správné zvýrazňování zdrojového kódu. Příslušné instrukce naleznete v dokumentaci  [Coconut syntax highlighting](http://coco-cs.readthedocs.io/cs/master/DOCS.html#syntax-highlighting).
+Nejprve vytvoříte soubor, do něhož náš kód vložíte. Doporučená extenze pro zdrojové soubory Coconut je `.coco`, vytvořte tedy soubor s názvem `hello_world.coco`. Poté, co to uděláte, měli byste nastavit svůj textový editor na správné zvýrazňování zdrojového kódu. Příslušné instrukce naleznete v odstavci [Zvýraznění skladby](http://coco-cs.readthedocs.io/cs/master/DOCS.html#zvyrazneni-skladby).
 
 Nyní vložíme kód do souboru `hello_world.coco`. Na rozdíl od Pythonu, kde záhlaví a různé importy jsou obvyklé a velmi často velmi nezbytné,
 ```coconut_python
@@ -1101,7 +1101,7 @@ vector(1, 2).angle(5) # MatchError
 ```
 _Jedna důležitá poznámka: dejte si pozor abyste nenechali prázdný řádek při dosazování vlastních metod, neboť v tom případě by interpret roztrhl kód. V normálním zápisu Coconut to není žádný problém, pouze zde, protože provádíme kopírování-vkládání do příkazového řádku_
 
-Copy, paste! Jestliže všechno chodí jak má, doporučuji se vrátit ke hrátkám s [aplikacemi](#applications) `vector_field` s použitím našich nových metod.
+Copy, paste! Jestliže všechno chodí jak má, doporučuji se vrátit ke hrátkám s [aplikacemi](#aplikace) `vector_field` s použitím našich nových metod.
 
 ## Vyplnění mezer <a id="filling-in-the-gaps"></a>
 

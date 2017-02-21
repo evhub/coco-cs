@@ -8,22 +8,22 @@ Coconut
    HELP
    DOCS
 
-`Coconut <http://coconut-lang.org/>`_ je varianta jazyka `Python <https://www.python.org/>`_ vytvořená pro **jednoduché a elegantní Pythonické funkcionální programování**.
+`Coconut <http://coconut-lang.org/>`_ je varianta jazyka `Python <https://www.python.org/>`_ vytvořená pro jednoduché a elegantní Pythonické **funkcionální programování**.
 
 Coconut je vyvíjen na `GitHub <https://github.com/evhub/coconut>`_ a hostován na `PyPI <https://pypi.python.org/pypi/coconut>`_.
 
 
 Instalace
--------
+---------
 
-Instalace Coconu je stejně snadná jako otevření konzoly s promptem a zadání::
+Instalace Coconut je stejně snadná jako otevření konzoly s promptem a zadání::
 
     pip install coconut
 
 načež máte celý svět Coconut u svých nohou.
 
 Ukázky kódu
--------
+-----------
 
 **Usměrnění programu** (pipeline-style programming):
 
@@ -127,7 +127,7 @@ Ukázky kódu
 
 
 Užitečné odkazy
--------
+---------------
 
 Podporu pro své první kroky v prostředí Coconut naleznete na těchto odkazech:
 
