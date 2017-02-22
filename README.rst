@@ -2,11 +2,11 @@ Coconut
 =======
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
-   FAQ
-   HELP
    DOCS
+   HELP
+   FAQ
 
 `Coconut <http://coconut-lang.org/>`_ je varianta jazyka `Python <https://www.python.org/>`_ vytvořená pro jednoduché a elegantní Pythonické **funkcionální programování**.
 
@@ -131,9 +131,10 @@ Užitečné odkazy
 
 Podporu pro své první kroky v prostředí Coconut naleznete na těchto odkazech:
 
-* `Tutoriál <http://coconut.readthedocs.io/cs/master/HELP.html>`_: Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
-* `Documentace <http://coconut.readthedocs.io/cs/master/DOCS.html>`_: Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
-* `FAQ <http://coconut.readthedocs.io/cs/master/FAQ.html>`_: Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
+* `Coconut <http://coconut-lang.org/>`_
+* `Dokumentace <http://coconut.readthedocs.org/cs/latest/DOCS.html>`_: Hledáte-li informaci o konkretní entitě, zkuste referenční dokumentaci jazyka Coconut.
+* `Tutoriál <http://coconut.readthedocs.org/cs/latest/HELP.html>`_: Dobrým výchozím bodem pro začátečníka v Coconut je jeho tutorial s případovými studiemi.
+* `FAQ <http://coconut.readthedocs.org/cs/latest/FAQ.html>`_: Chcete-li se zeptat, pro koho je Coconut určen a zda byste jej měl používat, navštivte Frequently Asked Questions .
 * `Create a New Issue <https://github.com/evhub/coconut/issues/new>`_: If you're having a problem with Coconut, creating a new issue detailing the problem will allow it to be addressed as soon as possible.
 * `Gitter <https://gitter.im/evhub/coconut>`_: For any questions, concerns, or comments about anything Coconut-related, ask around at Coconut's Gitter, a GitHub-integrated chat room for Coconut developers.
 

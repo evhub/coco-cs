@@ -1,3 +1,4 @@
+barn/
 # OS files
 .DS_Store
 Thumbs.db
@@ -69,6 +70,3 @@ target/
 
 # Sublime
 *.sublime-*
-
-# Project Specific
-barn/
