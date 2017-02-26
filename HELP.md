@@ -18,7 +18,7 @@
     1. [Třídění sekvence](#trideni-sekvence)
     1. [Třídění iterátoru](#trideni-iteratoru)
 1. [Případová studie 3: `vector` - část I](#pripadova-studie-3-vector-part-i)
-    1. [2-Vector](#2-vector)
+    1. [2-vector](#2-vector)
     1. [Konstruktor pro n-Vector](#konstruktor-pro-n-vector)
     1. [Metody pro n-Vector](#metody-pro-n-vector)
 1. [Případová studie 4: `vector_field`](#pripadova-studie-4-vectorfield)
@@ -518,7 +518,7 @@ Ve funkcionálním programování je často žádoucí definovat _neměnitelné_
 - jsou výrazně efektivnější, protože vyžadují mnohem méně doprovodných aktivit,
 - při kombinaci s 'pattern-matching' mohou být použity jako takzvané **algebraické datové typy** ke snadnému vytváření velkých a složitých datových struktur.
 
-### 2-Vector 
+### 2-vector 
 
 Příkaz `data` v Coconut přivádí do Pythonu mocnou utilitu _neměnitelných algebraických datových typů_. Skladbu příkazu `data` si ukážeme na definici jednoduchého dvouprvkového vektoru. Tento vektor bude mít specielní metodu `__abs__`, která spočítá jeho délku, definovanou jako odmocninu součtu čtverců jeho prvků. Zde je: 
 ```coconut

@@ -16,6 +16,7 @@
     1. [Podpora pro IPython-Jupyter](#podpora-pro-ipython-jupyter)
         1. [Extenze](#extenze)
         1. [Jádro](#jadro)
+	1. [Integrace s MyPy](#integrace-s-mypy)
 1. [Operátory](#operatory)
     1. [Lambda](#lambda)
     1. [Částečná aplikace](#castecna-aplikace)
@@ -34,15 +35,15 @@
     1. [Příkaz lambda](#prikaz-lambda)
     1. [Líné seznamy](#line-seznamy)
     1. [Implicitní castecna aplikace](#implicitni-castecna-aplikace)
-    1. [Literály množiny](#literaly-mnoziny)
+    1. [Literály setu](#literaly-setu)
     1. [Literály imaginárního čísla](#literaly-imaginarniho-cisla)
     1. [Podtržítkové separátory](#podtrzitkove-separatory)
-1. [Zápis funkce](#zapis-funkce)
+1. [Definice funkce](#definice-funkce)
     1. [Optimalizace koncového volání ](#optimalizace-koncoveho-volani)
     1. [Operátorové funkce](#operatorove-funkce)
     1. [Přiřazovací funkce](#prirazovaci-funkce)
-    1. [Infixové funkce](#infixove-funkce)
-    1. [Porovnávací funkce](#porovnavaci-funkce)
+	1. [Porovnávací funkce](#pattern-matching)
+	1. [Infixové funkce](#infixove-funkce)
 1. [Příkazy](#prikazy)
     1. [Rozložené přiřazení](#rozlozene-prirazeni)
     1. [Dekorátory](#dekoratory)
@@ -83,13 +84,13 @@
 
 ## Úvod
 
-Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlana spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/cs/latest/HELP.html)
+Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlena spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/cs/latest/HELP.html)
 
 Coconut je varianta jazyka [Python](https://www.python.org/), vytvořená pro **jednoduché, elegantní a funkcionální programování v Pythonu**. Skladba Coconut je podmnožna skladby Pythonu 3. To znamená, že uživatel, obeznámený s Pythonem, bude již obeznámený s většinou obsahu Coconut.
 
-Kompilátor jazyka Coconut převádí kód Coconut na kód Pythonu. Primární způsob přístupu ke kompilátoru Coconut je pomocí konzoly příkazového řádku, jež rovněž obsahuje překladač pro kompilaci v reálném čase. Kromě této konzoly podporuje Coconut také notebooky IPythonu a Jupiteru.
+Kompilátor jazyka Coconut převádí kód Coconut na kód Pythonu. Primární způsob přístupu ke kompilátoru Coconut je z příkazového řádku utility REPL, jež rovněž obsahuje překladač pro kompilaci v reálném čase. Kromě této konzoly podporuje Coconut také notebooky IPythonu a Jupiteru.
 
-Zatímco většina v Coconut má svoji inspiraci jednoduše ve snaze učinit programování v Pythonu funkcionální, další inspirace pochází z [Haskellu](https://www.haskell.org/), [CoffeeScriptu](http://coffeescript.org/), [F#](http://fsharp.org/) a z extenze Pythonu  [patterns.py](https://github.com/Suor/patterns).
+Zatímco většina kódu v Coconut vychází ze snahy umožnit a zjednodušit funkcionální programování v Pythonu, další inspirace pochází z [Haskellu](https://www.haskell.org/), [CoffeeScriptu](http://coffeescript.org/), [F#](http://fsharp.org/) a z extenze Pythonu  [patterns.py](https://github.com/Suor/patterns).
 
 ## Kompilace
  
@@ -237,13 +238,27 @@ Je-li Coconut použit jako extenze, bude speciální "magic command" posílat ú
 
 Je-li Coconut použit jako jádro (kernel), bude veškerý kód v konzoli nebo notebooku poslán k vyhodnocení do Coconut místo do Pythonu. Příkaz `coconut --jupyter notebook` (nebo `coconut --ipython notebook`) spustí notebook IPython/ Jupyter s použitím Coconut jako jádra a příkaz `coconut --jupyter console` (nebo `coconut --ipython console`) spustí konzoli IPython/ Jupyter s použitím Coconut jako jádra. Navíc, příkaz `coconut --jupyter` (nebo `coconut --ipython`) přidá Coconut jako jazykovou volbu uvnitř všech notebooků IPython/ Jupyter - i těch, které nejsou spouštěny aplikací Coconut. Tento příkaz musí být opakovaně proveden při instalaci nové verze Coconut.
 
+### Integrace s MyPy
+
+Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných nástrojů Coconut.
+
+Jednoduše zadejte `--mypy` (jako poslední argument), použijte [standardní skladbu anotace Python3](https://www.python.org/dev/peps/pep-0484/) a Coconut se o zbytek sám postará. Coconut implicitně kompiluje anotace typu na kompatibilní  `mypy --py2` komentáře typu. Chcete-li zachovat anotace typů z Python3, jednoduše zadejte `--target 3`.
+
+Kromě anotace typu argumentu funkce podoporuje Coconut také anotace proměnných typů s použitím [nové syntaxe z Python 3.6](https://www.python.org/dev/peps/pep-0526/), jež kompiluje na kompatibilní komentáře `mypy --py2`, pokud není zadáno `--target 3.6`.
+
+Coconut dokonce podporuje `--mypy` v překladači, jenž skenuje inteligentně každý nový řádek kódu v kontextu s předchozím řádkem zda neobjeví nově zavedené chyby MyPy. Na příklad:
+```coconut
+>>> a = count()[0]  # type: str
+<string>:14: error: Incompatible types in assignment (expression has type "int", variable has type "str")
+```
+
 ## Operátory 
 
 ### Lambda 
 
 Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příkazu `lambda` v Pythonu. Skladba s operátorem `->` je `(arguments) -> expression`. Operátor má stejné pořadí důležitosti jako starý příkaz, což znamená, že bude často nezbytné uzavřít lambdu do závorek.
 
-Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty i když je vyžadován jeden argument (vyjádřený znakem `_`).
+Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty nebo když je vyžadován jen jeden argument (vyjádřený znakem `_`).
 
 _Note: Je-li normální skladba lambdy nedostatečná, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazu lambda](#prikaz-lambda)._
 
@@ -458,11 +473,11 @@ před definicemi metod nebo atributů.
 
 ##### Zdůvodnění
 
-Hlavní část funkcionálního programování, které Coconut v Pythonu zlepšuje, je použití hodnot nebo neměnitelných datových typů. Neměnitelná data mohou být velmi užitečná ale vytvoření takových typů v Pythonu je velice obtížné. Coconut vytváří neměnitelné datové typy velice snadno použitím bloků typu `data`.
+Hlavní část funkcionálního programování, které Coconut v Pythonu zlepšuje, je použití hodnot nebo neměnitelných datových typů. Neměnitelná data jsou velmi užitečná ale vytvoření takových typů v Pythonu je velice obtížné. Coconut vytváří neměnitelné datové typy velice snadno použitím bloků typu `data`.
 
 ##### Python Docs
 
-Vrací subtřídu nové entice (tuple). Nová subtřída je použita k vytvoření entici podobným objektům, jejichž pole jsou přístupná přes vzhled (lookup) atributu, jakož i proto, že jsou indexovatelná a iterovatelná. Instance subtřídy mají také nápomocný docstring (se jménem typu a pole) a metodu  `__repr__()`, která uvádí obsah entice ve formátu `name=value`.
+Vrací novou subtřídu entice (tuple). Nová subtřída je použita k vytvoření entici podobných objektů, jejichž pole jsou přístupná přes vzhled (lookup) atributu a jsou indexovatelná a iterovatelná. Instance subtřídy mají také nápomocný docstring (se jménem typu a pole) a metodu  `__repr__()`, která uvádí obsah entice ve formátu `name=value`.
 
 Pro název pole lze použít libovolný platný identifikátor Pythonu. Platné identifikátorý se skládají z písmen, číslic a podtržítek ale nezačínají číslicí nebo podtržítkem a nejsou klíčovým slovem jako _class, for, return, global, pass nebo raise_.
 
@@ -779,7 +794,7 @@ def (arguments) -> statement; statement; ...
 ```
 kde `statement` může být příkaz přiřazení nebo keyword statement. Je-li poslední `statement` (nenásledovaný středníkem) `výrazem`, je automaticky vrácen.
 
-Příkazy lambda rovněž podporují implicitní skladbu lambda, u níž je při vypuštění argumentů, jako v `def -> _`, je předpokládán výraz `def (_=None) -> _`.
+Příkazy lambda rovněž podporují implicitní skladbu lambda, u níž je při vypuštění argumentů, jako v `def -> _`, předpokládán výraz `def (_=None) -> _`.
 
 ##### Příklad
 
@@ -844,7 +859,7 @@ mod$ <| 5 <| 3
 mod(5, 3)
 ```
 
-### Literály množiny 
+### Literály setu 
 
 Coconut umožňuje předsadit písmeno `s` nebo `f` před deklaraci setu (množiny). Spojení `s{}` informuje Coconut, že jde o prázdný set a nikoli o prázdný slovník. Spojení `f{}` generuje `frozenset`.
 
@@ -903,7 +918,7 @@ Pro snadnější čitelnost umožňuje Coconut použití podtržítka pro optick
 10000000.0
 ```
 
-## Zápis funkce 
+## Definice funkce 
 
 ### Optimalizace koncového volání 
 
@@ -1027,6 +1042,37 @@ def binexp(x): return 2**x
 print(binexp(5))
 ```
 
+### Pattern matching 
+
+Coconut podporuje vyhledávání shody s předlohou (pattern-matching), jíž jsou argumenty v definici funkce. Skladba definice porovnávací funkce je
+```coconut
+[match] def <name>(<pattern>, <pattern>, ... [if <cond>]):
+    <body>
+```
+Kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce,  `<pattern>` je definován [příkazem `match`](#match) a  `<default>` je volitelná implicitní hodnota, není-li žádný argument zadán. Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. 
+
+Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#rozlozene-prirazeni).
+
+_Poznámka: Definice porovnávací funkce může být kombinována s definicí přiřazovací a/nebo infixové funkce._
+
+##### Příklad
+
+###### Coconut
+```coconut
+def last_two(_ + [a, b]):
+    return a, b
+def xydict_to_xytuple({"x":x is int, "y":y is int}):
+    return x, y
+
+range(5) |> last_two |> print
+{"x":1, "y":2} |> xydict_to_xytuple |> print
+```
+
+###### Python
+
+_Nelze provést bez dlouhé řady kontrol na počátku funkce. Viz kompilovaný kód pro skladbu Pythonu._
+
+
 ### Infixové funkce 
 
 Coconut umožňuje infixové použití funkce, kde je název funkce umístěn mezi operandy a je obklopen zpětnými apostrofy. Volání se zpětným apostrofem (backtick calling) má prioritu mezi 'chaining and piping'.
@@ -1058,44 +1104,7 @@ def mod(a, b): return a % b
 print(mod(x, 2))
 ```
 
-### Porovnávací funkce 
 
-Coconut podporuje porovnávání s předlohou (pattern-matching)/rozložené přiřazení (destructuring assignment) uvnitř definice funkce. Složení této skladby je
-```coconut
-[match] def <name>(<pattern>, <pattern>, ... [if <cond>]):
-    <body>
-```
-Kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce a `<pattern>` je definován [příkazem `match`](#match). Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. Definice porovnávací (p-m) fukce je ekvivalentní [příkazu `match`](#match), který vypadá jako:
-```coconut
-def <name>(*args):
-    match (<pattern>, <pattern>, ...) in args:
-        <body>
-    else:
-        err = MatchError(<error message>)
-        err.pattern = "def <name>(<pattern>, <pattern>, ...):"
-        err.value = args
-        raise err
-```
-Selže-li průběh porovnávací funkce, vyvolá [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#rozlozene-prirazeni).
-
-_Poznámka: Definice porovnávací funkce může být kombinována s definicí přiřazovací a/nebo infixové funkce._
-
-##### Příklad
-
-###### Coconut
-```coconut
-def last_two(_ + [a, b]):
-    return a, b
-def xydict_to_xytuple({"x":x is int, "y":y is int}):
-    return x, y
-
-range(5) |> last_two |> print
-{"x":1, "y":2} |> xydict_to_xytuple |> print
-```
-
-###### Python
-
-_Nelze provést bez dlouhé řady kontrol na počátku funkce. Viz kompilovaný kód pro skladbu Pythonu._
 
 ## Příkazy
 

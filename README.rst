@@ -4,8 +4,8 @@ Coconut
 .. toctree::
    :maxdepth: 1
 
-   DOCS
    HELP
+   DOCS
    FAQ
 
 `Coconut <http://coconut-lang.org/>`_ je varianta jazyka `Python <https://www.python.org/>`_ vytvořená pro jednoduché a elegantní Pythonické **funkcionální programování**.
