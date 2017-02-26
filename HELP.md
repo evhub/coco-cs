@@ -46,14 +46,14 @@ Proč používat Coconut? Coconut rozšiřuje repertoár programátora v Pythonu
 
 Coconut přidává do Pythonu _syntaktickou podporu_ pro:
 
-- pattern-matching - porovnávání předlohy
-- algebraic data types - ADT 
+- pattern-matching - vyhledávání shody s předlohou
+- algebraic data types (ADT) - algebraické datové typy 
 - destructuring assignment - rozložené přiřazení
 - partial application - částečnou aplikaci
 - lazy lists - líné seznamy
 - function composition - skládání funkcí
 - prettier lambdas - úhlednější lambdy
-- infix notation 
+- infix notation - infixovou notaci 
 - pipeline-style programming - směrované programování
 - operator functions - operátorové funkce
 - tail recursion optimization - optimalizace koncové rekurze
