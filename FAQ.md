@@ -25,7 +25,7 @@ Yes and yes! Coconut kompiluje do Pythonu, takže moduly Coconut jsou přístupn
 
 ### Které verze Pythonu Coconut podporuje? 
 
-Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/latest/DOCS.html#compatibilni-verze-pythonu).
+Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/latest/DOCS.html#kompatibilni-verze-pythonu).
 
 ### Kde najdu záznam o posledních změnách Coconut?
 
