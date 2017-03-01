@@ -33,7 +33,7 @@ Informace o každém vydání Coconat jsou zaznamenávány na stránce [GitHub](
 
 ### Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace!
 
-Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coco-cs.readthedocs.io/cs/master/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
+Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coco-cs.readthedocs.io/cs/latest/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
 
 ### Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut? 
 
