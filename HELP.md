@@ -108,8 +108,8 @@ Z toho vyplývá, že jste-li důvěrně seznámen s Pythonem, jste již z vět�
 ```coconut_pycon
 >>> "hello, world!"
 hello, world!
->>> 1 + 1
-2
+>>> 1 + 2
+3
 ```
 
 ### Použití kompilátoru 
