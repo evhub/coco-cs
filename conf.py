@@ -46,7 +46,7 @@ project = "Coconut"
 copyright = "2015-2017, Evan Hubinger, licensed under Apache 2.0; Czech translation by Jaroslav Kubias"
 author = "Evan Hubinger"
 version = VERSION
-release = VERSION_STR_TAG
+release = version_str_tag
 
 master_doc = "README"
 source_suffix = [".rst", ".md"]
