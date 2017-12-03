@@ -23,8 +23,15 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from coconut.root import *  # NOQA
 
-from recommonmark.parser import CommonMarkParser
+from coconut.constants import (
+    version_str_tag,
+    without_toc,
+    with_toc,
+)
+
 from sphinx_bootstrap_theme import get_html_theme_path
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
 
 #-----------------------------------------------------------------------------------------------------------------------
 # DEFINITIONS:
