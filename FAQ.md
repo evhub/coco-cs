@@ -1,23 +1,11 @@
-# Frequently Asked Questions
+# Coconut FAQ
 
-<!-- MarkdownTOC -->
+## Frequently Asked Questions
 
-1. [Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu?](#mohu-pouzit-moduly-pythonu-z-coconut-a-moduly-coconut-z-pythonu)
-1. [Které verze Pythonu Coconut podporuje?](#ktere-verze-pythonu-coconut-podporuje)
-1. [Kde najdu záznam o posledních změnách Coconut?](#kde-najdu-zaznam-o-poslednich-zmenach-coconut)
-1. [Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)!](#pokousel-jsem-se-napsat-rekurzivni-iterator-a-muj-python-zpusobil-chybu-segmentace)
-1. [Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut?](#jsem-li-perfektne-spokojeny-s-pythonem-proc-bych-se-mel-ucit-coconut)
-1. [Přináší Coconut také nějakou pomůcku pro ladění kódu?](#prinasi-coconut-take-nejakou-pomucku-pro-ladeni-kodu)
-1. [Nemám rád funkcionální programování, měl bych se přesto učit Coconut?](#nemam-rad-funkcionalni-programovani-mel-bych-se-presto-ucit-coconut)
-1. [Neznám funkcionální programování, mám se přesto pustit do Coconut?](#neznam-funkcionalni-programovani-mam-se-presto-pustit-do-coconut)
-1. [Neznám Python moc dobře, měl bych se přesto učit Coconut?](#neznam-python-moc-dobre-mel-bych-se-presto-ucit-coconut)
-1. [Proč není Coconut čistě funkcionální?](#proc-neni-coconut-ciste-funkcionalni)
-1. [Neuškodí transpilovaný jazyk jako Coconut komunitě Pythonu?](#neuskodi-transpilovany-jazyk-jako-coconut-komunite-pythonu)
-1. [Chci přispívat do Coconut, jak mohu začít?](#chci-prispivat-do-coconut-jak-mohu-zacit)
-1. [Proč název Coconut?](#proc-nazev-coconut)
-1. [Kdo vytvořil Coconut?](#kdo-vytvoril-coconut)
-
-<!-- /MarkdownTOC -->
+```eval_rst
+.. contents::
+    :local:
+```
 
 ### Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu? 
 
@@ -25,15 +13,36 @@ Yes and yes! Coconut kompiluje do Pythonu, takže moduly Coconut jsou přístupn
 
 ### Které verze Pythonu Coconut podporuje? 
 
-Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/latest/DOCS.html#kompatibilni-verze-pythonu).
+Coconut podporuje všechny verze Pythonu `>= 2.6` ve větvi `2.x` nebo `>= 3.2` ve větvi `3.x`. Ve skutečnosti je kód Coconut kompilován tak aby běžel stejně na každé z podporovaných verzí.
+Viz [kompatibilní verze Pythonu](http://coconut.readthedocs.io/cs/latest/DOCS.html#kompatibilni-verze-pythonu).
+
+
+### Může být Coconut použit ke konverzi jedné verze Pythonu na jinou?
+
+Ano, ale jen ve zpětném směru. Coconut může konvertovat Python 3 na Python 2 ale nikoliv obráceně. Coconut vlastně může přeměnit kód Pythonu 3 na Python na verzi nezávislý. Coconut zkompiluje skladbu Python 3, vestavěné entity i dokonce importy na kód, který bude pracovat v každé podporované verzi Pythonu (`2.6`, `2.7`, `>=3.2`).
+
+Existuje však několik výminek: některé konstrukty, jako `async`, nelze replikovat   nižších verzích Pythonu a k tomu aby pracovaly, je potřebné je zavést flagem `--target`. Úplný seznam viz [compatibilní verze Pythonu](DOCS.html#compatible-python-versions).
+
+### Jak lze publikovat paket Coconut na PyPI?
+
+Protože Coconut pouze kompiluje do Pythonu, publikování paketu Coconut na PyPI je přesně totéž jako publikování paketu Pythonu, s určitým kompilačním krokem navíc. Napíšete svůj paket v Coconut, spustíte `coconut` pro zdrojový kód a načtete kompilovaný kód na PyPI. Můžete dokonce míchat kódy Pythonu a Coconut, protože se kompilace dotýká pouze souborů `.coco`. Chcete-li vidět příklad paketu PyPI, psaného v Coconut, včetně souboru [Makefile](https://github.com/evhub/pyprover/blob/master/Makefile), včetně použitých kompilačních příkazů, podívejte se na [pyprover](https://github.com/evhub/pyprover).
 
 ### Kde najdu záznam o posledních změnách Coconut?
 
 Informace o každém vydání Coconat jsou zaznamenávány na stránce [GitHub](https://github.com/evhub/coconut/releases). Zde můžete nalézt všechny nové vlastnosti a výrazné změny, uvedené v jednotlivých vydáních.
 
+### Podporuje Coconut kontrolu statických typů?
+
+Ano, Coconut kompiluje [nejnovější](https://www.python.org/dev/peps/pep-0526/) a 
+[nejlepší](https://www.python.org/dev/peps/pep-0484/) skladbu anotace typu na komentáře, nezávislé na verzi Pythonu, které potom mohou být kontrolovány s použitím nástroje [MyPy Integration](http://coconut.readthedocs.io/en/master/DOCS.html#mypy-integration).
+
 ### Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace!
 
-Žádný problém - stačí použít dekorátor [`recursive_iterator`](http://coco-cs.readthedocs.io/cs/latest/DOCS.html#recursive_iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
+Žádný problém - stačí použít dekorátor [`recursive_iterator`](DOCS.html#recursive-iterator) z Coconut a budete v pohodě. Toto je [známý problém  Pythonu](http://bugs.python.org/issue14010) a `recursive_iterator` vám jej vyřeší.
+
+### Jak rozdělím výraz přes několik řádků v  Coconut?
+
+Protože je skladba Coconut nadřazená skladbě Python 3, podporuje Coconut stejné pokračování řádků jako Python. To znamená, že jak pokračování zpětným lomítkem, tak implikované pokračování uvnitř kulatých, hranatych a složených závorek bude chodit. Závorkové pokračování je doporučená metoda a Coconut dokonce podporuje její [vylepšenou verzi](DOCS.html#enhanced-parenthetical-continuation).
 
 ### Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut? 
 
@@ -49,11 +58,11 @@ Definitely! Kromě toho, že je Coconut skvělý pro funkcionální programován
 
 ### Neznám funkcionální programování, mám se přesto pustit do Coconut? 
 
-Yes, absolutely! [Tutoriál](http://coconut.readthedocs.io/cs/latest/HELP.html) pro Coconut nepředpokládá absolutně žádnou předchozí znalost funkcionálního programování, pouze Pythonu. Protože Coconut není čistě funkcionálním programovacím jazykem a veškerý platný Python je platný Coconut, je Coconut skvělým úvodem do funkcionálního programování. Osvojíte-li si Coconut, budete si moci vyzkoušet nový styl programování bez ztráty jakékoli znalosti Pythonu, který znáte a milujete.
+Yes, absolutely! [Tutoriál](HELP.html) nepředpokládá absolutně žádnou předchozí znalost funkcionálního programování, pouze Pythonu. Protože Coconut není čistě funkcionálním programovacím jazykem a veškerý platný Python je platný Coconut, je Coconut skvělým úvodem do funkcionálního programování. Osvojíte-li si Coconut, budete si moci vyzkoušet nový styl programování bez ztráty jakékoli znalosti Pythonu, který znáte a milujete.
 
 ### Neznám Python moc dobře, měl bych se přesto učit Coconut? 
 
-Maybe. Znáte-li aspoň základy Pythonu a jste dobře obeznámen s funkcionálním programováním, potom zcela určitě vám Coconut umožní pokračovat v používání všech vašich oblíbených nástrojů funkcionálního programování za současného dalšího seznamování s Pythonem. Nejste-li příliš obeznámen ani s Pythonem ani s funkcionálním programováním, potom učiníte lépe, když nejprve projdete vhodným tutoriálem Pythonu.
+Možná. Znáte-li aspoň základy Pythonu a jste dobře obeznámen s funkcionálním programováním, potom zcela určitě vám Coconut umožní pokračovat v používání všech vašich oblíbených nástrojů funkcionálního programování za současného dalšího seznamování s Pythonem. Nejste-li příliš obeznámen ani s Pythonem ani s funkcionálním programováním, potom učiníte lépe, když nejprve projdete vhodným tutoriálem Pythonu.
 
 ### Proč není Coconut čistě funkcionální? 
 
@@ -64,6 +73,11 @@ Coconut je záměrně vytvořen tak aby umožnil vytváření kódu v čistě fu
 ### Neuškodí transpilovaný jazyk jako Coconut komunitě Pythonu? 
 
 I certainly hope not! Na rozdíl od většiný transpilovaných (transpilled) jazyků, je veškerý Python platný Coconut. Cílem Coconut není nahradit Python ale _rozšířit_ jej. Coconut je dokonale interoperativní s Pythonem a používá stejné knihovny. Tudíž Coconut nemůže rozdělit komunitu Pythonu, protože komunita Coconu _je_ komunitou Pythonu.
+
+### Chci používat Coconut v produkčním prostředí; jak dosáhnu maximálního výkonu?
+
+Za prvé, budete potřebovat rychlý kompilátor, takže byste měl buďto  [instalovat Coconut s volbou `cPyparsing`](DOCS.html#installation) nebo použít [`PyPy`](https://pypy.org/). Za druhé, existují dvě jednoduché věci, které můžete udělat, abyste přinutili Coconut rychleji produkovat Python: kompilovat se specifikací `--no-tco` a kompilovat se specifikací `--target` pro určitou verzi Pythonu, na níž má váš kód běžet. Zadání specifikace `--target` pomůže optimalizovat kompilovaný kód pro danou verzi Pythonu a byť je koncová optimalizace [(Tail Call Optimization)](DOCS.html#tail-call-optimization) užitečná, 
+obvykle výrazně zpomalí její provedení, takže nepoužití této možnosti způsobí výrazný nárůst výkonu.
 
 ### Chci přispívat do Coconut, jak mohu začít? 
 
@@ -77,4 +91,4 @@ Pokud vám to není známo, obrázek nahoře pochází z komedie [Monty Python a
 
 ### Kdo vytvořil Coconut? 
 
-[Evan Hubinger](https://github.com/evhub) is an undergraduate student studying mathematics and computer science at [Harvey Mudd College](https://www.hmc.edu/). You can find his resume online at <http://evhub.github.io/resume.pdf>.
+[Evan Hubinger](https://github.com/evhub) is an undergraduate student studying mathematics and computer science at [Harvey Mudd College](https://www.hmc.edu/).  He can be reached by asking a question on [Coconut's Gitter chat room](https://gitter.im/evhub/coconut), through email at <evanjhub@gmail.com>, or on [LinkedIn](https://www.linkedin.com/in/ehubinger).

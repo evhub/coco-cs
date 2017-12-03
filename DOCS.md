@@ -84,7 +84,7 @@
 
 ## Úvod
 
-Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlena spíš jako referenční příručka než edukativní úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/cs/latest/HELP.html)
+Tato dokumentace pokrývá všechny technické detaily programovacího jazyka [Coconut ](http://evhub.github.io/coconut/) a je zamýšlena spíš jako referenční příručka než podrobný úvod. Úplný úvod a tutoriál pro Coconut - viz [Tutoriál](http://coconut.readthedocs.io/cs/latest/HELP.html)
 
 Coconut je varianta jazyka [Python](https://www.python.org/), vytvořená pro **jednoduché, elegantní a funkcionální programování v Pythonu**. Skladba Coconut je podmnožna skladby Pythonu 3. To znamená, že uživatel, obeznámený s Pythonem, bude již obeznámený s většinou obsahu Coconut.
 
@@ -94,28 +94,75 @@ Zatímco většina kódu v Coconut vychází ze snahy umožnit a zjednodušit fu
 
 ## Kompilace
  
-### Instalace 
+### Instalace
+
+#### Použití Pip 
 
 Protože je Coconut hostován v [Python Package Index](https://pypi.python.org/pypi/coconut), lze jej snadno instalovat s použitím `pip`. Jednoduše nainstalujte [Python](https://www.python.org/downloads/), otevřte příkazový řádek (cmd) a zadejte
 ```
 pip install coconut
 ```
-což nainstaluje Coconut a jeho požadované závislosti. Coconut sám má několik závislostí (dependencies), které lze instalovat zápisem 
+což nainstaluje Coconut a jeho požadované závislosti. 
+
+_Note: Máte-li nainstalovanou starou verzi Coconut a chcete ji aktualizovat, zadejte `pip install --upgrade coconut`._
+
+Když při spuštění `pip install coconut` narazíte na chybu, spusťte příkaz znovu s volbou `--user`. Když `pip install coconut` chodí ale nemáte přístup k příkazu `coconut`, ujistěte se, že umístění vaší instalace Coconut je uvedeno v proměnné prostředí `PATH`. V UNIXu to je `/usr/local/bin` (bez `--user`) nebo `${HOME}/.local/bin/` (s `--user`).
+ 
+#### Použití Conda
+
+Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.ioo/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Pouze [install `conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
 ```
-pip install coconut[all]
+conda config --add channels conda-forge
+conda install coconut
 ```
-což umožní používání flagů `--jobs`, `--watch` a `--jupyter`. Pro instalaci pouze vybraného flagu, napište místo `all` název příslušného flagu.
+což řádně vytvoří a sestaví `conda recipe` z [`conda-forge` feedstock] (https://github.com/conda-forge/coconut-feedstock).
+
+_Note: Pro použití `conda` k instalaci alternativního `coconut-develop`,   
+ nahraďte slovo `coconut` souslovím `coconut-develop` v posledních třech příkazech nahoře._
+
+#### Volitelné závislosti
+
+Coconut má také volitelné dependence, instalovatelné zadáním
+```
+pip install coconut [název volitelné závislosti]
+```
+nebo pro instalaci více dependencí,
+```
+pip install coconut [opt_dep_1, opt_dep_2]
+```
+Úplný seznam volitelných depencencí:
+
+- `all`: alias pro `jupyter, watch, jobs, mypy` (doporučný způsob  
+   instalace úplné verze Coconut) 
+- `jupyter/ipython`: umožňuje použití flagu `--jupyter` / `--ipython`
+- `watch`: umožňuje flag `--watch`
+- `jobs`: umožňuje flag `--jobs`
+- `mypy`: umožňuje flag `mypy`
+- `cPyparsing`: výrazně urychluje kompilaci (pokud to vaše platforma     
+   podporuje) použitím [`cPyparsing`](https://github.com/evhub/ 
+   cpyparsing)                
+- `tests`: všechno nezbytné pro používání sestovací soupravy Coconutu
+- `docs`: všechno nezbytné pro vytváření dokumentace Coconutu
+- `dev`: všechno nezbytné pro vyvíjení Coconutu, včetně všech výše
+   uvedených dependencí
+
+#### Vývojářská verze
 
 Případně, chcete-li si vyzkoušet poslední a nejlepší Coconut, zapište
 ```
 pip install coconut-develop
 ```
-což nainstaluje nejposlednější chodící [development build](https://github.com/evhub/coconut/tree/develop) (volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše). Více informací o aktuální vývojové sestavě najdete na [development version of this documentation](http://coconut.readthedocs.org/en/develop/DOCS.html). Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji [vytvořením nového issue](https://github.com/evhub/coconut/issues/new).
+což nainstaluje nejposlednější chodící verzi Coconutu z [`develop` branch](https://github.com/evhub/coconut/tree/develop). Volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše. Více informací o aktuální vývojové sestavě najdete na [development version of this documentation](http://coconut.readthedocs.io/en/develop/DOCS.html). Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji [vytvořením nového issue](https://github.com/evhub/coconut/issues/new).
 
 ### Použití 
 
 ```
-coconut [-h] [-v] [source] [dest] [-t version] [-s] [-l] [-k] [-p] [-a] [-w] [-d] [-r] [-n] [-m] [-i] [-q] [-f] [-c code] [-j processes] [--jupyter ...] [--tutorial] [--documentation] [--style name] [--recursion-limit limit] [--verbose]
+coconut [-h] [-v] [-t version] [-i] [-l] [-k] [-p] [-a] [-w] [-r] [-n]
+        [-d] [-q] [-s] [-f] [-c code] [-j processes] [--no-tco]
+        [--minify] [--jupyter ...] [--mypy ...] [--argv ...] 
+        [--tutorial] [--documentation] [--style name] 
+        [--recursion-limit limit] [--verbose] [--trace]
+        [source] [dest]
 ```
 
 #### Poziční argumenty 
@@ -130,33 +177,73 @@ dest            cílová složka pro compilované soubory (implicitně jí je zd
 ```
 -h, --help              show this help message and exit
 -v, --version           print Coconut and Python version information
--t, --target            specify target Python version (defaults to universal)
--s, --strict            enforce code cleanliness standards
+-t version, --target version
+                        specify target Python version (defaults to
+                        universal)
+-i, --interact			force the interpreter to start (otherwise starts if no
+                        other command is given) (implies --run)
+-p, --package           compile source as part of a package (defaults to only
+                        if source is a directory)
+-a, --standalone        compile source as standalone files (defaults to only
+                        if source is a single file)
 -l, --line-numbers      add line number comments for ease of debugging
 -k, --keep-lines        include source code in comments for ease of debugging
--p, --package           compile source as part of a package (defaults to only if source is a directory)
--a, --standalone        compile source as standalone files (defaults to only if source is a single file)
--w, --watch           watch a directory and recompile on changes (requires watchdog)
--d, --display           print compiled Python
+-w, --watch             watch a directory and recompile on changes 
 -r, --run               run compiled Python (often used with --nowrite)
--n, --nowrite           disable writing compiled Python
--m, --minify            compress compiled Python
--i, --interact          force the interpreter to start (otherwise starts if no other command is given)
--q, --quiet             suppress all informational output (combine with --display to write runnable code to stdout)
--f, --force             force overwriting of compiled Python (otherwise only overwrites when source code or compilation parameters change)
--c, --code code         run a line of Coconut passed in as a string (can also be passed into stdin)
--j, --jobs processes    number of additional processes to use (defaults to 0) (pass 'sys' to use machine default)
---jupyter, --ipython    run Jupyter/IPython with Coconut as the kernel (remaining args passed to Jupyter)
+-n, --no-write          disable writing compiled Python
+-d, --display           print compiled Python
+-q, --quiet             suppress all informational output (combine with 
+                        --display to write runnable code to stdout)
+-s, --strict            enforce code cleanliness standards
+--no-tco, --notco       disable tail call optimization                       
+-c code, --code code    run Coconut passed in as a string (can also be piped
+                        into stdin)
+-j, --jobs processes    number of additional processes to use (defaults to 
+                        0) (pass 'sys' to use machine default)
+-f, --force             force overwriting of compiled Python (otherwise only
+                        overwrites when source code or compilation
+                        parameters change)
+--minify                compress compiled Python						
+--jupyter, --ipython    run Jupyter/IPython with Coconut as the kernel (
+                        remaining args passed to Jupyter)
+--mypy ...              run MyPy on compiled Python (remaining args passe to
+                        MyPy) (implies --package--no-tco)
+--argv ...              set sys.argv to source plus remaining args for use
+                        in Coconut script being run						
 --tutorial              open the Coconut tutorial in the default web browser
---documentation         open the Coconut documentation in the default web browser
---style name            pygments syntax highlighting style (or 'none' to disable)
---recursion-limit       set maximum recursion depth in compiler (defaults to 2000)
+
+--style name            Pygments syntax highlighting style (or 'none' to
+                        disable) (defaults to COCONUT_STYLE environment
+                        variable, if it exists, otherwise 'default')
+--recursion-limit limit
+                        set maximum recursion depth in compiler (defaults to
+                        2000)
 --verbose               print verbose debug output
+--trace                 print verbose parsing data (only available in
+                        coconut-develop)
 ```
+
+### Skripty Coconutu
+```
+Ke spuštění souboru Coconut jako skriptu poskytuje Coconut příkaz
+```
+coconut-run <source> <args>
+```
+jako alias pro
+```
+coconut --run --quiet --target sys <source> --argv <args>
+```
+který se potichu zkompiluje a spustí `<source>`, předávajíc skriptu jakýkoliv dodatečný argument, napodobujíc tak práci příkazu pythonu.
+
+`coconut-run` může být použit v řádku s shebangem Unixu pro vytvoření skriptu Coconut přidáním následujícího řádku na začátek skriptu:
+```bash
+#!/usr/bin/env coconut-run
+```
+
 
 ### Názvy zdrojových souborů 
 
-Zdrojové soubory používají extenze `.coco` (upřednostněno), `.coc` nebo `.coconut`. Soubor `.coco` (či `.coc` / `.coconut`) je kompilován do souboru s příponou `.py`. Je-li požadována jiná extenze než `.py`, například `.pyde` pro [Python Processing](http://py.processing.org/), může být vložena před `.coco` a tato složená extenze bude použita místo `.py`. Například, `name.coco` bude kompilovat na `name.py`, zatímco `name.pyde.coco` bude kompilovat na `name.pyde`.
+Zdrojové soubory používají extenze `.coco` (upřednostněno), `.coc` nebo `.coconut`. Soubor `.coco` (či `.coc`/`.coconut`) je kompilován do souboru s příponou `.py`. Je-li požadována jiná extenze než `.py`, například `.pyde` pro [Python Processing](http://py.processing.org/), může být vložena před `.coco` a tato složená extenze bude použita místo `.py`. Například, `name.coco` bude kompilovat na `name.py`, zatímco `name.pyde.coco` bude kompilovat na `name.pyde`.
 
 ### Kompilační režimy 
 
@@ -167,96 +254,162 @@ Je-li `zdrojovým` argumentem pro CLI konzolu soubor, provede se implicitně sam
 
 Protože je skladba Coconut založena na Python3, měl by kód Coconut, kompilovaný kompilátorem Coconut v univerzálním režimu (implicitní  `--target`) běžet v libovolné verzi Pythonu `>= 2.6` nebo `>= 3.2`.
 
-_Poznámka: Vyzkoušené implementace jsou [CPython](https://www.python.org/) `2.6, 2.7, 3.2, 3.3, 3.4, 3.5` a [PyPy](http://pypy.org/) `2.7, 3.2`._
+_Poznámka: Vyzkoušené implementace jsou [CPython](https://www.python.org/) `2.6, 2.7, 3.2, 3.3, 3.4, 3.5, 3.6` a [PyPy](http://pypy.org/) `2.7, 3.2`._
 
-V rámci snahy o vzájemnou kompabilitu (cross-compatibility), přidává Coconut nové  Python 3 built-ins přepisuje Python 2 built-ins na Python 3 verze tam, kde je to možné. Navíc Coconut přepisuje některé Python 3 built-ins z optimalizačních důvodů. Je-li požadován přístup k verzím Pythonu, lze staré built-ins vydolovat s použitím předložky `py_`. Dostupné Python built-ins available jsou:
-- `py_chr`
-- `py_filter`
-- `py_hex`
-- `py_input`
-- `py_raw_input`
-- `py_int`
-- `py_oct`
-- `py_open`
-- `py_print`
-- `py_range`
-- `py_xrange`
-- `py_str`
-- `py_map`
-- `py_zip`
+Aby byly nativní objekty (built-ins) Coconut univerzálně přístupné pro různé verze Pythonu, přepisuje **Coconut automaticky built-iny Pythonu 2 na příslušné protějšky Pythonu3**. Navíc, Coconut také přepisuje některé built-iny Pythonu3 z optimalizačních důvodů. Je-li žádán přístup k původním verzím přepsaných built-inů, lze je získat s použitím prefixu `py_`.
+
+Pro kompatibilitu se standardní knihovnou **mapuje Coconut automaticky importy pod názvy Python3 s importy pod názvy Python2**. Takto se Coconut automaticky postará o všechny moduly standardní knihovny, které byly přejmenovány z Python2 na Python3, pokud je použit pouze Python3. Ovšem, pro moduly nebo objekty, které existují pouze v Python3, neumí Coconut kompatibilitu zajistit.
 
 Konečně, zatímco se Coconut pokusí kompilovat skladbu Python3 na jeho univerzální ekvivalent, následující konstrukty nemají žádný ekvivalent v Python2 a vyžadují specifikaci alespoň `3` před svým použitím:
 - destructuring assignment with `*`s (use Coconut pattern-matching instead),
-- function type annotation,
 - the `nonlocal` keyword,
 - `exec` used in a context where it must be a function,
 - keyword class definition,
 - tuples and lists with `*` unpacking or dicts with `**` unpacking (requires `--target 3.5`),
 - `@` as matrix multiplication (requires `--target 3.5`),
 - `async` and `await` statements (requires `--target 3.5`), and
-- formatting `f` strings (requires `--target 3.6`).
+- formatting `f` strings  by prefixing them with `f`(requires `--target 3.6`).
 
 ### Přípustné cíle 
 
-Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, měl by být cíl určen flagem `--target`. Daný cíl (target) ovlivní pouze kompilovaný kód a zda je určitá syntaxe Pythonu3 (viz níže) povolena. Tam, kde se standardy skladeb pro Python3 a Python2 liší, bude skladba Coconut vždy používat skladbu Python3 pro všechny cíle. Podporované cíle jsou:
+Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, měl by být cíl určen flagem `--target`. Daný cíl (target) ovlivní pouze kompilovaný kód a zda je určitá syntaxe Pythonu3 (viz výše) povolena. Tam, kde se standardy skladeb pro Python3 a Python2 liší, bude skladba Coconut vždy používat skladbu Python3 pro všechny cíle. Podporované cíle jsou:
 
 - universal (default) (will work on _any_ of the below),
-- `2`, `26` (will work on any Python `>= 2.6` but `< 3`),
-- `27` (will work on any Python `>= 2.7` but `< 3`),
+- `2`, `2.6` (will work on any Python `>= 2.6` but `< 3`),
+- `2.7` (will work on any Python `>= 2.7` but `< 3`),
 - `3`, `32` (will work on any Python `>= 3.2`),
-- `33`, `34` (will work on any Python `>= 3.3`),
-- `35` (will work on any Python `>= 3.5`),
-- `36` (will work on any Python `>= 3.6`),
+- `3.3`, `34` (will work on any Python `>= 3.3`),
+- `3.5` (will work on any Python `>= 3.5`),
+- `3.6` (will work on any Python `>= 3.6`),
 - `sys` (chooses the specific target corresponding to the current version).
 
-_Poznámka: Čárky jsou ve specifikacích cíle ignorovány, takže cíl `2.7` je ekvivalentní cíli `27`._
+_Poznámka: Tečky jsou ve specifikacích cíle ignorovány, takže cíl `2.7` je ekvivalentní cíli `27`._
 
 ### Režim `strict`  
 
 Je-li povolen flag `--strict` (or `-s`), ohlásí Coconut chyby pro různé problémy stylu. Jsou jimi
 - mixing of tabs and spaces (without `--strict` will show a Warning),
-- missing new line at end of file (without `--strict` will show a Warning),
 - use of `from __future__` imports (without `--strict` will show a Warning)
+- missing new line at end of file ),
 - trailing whitespace at end of lines,
 - semicolons at end of lines,
 - use of the Python-style `lambda` statement,
-- use of `u` to denote Unicode strings, and
-- use of backslash continuations (use [parenthetical continuation](#pokracovani-v-zavorkach) instead).
+- inheriting from `object` in classes (Coconut does this automatically)
+- use of `u` to denote Unicode strings (all Coconut strings aru Unicode
+  strings)
+- use of backslash continuations (use [parenthetical continuation](#
+  pokracovani-v-zavorkach) instead).
 
-Doporučuje se při práci na novém projektu používat flag `--strict` (nebo `-s`) protože vám bude nápomocen při psaní čistšího kódu.
+Navíc, `--strict` zneplatňuje (disables) zavrhnuté vlastnosti, činíce je zcela nedostupnými při kompilaci s flagem `--strict`. Doporučuje se při práci na novém projektu používat flag `--strict` (nebo `-s`) protože vám bude nápomocen při psaní čistšího kódu.
+
+## Integrace
+
+### Zvýraznění syntaxe
+
+Textové editory, které podporují zvýraznění syntaxe Coconut, jsou tyto:
+
+- **SublimeText**: Viz sekci SublimeText níže.
+- **Vim**: Viz [`coconut.vim`](https://github.com/manicmaniac/coconut.vim).
+- **Emacs**: Viz [`coconut-mode`](https://github.com/NickSeagull/coconut-mode).
+- **Atom**: Viz [`language-coconut`](https://github.com/enilsen16/language-coconut).
+- Každý editor, který podporuje Pygments (např. **Spyder**): Viz sekci Pygments níže.
+
+Případně, pokud žádný z výše uvedený editorů vám nevyhovuje, můžete v Coconut pracovat jako v Pythonu. Jednoduše nastavte svůj editor tak, aby interpretoval všechny souboury `.coco` jako soubory Pythonu, čímž by mělo být zvýraznění vašeho kódu vyhovující.
+
+#### SublimeText
+
+Zvýraznění syntaxe Coconutu v editoru SublimeText vyžaduje, aby byl instalován standardní manažer [Package Control](https://packagecontrol.io/installation). Je-li tak učiněno, potom:
+
+1. otevřte příkazovou paletu SublimeTextu stiskem `Ctrl+Shift+P` (nebo `Cmd+Shift+P` v Mac)
+2. zadejte `Package Controll: Install Package`
+3. zadejte `Coconut`.
+
+Abyste se ujistili, že je všechno OK, otevřte soubor `.coco` a ujistěte se, že se v pravém spodním rohu objeví `Coconut`. Objeví-li se něco jiného, třeba `Plain Text`, klikněte na to, vyberte `Open all with current extension as...` na vrchu výsledného menu a vyberte `Coconut`.
+
+_Note: Zvýraznění syntaxe Coconutu je poskytnuto paketem [sublime-coconut](https://github.com/evhub/sublime-coconut)._
+
+#### Pygments
+
+Tentýž příkaz `pip install coconut`, který instaluje utilitu příkazového řádku Coconutu, instaluje také lexer `coconut` Pygments. Způsob použití závisí na použité `Pygments-enabled` aplikaci ale normálně zadejte `coconut` jako zvýrazňovaný jazyk a/nebo použijte platnou extenzi souboru Coconut (`.coco`, `.coc` nebo `.coconut`) a Pygment by se měl umět zorientovat.
+
+Na příklad, tato dokumentace je generována [Sphinx](http://www.sphinx-doc.org/en/stable/) se zvýrazněním syntaxe vytvořené přidáním řádku
+```coconut_python
+highlight_language = "coconut"
+```
+do souboru `conf.py` v distribuci Coconut.
 
 ### Podpora pro IPython Jupyter 
 
-Dáváte-li přednost prostředí [IPython](http://ipython.org/) (jádro Pythonu pro framework [Jupyter](http://jupyter.org/) framework) před normální konzolou Pythonu, lze použít Coconut jako extenzi IPythonu nebo jádro Jupyteru.
-
-#### Extenze 
-
-Je-li Coconut použit jako extenze, bude speciální "magic command" posílat útržky kódu k vyhodnocení s použitím Coconut místo IPythonu ale IPython bude stále použit jako implicitní aplikace. Řádkový magic `%load_ext coconut` načte Coconut jako extenzi, připojujíc magics `%coconut` a `%%coconut`. Řádkový magic `%coconut` spustí řádek Coconut s implicitními parametry a blokový magic `%%coconut` přijme CL (command line) argumenty z prvního řádku a vyhodnotí kód Coconut pro dané parametry ve zbytku buňky.
-
+Dáváte-li přednost prostředí [IPython](http://ipython.org/) (jádro Pythonu pro framework [Jupyter](http://jupyter.org/) ) před normální konzolou Pythonu, lze použít Coconut jako extenzi IPythonu nebo jádro Jupyteru.
 
 #### Jádro 
 
-Je-li Coconut použit jako jádro (kernel), bude veškerý kód v konzoli nebo notebooku poslán k vyhodnocení do Coconut místo do Pythonu. Příkaz `coconut --jupyter notebook` (nebo `coconut --ipython notebook`) spustí notebook IPython/ Jupyter s použitím Coconut jako jádra a příkaz `coconut --jupyter console` (nebo `coconut --ipython console`) spustí konzoli IPython/ Jupyter s použitím Coconut jako jádra. Navíc, příkaz `coconut --jupyter` (nebo `coconut --ipython`) přidá Coconut jako jazykovou volbu uvnitř všech notebooků IPython/ Jupyter - i těch, které nejsou spouštěny aplikací Coconut. Tento příkaz musí být opakovaně proveden při instalaci nové verze Coconut.
+Je-li Coconut použit jako jádro (kernel), bude veškerý kód v konzoli nebo notebooku poslán k vyhodnocení do Coconut místo do Pythonu. Jinak se jádro Coconut chová stejně jako jádro iPythonu, včetně podpory pro příkazy `%magic`. 
+
+Příkaz `coconut --jupyter notebook` (nebo `coconut --ipython notebook`) spustí notebook IPython/ Jupyter s použitím Coconut jako jádra a příkaz `coconut --jupyter console` (nebo `coconut --ipython console`) spustí konzoli IPython/ Jupyter s použitím Coconut jako jádra. Navíc, příkaz `coconut --jupyter` (nebo `coconut --ipython`) přidá Coconut jako jazykovou volbu uvnitř všech notebooků IPython/ Jupyter - i těch, které nejsou spouštěny aplikací Coconut. Tento příkaz musí být opakovaně proveden při instalaci nové verze Coconut.
+
+#### Extenze 
+
+Je-li Coconut použit jako extenze, bude speciální "magic command" posílat útržky kódu k vyhodnocení s použitím Coconut místo IPythonu ale IPython bude stále použit jako implicitní aplikace.
+
+Řádkový magic `%load_ext coconut` načte Coconut jako extenzi, připojujíc magics `%coconut` a `%%coconut`. Řádkový magic `%coconut` spustí řádek Coconut s implicitními parametry a blokový magic `%%coconut` přijme CL (command line) argumenty z prvního řádku a vyhodnotí kód Coconut pro dané parametry ve zbytku buňky.
+
 
 ### Integrace s MyPy
 
-Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných nástrojů Coconut.
+Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných nástrojů Coconut. Jednoduše zadejte `--mypy` abyste umožnili integraci s MyPy, ale dejte si pozor abyste to zadali jako poslední argument, protože všechny argumenty po `--mypy` jsou poslány do `mypy`, nikoliv do Coconut.
 
-Jednoduše zadejte `--mypy` (jako poslední argument), použijte [standardní skladbu anotace Python3](https://www.python.org/dev/peps/pep-0484/) a Coconut se o zbytek sám postará. Coconut implicitně kompiluje anotace typu na kompatibilní  `mypy --py2` komentáře typu. Chcete-li zachovat anotace typů z Python3, jednoduše zadejte `--target 3`.
+_Note: Protože [optimalizace koncového volání](#tail-call-optimization) vylučuje řádnou typovou kontrolu, `--mypy` ji implicitně vypíná.
 
-Kromě anotace typu argumentu funkce podoporuje Coconut také anotace proměnných typů s použitím [nové syntaxe z Python 3.6](https://www.python.org/dev/peps/pep-0526/), jež kompiluje na kompatibilní komentáře `mypy --py2`, pokud není zadáno `--target 3.6`.
+Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#enhanced-type-annotations) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
+
+Coconut dokonce podporuje `--mypy` v interpretu, který inteligentně skenuje každý nový řádek kódu, číhaje na nově zavedené chyby MyPy. Na příklad:
 
 Coconut dokonce podporuje `--mypy` v překladači, jenž skenuje inteligentně každý nový řádek kódu v kontextu s předchozím řádkem zda neobjeví nově zavedené chyby MyPy. Na příklad:
 ```coconut
->>> a = count()[0]  # type: str
+>>> a: str = count()[0]
 <string>:14: error: Incompatible types in assignment (expression has type "int", variable has type "str")
 ```
 
+:Note: Někdy si MyPy nebude vědět rady s jistými konstrukty Coconut, např. s `adaptern`. V tom případě jednoduše zadejte `# type: ignore` na řádek Coconut, na jehož kompilaci si MyPy stěžuje (o který řádek se jedná, zjistíte použitím flagu `--line-numbers`).
+
 ## Operátory 
+
+Toto jsou operátory Coconut, uvedené v pořadí podle precedencí (nejvyšší nahoře):
+```
+===================== ==========================
+Symbol                 Asociativita
+===================== ==========================
+..                    n/a wont´t capture call
+**                    right
++, -, ~               unary
+*, /, //, %, @        left
++, -                  left
+<<, >>                left
+&                     left
+^                     left
+|                     left
+::                    n/a lazy
+a `b` c               left captures lambda
+??                    left short-circuit
+..>, <.., ..*>, <*..  n/a captures lambda
+|>, <|, |*>, <*|      left captures lambda
+==, !=, <, >,
+    <=, >=,
+	in, not in,
+	is, is not        n/a
+not                   unary
+and                   left short-circuit
+or                    left short-circuit
+a if b else c         ternary left short-circuit
+->	                  right
+===================== ==========================
+```
+
 
 ### Lambda 
 
-Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příkazu `lambda` v Pythonu. Skladba s operátorem `->` je `(arguments) -> expression`. Operátor má stejné pořadí důležitosti jako starý příkaz, což znamená, že bude často nezbytné uzavřít lambdu do závorek.
+Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příkazu `lambda` v Pythonu. Skladba s operátorem `->` je `(parameters) -> expression` (nebo `parameter -> expression` pro lambdy s jedním argumentem). Operátor má stejné pořadí důležitosti jako starý příkaz, což znamená, že bude často nezbytné uzavřít lambdu do závorek a je asociativní vpravo.
 
 Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty nebo když je vyžadován jen jeden argument (vyjádřený znakem `_`).
 
@@ -277,13 +430,13 @@ Všimněte si, že funkce vytvořené formou lambda nemohou obsahovat příkazy 
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 dubsums = map((x, y) -> 2*(x+y), range(0, 10), range(10, 20))
 dubsums |> list |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 dubsums = map(lambda x, y: 2*(x+y), range(0, 10), range(10, 20))
 print(list(dubsums))
@@ -292,6 +445,8 @@ print(list(dubsums))
 ### Částečná aplikace 
 
 K označení částečné aplikace používá Coconut znak `$` mezi názvem funkce a závorkou před argumenty. It has the same precedence as subscription.
+
+Částečná aplikace Coconutu také podporuje použití `?` a by se přeskočilo částečné použití argumentu, odkládajíc použití tohoto argumentu až na volání částečtě aplikované  funkce. Toto je důležité, chcete-li částečně aplikovat argumenty, které nejsou první v pořadí argumentů.
 
 ##### Zdůvodnění
 
@@ -315,59 +470,84 @@ Objekt `partial` je použit pro částečnou (partial) aplikaci funkce, která �
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
-expnums = map(pow$(2), range(5))
+expnums = range(5) |> map$(pow$(?, 2))
 expnums |> list |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
-import functools
-expnums = map(functools.partial(pow, 2), range(5))
+# unlike this simple lambda, $ produces a pickleable object
+expnums = map(lambda x: pow(x, 2), range(5))
 print(list(expnums))
 ```
 
-### Vedení pipeline 
+### Spojovník (pipeline) 
 
-Coconut používá vodící (pipe) operátory pro usměrnění průběhu aplikace funkcí. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
+Coconut používá spojovníky (|) pro usměrnění průběhu aplikace funkcí. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
 ```coconut
 (|>)    => pipe forward
 (|*>)   => multiple-argument pipe forward
 (<|)    => pipe backward
 (<*|)   => multiple-argument pipe backward
 ```
+Navíc, všechny spojovníkové operátory podporují lambdu jako poslední argument, přesto že má lambda nižší precedenci. Takže, `a |> x -> b |> c` je ekvivalentní s `a |> (x -> b |> c)`, nikoliv s `a |> (x -> b) |> c`.
+
+_Note: Pro vizuální rozložení operací přes několik řádek použijte [parenthetical continuation](#enhanced-parenthetical-continuation)._
+
+##### Optimalizace
+
+V Coconut je obvyklé psát kód, který používá spojovníky pro zadávaní objektu řadou [partials](#partial-application) a/nebo [implicit partials](#immplicit-partial-application), jako v
+```coconut
+obj |> .attribute |> .method(args) |> func$(args) |> .[index]
+```
+což je často mnohem čitelnější, protože to umožňuje aby byly operace psány v pořadí, v němž jsou vykonávány, místo jako v
+```
+func(args, obj.attribute.method(args))[index]
+```
+kde musí `func` přijít jako první.
+
+Kdyby Coconut kompiloval každou část ve spojovníkové syntaxi jako skutečný objekt částečné aplikace, stala by se skladba ve stylu Coconut do té míry pomalejší než skladba ve stylu Python, že by byla téměř nepoužitelná. Coconut tento problém obchází tím, že `partials` i `implicit partials` jsou kompilovány na skladbu ve stylu Python, nevytvářejíc tak žádné mezilehlé objekty.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def sq(x) = x**2
 (1, 2) |*> (+) |> sq |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import operator
 def sq(x): return x**2
 print(sq(operator.add(1, 2)))
 ```
 
-### Skladba 
+### Skladba funkcí 
 
-Coconut používá operátor `..` pro skládání funkcí. It has a precedence in-between subscription and exponentiation. The in-place operator is `..=`.
+Coconut má tři základní operátory pro skladbu funkcí: `..`, `..>` a `<..`. Jak `..`, tak  `<..` používají "zpětnou" skladbu funkcí, kdy je první funkce volána jako poslední, zatímco `..>` používá "dopřednou"  skladbu funkcí, kde je první funkce volaná jako první.
 
-##### Example
+Spojovníkové operátory `..>` a `<..` mají také formu `..*>` a `<*..`, která je ekvivalentní k operátorům `|*>` a `<*|`. Zpětné a dopředné spojovníkové operátory nemohou být použitý společně v jednom výrazu (na rozdíl od normálních spojovníků) a jeich precedence je mezi spojovníkem `None` a normálním spojovníkem.
 
-###### Coconut
+Operátor `..` má nižší precedenci než přístup k atributu (`.`), slicing (`[]`), atd, kromě volání funkce, vůči níž má precedenci vyšší. Takže je `a.b..c.d` ekvivalentní k `(a.b)..(c.d)`, zatímco `f..g(x)` je ekvivalentní k `(f.g)(x)`.
+
+'In-place' operátory pro skladbu funkcí jsou `..=`, `..>=`, `<..=`, `..*>=` a `<*..=`.
+
+##### Příklad
+
+**Coconut**
 ```coconut
 fog = f..g
+f_into_g = f ..> g
 ```
 
-###### Python
+**Python**
 ```coconut_python
-# unlike this simple lambda, .. produces a pickleable object
+# unlike this simple lambda, Coconut produces a pickleable object
 fog = lambda *args, **kwargs: f(g(*args, **kwargs))
+f_into_g = lambda *args, **kwargs: g(f(*args, **kwargs))
 ```
 
 ### Řetězení 
@@ -380,7 +560,7 @@ Důležitým nástrojem pro práci s iterátory stejně snadno jako při práci 
 
 ##### Python Docs
 
-Vytvořte iterátor, který vyčerpá prvky z prvního a poté z druhého iteráblu (iterovatelného objektu). Používá se pro ošetření následných sekvencí jako jediné sekvence. Zřetězené vstupy jsou vyhodnocovány líně. Zhruba ekvivalentní k:
+Vytvořte iterátor, který vrací prvky z prvního iteráblu (iterovatelného objektu) dokud je nevyčerpá, potom přejde do dalšího iteráblu až projde všemi iterábly. Používá se pro ošetření následných sekvencí jako jediné sekvence. Zřetězené vstupy jsou vyhodnocovány líně. Zhruba ekvivalentní k:
 ```coconut_python
 def chain(*iterables):
     # chain('ABC', 'DEF') --> A B C D E F
@@ -391,36 +571,57 @@ def chain(*iterables):
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def N(n=0) = (n,) :: N(n+1) # no infinite loop because :: is lazy
 
 (range(-10, 0) :: N())$[5:15] |> list |> print
 ```
 
-###### Python
+**Python:**
 
 _Nelze provést bez komplikované komprehence iterátoru namísto líného řetězení. Viz kompilovaný kód pro skladbu Pythonu._
 
-### Krájení iterátoru 
+### Krájení iterátoru (slicing) 
 
-K provedení iterátorového členění používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. It has the same precedence as subscription.
+K provedení iterátorového členění používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. 
 
-Iterátorové členění pracuje stejně jako sekvenční členění, včetně podpory negativních indexů a úseků (slices) a podpory pro objekty `úseků` stejně jako u normálního členění. Iterátorové členění však nezaručuje, že bude zachován původní iterátor (pro jeho zachování použijte [funkci`tee`](#tee)).
+Iterátorové členění pracuje stejně jako sekvenční členění, včetně podpory negativních indexů a úseků (slices) a podpory pro objekty `úseků` stejně jako u normálního členění. Iterátorové členění však nezaručuje, že bude zachován původní iterátor (pro jeho zachování použijte [funkci`tee`](#tee) nebo [`reiterable`](#reiterable)).
 
 Iterátorové členění v Coconut je velmi podobné `itertools.islice` v Pythonu, avšak na rozdíl od `itertools.islice`, podporuje iterátorové členění negativní index a přednostně použije  `__getitem__` objektu, pokud existuje. Iterátorové členění je také optimalizované pro práci s objekty `map`, `zip`, `range` a `count`, počítaje pouze ty prvky, které jsou nezbytné pro vynětí žádaného úseku.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 map((x)->x*2, range(10**100))$[-1] |> print
 ```
 
-###### Python
+**Python**
 _Nelze provést bez komplikované funkce pro iterátorové členění a inspekce uživatelských objektů. Nezbytné definice v Pythonu lze nalézt v záhlaví Coconut._
 
-### Alternativy Unicode <a id="unicode-alternatives"></a>
+### None Coalescing
+
+Coconut poskytuje označení `??` pro `None-coalescing` operátor, podobný `null-coalescing` operátoru `??` v C#. Operátor  `None-coalescing` vyhodnocuje svůj levý operand, nemá-li hodnotu `None`, v opačném případě svůj pravý operand. Tento operátor také vyjadřuje zkratku, spočívající v tom, že když jeho levý operand není `None`, nevyhodnocuje pravý operand. `None-coalescing` má precedenci mezi voláním infixové funkce a spojovníkem a je asociativní vlevo. Operátor `in-place` má označení `??=`.
+
+Coconut také umožňuje použití jediného znaku `?` před přístupem k atributu, při volání funkce, částečné aplikaci a při (iterátorovém) indexování pro (zkratkovité) upuštění od vyhodnocení zbytku, pokud dosavadní vyhodnocení má hodnotu `None`. Tudíž, `a?.b` je ekvivalentní k `a.b if a is not None else a`.
+
+##### Příklad
+
+**Coconut:**
+```coconut
+could_be_none() ?? calculate_default_value()
+could_be_none()?.attr[index].method()
+```
+
+**Python**
+```coconut_python
+(lambda result: result if result is not None else
+ calculate_default_value())(could_be_none())
+(lambda result: None if result is None else
+ result.attr[index].method())(could_be_none())
+
+### Alternativy Unicode
 
 Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternativy jsou poměrně nápovědné, se záměrem reflektovat vzhled nebo účel originálního symbolu. 
 
@@ -437,8 +638,12 @@ Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternati
 ÷ (\xf7)                    => "/"
 ÷/ (\xf7/)                  => "//"
 ∘ (\u2218)                  => ".."
+∘> (\u2218>)                => "..>"
+<∘ (<\u2218)                => "<.."
+∘*> (\u2218*>)              => "..*>"
+<*∘ (<*\u2218)              => "<*.."
 − (\u2212)                  => "-" (only subtraction)
-⁻ (\u207b)                  => "-" (only negation)
+- (\u207b)                  => "-" (only negation)
 ¬ (\xac)                    => "~"
 ≠ (\u2260) or ¬= (\xac=)    => "!="
 ≤ (\u2264)                  => "<="
@@ -454,22 +659,29 @@ Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternati
 
 ## Klíčová slova 
 
-### `data` 
+### `data`
+
+Klíčové slovo `data` se používá k vytvoření neměnitelných algebraických datových typů s nativní podporou pro rozkladný (destructuring) [pattern-matching](#match) a [`fmap`](#fmap). 
 
 Syntaxe datového bloku `data` je něco mezi syntaxí pro funkce a syntaxí pro třídy. První řádek vypadá jako definice funkce, zatímco zbytek těla připomíná třídu, obvykle obsahující definice metod. Je to tak proto, že zatímco blok `data` vlastně v Pythonu končí jako třída, Coconut automatický vytváří specielní, neměnitelný konstruktor, založený na daných argumentech.
 
-Bloky typu `data` vytvářejí v Coconut neměnitelné třídy pomocí parametru `__slots__` a odvozené z `collections.namedtuple`. Skladba deklarace datového bloku vypadá takto:
+Deklarace datového typu vypadá takto:
 ```coconut
-data <name>(<args>):
+data <name>(<args>) [from <inherits>]:
     <body>
 ```
-`<name>` je název nového datového typu, `<args>` jsou argumenty jeho konstruktoru stejně jako názvy jeho atributů a `<body>` obsahuje metody datového typu.
 
-Subtřídy datových typů lze snadno vytvořit děděním do normální `třídy` Pythonu. Aby se stala nová subtřída neměnitelná, je nutné do ní vložit řádek
+`<name>` je název nového datového typu, `<args>` jsou argumenty jeho konstruktoru stejně jako názvy jeho atributů, `<body>` obsahuje metody datového typu a <inherits> nepovinně obsahuje libovolnou bázovou třídu.
+
+Coconut připouští aby datová pole v `<args>` měla přiřazené implicitní hodnoty a [anotace typu](#enhanced-type-annotations) a podporuje hvězdičkové parametry na konci, pro posbírání extra argumentů.
+
+Konstruktory pro `datové` typy musí být vytvářeny s použitím metody `__new__` místo `__init__`. Pro snadnější psaní metod `__new__` poskytuje Coconut vestavěnou funkci [makedata](#makedata).
+
+Subtřídy datových typů lze snadno vytvořit jejich děděním v jiné deklaraci `datového` typu nebo v normální `třídě` Pythonu. Použije-li se normální příkaz `class`, vytvoření nové neměnitelné subtřídy vyžaduje přidání řádku
 ```coconut
 __slots__ = ()
 ```
-před definicemi metod nebo atributů.
+do těla subtřídy před definicemi metod nebo atributů.
 
 ##### Zdůvodnění
 
@@ -485,56 +697,78 @@ Pojmenované instance entic nemají individuální slovníky (dictionaries), tak
 
 ##### Příklady
 
-###### Coconut
+**Coconut**
 ```coconut
-data vector(x, y):
+data vector2(x:int=0, y:int=0):
     def __abs__(self):
         return (self.x**2 + self.y**2)**.5
 
-v = vector(3, 4)
-v |> print # all data types come with a built-in __repr__
+v = vector2(3, 4)
+v |> print  # all data types come with a built-in __repr__
 v |> abs |> print
-v.x = 2 # this will fail because data objects are immutable
+v.x = 2  # this will fail because data objects are immutable
+vector2() |> print
 ```
-_Demonstruje skladbu, vlastnosti a neměnitelnou povahu typů `data`._
+_Demonstruje skladbu, vlastnosti a neměnitelnou povahu typů `data`, stejně jako použití implicitních argumentů a anotací typů._
 ```coconut
-data Empty(): pass
-data Leaf(n): pass
-data Node(l, r): pass
-Tree = (Empty, Leaf, Node)
+data Empty()
+data Leaf(n)
+data Node(l, r)
 
-def size(Tree()) = 0
-
-@addpattern(size)
-def size(Tree(n)) = 1
+def size(Empty()) = 0
 
 @addpattern(size)
-def size(Tree(l, r)) = size(l) + size(r)
+def size(Leaf(n)) = 1
+
+@addpattern(size)
+def size(Node(l, r)) = size(l) + size(r)
 
 size(Node(Empty(), Leaf(10))) == 1
 ```
 _Demonstruje algebraickou povahu typů `data` při kombinaci s pattern-matching._
 
-###### Python
+```coconut
+data vector(*pts):
+    """Immutable arbitrary-length vector."""
+
+    def __abs__(self) =
+        self.pts |> map$(pow$(?, 2)) |> sum |> pow$(?, 0.5)
+
+    def __add__(self, other) =
+        vector(*other_pts) = other
+        assert len(other_pts) == len(self.pts)
+        map((+), self.pts, other_pts) |*> vector
+
+    def __neg__(self) =
+        self.pts |> map$((-)) |*> vector
+
+    def __sub__(self, other) =
+        self + -other
+```
+_Demonstruje `hvězdičkovou` deklaraci typu `data`._		
+
+**Python**
 ```coconut_python
-import collections
-class vector(collections.namedtuple("vector", "x, y")):
+import typing
+class vector2(typing.NamedTuple("vector2", [("x", int), ("y", int)]), object):
     __slots__ = ()
+    def __new__(cls, x=0, y=0):
+        return super(vector2, cls).__new__((x, y))
     def __abs__(self):
         return (self.x**2 + self.y**2)**.5
 
-v = vector(3, 4)
+v = vector2(3, 4)
 print(v)
 print(abs(v))
 v.x = 2
 ```
-```coconut
+```coconut_python
 import collections
-class Empty(collections.namedtuple("Empty", "")):
+class Empty(collections.namedtuple("Empty", ""), object):
     __slots__ = ()
-class Leaf(collections.namedtuple("Leaf", "n")):
+class Leaf(collections.namedtuple("Leaf", "n"), object):
     __slots__ = ()
-class Node(collections.namedtuple("Node", "l, r")):
+class Node(collections.namedtuple("Node", "l, r"), object):
     __slots__ = ()
 
 def size(tree):
@@ -549,6 +783,7 @@ def size(tree):
 
 size(Node(Empty(), Leaf(10))) == 1
 ```
+_Hvězdičkové deklarace dat nelze provádět bez dlouhé sekvence definicí metod. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### `match` 
 
@@ -578,6 +813,12 @@ pattern ::= (
     | STRING                        # řetězce
     | [pattern "as"] NAME           # capture
     | NAME "(" patterns ")"         # datové typy
+    | pattern "is" exprs            # type-checking
+    | pattern "and" pattern         # match all
+    | pattern "or" pattern          # match any
+    | "{" pattern_pairs             # dictionaries
+        ["," "**" NAME] "}"
+    | ["s"] "{" pattern_consts "}"  # sets	
     | "(" patterns ")"              # sekvence mohou mít formu entice
     | "[" patterns "]"              #  nebo formu seznamu
     | "(|" patterns "|)"            # líné seznamy
@@ -587,7 +828,7 @@ pattern ::= (
         patterns,
         "*" middle,
         patterns
-      (")" | "]")                       # must both be parens or brackets
+      (")" | "]")                   
     | (                             # head-tail splits
         "(" patterns ")"
         | "[" patterns "]"
@@ -608,9 +849,8 @@ pattern ::= (
         | "[" patterns "]"
         | "(|" patterns "|)"
       ) "::" pattern
-    | pattern "is" exprs            # type-checking
-    | pattern "and" pattern         # match all
-    | pattern "or" pattern          # match any
+    | ([STRING "+"] NAME            # complex string matching
+        ["+" STRING]) 
     )
 ```
 
@@ -626,20 +866,23 @@ Příkaz `match` přijme vzorek a pokusí se k němu nalézt shodu v zadaných a
 - Ověření typu (`<var> is <types>`): před připojením k proměnné `<var>` ověří, zda kontrolovaná pozice je typu `<types>`.
 - Datové typy (`<name>(<args>)`): ověří, zda kontrolovaná pozice je typu `<name>` a spáruje atributy s `<args>`.
 - Seznamy (`[<patterns>]`), entice (`(<patterns>)`) nebo líné seznamy (`(|<patterns>|)`): spáruje pouze sekvence (`collections.abc.Sequence`) stejné délky a porovná obsah vůči `<patterns>`.
-- Dicts (`{<pairs>}`): spáruje pouze mapping (`collections.abc.Mapping`) stejné délky a porovná obsah vůči `<pairs>`.
+- Líné seznamy (`(|<patterns>|)`): totéž jako při hledání shody (matching) u seznamů nebo entic, ale místo sekvencí kontroluje iterovatelné objekty - `iterábly` (`collections.abc.Iterable`).
+- Fixed-Length Dicts (`{<pairs>}`): porovná pouze `mapování` (`collections.abc.Mapping`) stejné délky a obsahy porovná s `<pairs>`.
+- Dicts With Rest (`{<pairs>, **<rest>}`): porovná `mapování` (`collections.abc.Mapping`) obsahující všechny `<pairs>` a vloží `dict` všeho ostatního do `<rest>`.
 - Sety (`{<constants>}`): spáruje pouze set (`collections.abc.Set`) se stejnou délkou a obsahem.
 - Head-Tail Splits (`<list/tuple> + <var>`): porovná počátek sekvence vůči `<list/tuple>`, zbytek připojí k `<var>` a učiní jej typem použitého konstruktu.
 - Init-Last Splits (`<var> + <list/tuple>`): přesně totéž jako head-tail splits ale vzhledem ke konci, nikoliv k počátku sekvence.
 - Head-Last Splits (`<list/tuple> + <var> + <list/tuple>`): kombinace předchozích dvou operací.
 - Iterator Splits (`<list/tuple/lazy list> :: <var>` nebo `<lazy list>`): porovná počátek iteráblu (`collections.abc.Iterable`) s `<list/tuple/lazy list>`, potom připojí zbytek k `<var>` nebo ověří, že je iteráble proveden.
+- Complex String Matching (`<string> + <var> + <string>`): porovná stringy, které začínají a končí danými substringy, přiřazujíce prostředek k <`var`>.
 
-_Poznámka: Podobně jako u [krájení iterátoru](#krajeni-iteratoru), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte [funkci `tee`](#tee)._
+_Poznámka: Podobně jako u [krájení iterátoru](#krajeni-iteratoru), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte funkci [`tee`](#tee) nebo [`reitarable`](#reiterable))._
 
 Při ověřování zda může být objekt porovnáván určitým způsobem používá Coconut abstraktní bázové třídy Pythonu. Je tedy nutné registrovat uživatelský objekt jako příslušnou bázovou třídu.
 
 ##### Příklady
 
-###### Coconut
+**Coconut**
 ```coconut
 def factorial(value):
     match 0 in value:
@@ -668,12 +911,12 @@ data point(x, y):
 point(1,2) |> point(3,4).transform |> print
 point(1,2) |> point(1,2).__eq__ |> print
 ```
-_Demonstrace porovnávání datových typů. Hodnoty, definované příkazem `data`, mohou být konfrontovány a jejich obsahy zpřístupněny s použitím konstruktorů datového typu `point`._
+_Demonstrace porovnávání datových typů. Hodnoty, definované příkazem `data` mohou být konfrontovány a jejich obsahy zpřístupněny s použitím konstruktorů datového typu `point`._
 ```coconut
-data Empty(): pass
-data Leaf(n): pass
-data Node(l, r): pass
-Tree = (Empty, Leaf, Node)
+data Empty()
+data Leaf(n)
+data Node(l, r)
+Tree = (Empty, Leaf, Node)  # type union
 
 def depth(Tree()) = 0
 
@@ -683,30 +926,28 @@ def depth(Tree(n)) = 1
 @addpattern(depth)
 def depth(Tree(l, r)) = 1 + max([depth(l), depth(r)])
 
-Empty() |> depth |> print                                  # 0
-Leaf(5) |> depth |> print                                  # 1
-Node(Leaf(2), Node(Empty(), Leaf(3))) |> depth |> print    # 3
+Empty() |> depth |> print                                 
+Leaf(5) |> depth |> print                                 
+Node(Leaf(2), Node(Empty(), Leaf(3))) |> depth |> print   
 ```
 _Ukázka kombinace datových typů a porovnávacích (match) příkazů při opakovaném použití algebraických datových typů v jiných funkcionálních programovacích jazycích._
 ```coconut
-def duplicate_first(value):
-    match [x] + xs as l in value:
-        return [x] + l
-    else:
-        raise TypeError()
+def duplicate_first([x] + xs as l) =
+    [x] + l
 
 [1,2,3] |> duplicate_first |> print
 ```
 _Ukázka head-tail krájení (splitting), jednoho z nejvíce používaného způsobu užití pattern-matching, kde `+ <var>` (nebo `:: <var>` pro jakýkoli iterábl) na konci seznamu nebo enticového literálu  může být použit k porovnání se zbytkem sekvence._
 ```
-def sieve([head] :: tail) = [head] :: sieve(n for n in tail if n % head)
+def sieve([head] :: tail) = 
+    [head] :: sieve(n for n in tail if n % head)
 
 @addpattern(sieve)
 def sieve((||)) = []
 ```
 _Ukazuje, jak porovnávat vůči iterátorům, totiž že případ prázdného iterátoru (`(||)`) musí přijít jako poslední, jinak tento případ vyčerpá celý iterátor před tím, než přijde ke slovu porovnání s jakoukoli jinou předlohou._
 
-###### Python
+**Python**
 
 _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
@@ -729,7 +970,7 @@ kde `<pattern>` je jakýkoli vzorek pro hledání shody, `<value>` je porovnáva
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def classify_sequence(value):
     out = ""        # unlike with normal matches, only one of the patterns
@@ -756,7 +997,7 @@ def classify_sequence(value):
 (1,1,1) |> classify_sequence |> print
 ```
 
-###### Python
+**Python**
 
 _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
@@ -766,21 +1007,17 @@ Klíčová slova `data`, `match`, `case`, `async` (keyword in Python 3.5) a `awa
 
 ##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
 \data = 5
 print(\data)
 ```
 
-###### Python
+**Python:**
 ```coconut_python
 data = 5
 print(data)
 ```
-
-### Vyhrazené proměnné 
-
-Není povoleno aby název proměnné začínal `_coconut`, protože tyto proměnné jsou vyhrazeny pro kompilátor.
 
 ## Výrazy 
 
@@ -798,12 +1035,12 @@ Příkazy lambda rovněž podporují implicitní skladbu lambda, u níž je při
 
 ##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
 L |> map$(def (x) -> y = 1 / x; y*(1 - y))
 ```
 
-###### Python
+**Python:**
 ```coconut_python
 def _lambda(x):
     y = 1 / x
@@ -813,7 +1050,7 @@ map(_lambda, L)
 
 ### Líné seznamy 
 
-Coconut podporuje vytváření líných seznamů, jejichž obsah je považován za iterátor a není vyhodnocen, dokud není zapotřebí. Líné seznamy (lazy lists) se v Coconut vytvářejí jednoduše uzavřením čárkami odděleného výčtu do specielních závorek `(|` a `|)` (takzvaných "banana brackets") místo do `[` a `]` u seznamů nebo do `(` a `)` u entic.
+Coconut podporuje vytváření líných seznamů (lazy lists), jejichž obsah je považován za iterátor a není vyhodnocen, dokud není zapotřebí. Líné seznamy (lazy lists) se v Coconut vytvářejí jednoduše uzavřením čárkami odděleného výčtu do specielních závorek `(|` a `|)` (takzvaných "banana brackets") místo do `[` a `]` u seznamů nebo do `(` a `)` u entic.
 
 Líné seznamy používají ke zlenivění stejný mechanizmus jako u iterátorového řetězení a tudíž je líný seznam `(| x, y |)` ekvivalentní výrazu iterátorového řetězení `(x,) :: (y,)`, byť líný seznam nevytváří mezilehlé entice.
 
@@ -823,12 +1060,12 @@ Líné seznamy, jejichž sekvence jsou vyhodnocovány jen v případě potřeby,
 
 ##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
 (| print("hello,"), print("world!") |) |> consume
 ```
 
-###### Python
+**Python:**
 _Nelze provést bez složité komprehence iterátoru. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### Implicitní částečná aplikace 
@@ -845,109 +1082,68 @@ iter$[]         =>      # the equivalent of seq[] for iterators
 .$[a:b:c]       =>      # the equivalent of .[a:b:c] for iterators
 ```
 
-##### Example
+##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
 1 |> "123"[]
 mod$ <| 5 <| 3
 ```
 
-###### Python
+**Python:**
 ```coconut_python
 "123"[1]
 mod(5, 3)
 ```
 
-### Literály setu 
+### Vylepšené anotace typu
 
-Coconut umožňuje předsadit písmeno `s` nebo `f` před deklaraci setu (množiny). Spojení `s{}` informuje Coconut, že jde o prázdný set a nikoli o prázdný slovník. Spojení `f{}` generuje `frozenset`.
+Protože je syntaxe Coconutu nadmnožinou syntaxe Python3, podporuje sladbu [anotace typu Pythonu 3](https://www.python.org/dev/peps/pep-0484) a skladbu [anotace proměnné typu Pythonu 3.6](https://www.python.org/dev/peps/pep-0526/). Implicitně kompiluje Coconut všechny anotace typu na typové komentáře, kompatibilní s Python 2. Chcete-li zachovat anotace typu, zadejte flag --target, který je podporuje.
+
+_Note: Při kompilaci anotace typu pro syntaxi Pyhonu 3, zabalí Coconut každou anotaci do řetězce v situaci, kdy by ji Pyhon jinak vyhodnotil, takže veškeré anotace typu jsou vyhodnocovány pouze při kompilaci, nikdy při běhu programu._
+
+Navíc, Coconut přidává speciální syntaxi pro zjednodušení zápisu anotací. Uvnitř anotace typu zachází Coconut s některými konstrukty odlišně, kompilujíc je na anotaci typu místo na to, co by normálně představovaly. Konkrétně, Coconat používá následující transformace:
+
+```coconut
+<type>?
+    => typing.Optional[<type>]
+<type>[]
+    => typing.Sequence[<type>]
+<type>$[]
+    => typing.Iterable[<type>]
+() -> <ret>
+    => typing.Callable[[], <ret>]
+<arg> -> <ret>
+    => typing.Callable[[<arg>], <ret>]
+(<args>) -> <ret>
+    => typing.Callable[[<args>], <ret>]
+-> <ret>
+    => typing.Callable[..., <ret>]
+```
+kde [`typing`](https://docs.python.org/3/library/typing.html) je standardní modul Pythonu 3.5.
 
 ##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
-empty_frozen_set = f{}
+def int_map(
+    f: int -> int,
+    xs: int[],
+) -> int[] =
+    xs |> map$(f) |> list
 ```
 
-###### Python
+**Python:**
 ```coconut_python
-empty_frozen_set = frozenset()
+import typing  # unlike this typing import, Coconut produces universal code
+def int_map(
+    f,  # type: typing.Callable[[int], int]
+    xs,  # type: typing.Sequence[int]
+):
+    # type: (...) -> typing.Sequence[int]
+    return list(map(f, xs))
 ```
 
-### Literály imaginárního čísla 
-
-Jako doplněk k zápisu imaginárního čísla v Pythonu pomocí literálů `<num>j` nebo `<num>J` přidává Coconut ještě literály `<num>i` nebo `<num>I` pro zlepšení čitelnosti při použití v matematickém kontextu.
-
-##### Python Docs
-
-Literály imaginárního čísla (imaginární literály) jsou popsány následujícími lexikálními definicemi:
-```coconut
-imagnumber ::= (floatnumber | intpart) ("j" | "J" | "i" | "I")
-```
-Imaginární literál generuje komplexní číslo s hodnotou reálné části o velikosti 0.0. Komplexní čísla jsou prezentována jako dvojice desetinných čísel se stejným omezením jejich rozsahu. Komplexní číslo s nenulovou reálnou částí vytvoříte přidáním desetinného čísla, např. (3+4i). Několik příkladů imaginárních literálů (neboli imaginárních částí):
-```coconut
-3.14i   10.i    10i     .001i   1e100i  3.14e-10i
-```
-
-##### Příklad
-
-###### Coconut
-```coconut
-3 + 4i |> abs |> print
-```
-
-###### Python
-```coconut_python
-print(abs(3 + 4j))
-```
-
-### Podtržítkové separátory 
-
-Pro snadnější čitelnost umožňuje Coconut použití podtržítka pro optické rozdělení velkého čísla. Kompilátor tato podtržítka ignoruje.
-
-##### Příklad
-
-###### Coconut
-```coconut
-10_000_000.0
-```
-
-###### Python
-```coconut_python
-10000000.0
-```
-
-## Definice funkce 
-
-### Optimalizace koncového volání 
-
-Coconut provede automatickou optimalizaci koncovým voláním u každé funkce, která vyhoví následujícím kriteriím:
-
-1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#prirazovaci-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
-2. nesmí to být generátor (používající `yield`) nebo asynchronní funkce (používající`async`).
-
-_Poznámka: Optimalizace koncovým voláním pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern) nebo [`prepattern`](#prepattern)._
-
-Setkáte-li se s `RuntimeError` v souvislosti s maximální hloubkou rekurze, je velmi vhodné přepsat svou funkci aby vyhověla výše uvedenému kriteriu pro optimalizaci koncovým voláním nebo odpovídajícímu kriteriu pro [`recursive_iterator`](#recursive-iterator), obojí by mělo takové chybě zabránit.
-
-##### Příklad
-
-###### Coconut
-```coconut
-def factorial(n, acc=1):
-    case n:
-        match 0:
-            return acc
-        match _ is int if n > 0:
-            return factorial(n-1, acc*n)
-    else:
-        raise TypeError("the argument to factorial must be an integer >= 0")
-```
-
-###### Python
-
-_Nelze provést bez přepsání funkce._
 
 ### Operátorové funkce 
 
@@ -964,10 +1160,14 @@ Velmi často prováděným úkonem ve funkcionálním programování je využit�
 (|*>)       => # multi-arg pipe forward
 (<|)        => # pipe backward
 (<*|)       => # multi-arg pipe backward
-(..)        => # function composition
+(..), (<..) => # backward function composition
+(..>)       => # forward function composition
+(<*..)      => # multi-arg backward function composition
+(..*>)      => # multi-arg forward function composition
 (.)         => (getattr)
 (::)        => (itertools.chain) # will not evaluate its arguments lazily
 ($)         => (functools.partial)
+($[])       => # iterator slicing operator
 (+)         => (operator.add)
 (-)         => # 1 arg: operator.neg, 2 args: operator.sub
 (*)         => (operator.mul)
@@ -997,16 +1197,108 @@ Velmi často prováděným úkonem ve funkcionálním programování je využit�
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 (range(0, 5), range(5, 10)) |*> map$(+) |> list |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import operator
 print(list(map(operator.add, range(0, 5), range(5, 10))))
 ```
+
+### Literály setu 
+
+Coconut umožňuje předsadit písmeno `s` před literály setu (množiny). Byť to ve většině případů nedělá nic, v případě prázdné množiny to indikuje, že se jedná o `set` a nikoliv o `dictionary`. Spojení `s{}` informuje Coconut, že jde o prázdný set a nikoli o prázdný slovník. Spojení `f{}` generuje `frozenset`.
+
+##### Příklad
+
+**Coconut**
+```coconut
+empty_frozen_set = f{}
+```
+
+**Python**
+```coconut_python
+empty_frozen_set = frozenset()
+```
+
+### Imaginární literály 
+
+Jako doplněk k notaci imaginárních literálů`<num>j` nebo `<num>J` v Pythonu, podporuje Coconut také notace `<num>i` nebo `<num>I` pro zlepšení čitelnosti imaginárních literálů při použití v matematickém kontextu.
+
+##### Python Docs
+
+Literály imaginárního čísla (imaginární literály) jsou popsány následujícími lexikálními definicemi:
+```coconut
+imagnumber ::= (floatnumber | intpart) ("j" | "J" | "i" | "I")
+```
+Imaginární literál generuje komplexní číslo s hodnotou reálné části o velikosti 0.0. Komplexní čísla jsou prezentována jako dvojice desetinných čísel se stejným omezením jejich rozsahu. Komplexní číslo s nenulovou reálnou částí vytvoříte přidáním desetinného čísla, např. (3+4i). Několik příkladů imaginárních literálů (neboli imaginárních částí):
+```coconut
+3.14i   10.i    10i     .001i   1e100i  3.14e-10i
+```
+
+##### Příklad
+
+**Coconut**
+```coconut
+3 + 4i |> abs |> print
+```
+
+**Python**
+```coconut_python
+print(abs(3 + 4j))
+```
+
+
+
+## Definice funkce 
+
+### Optimalizace koncového volání 
+
+Coconut provede automatickou optimalizaci koncovým voláním u každé funkce, která vyhoví následujícím kriteriím:
+
+1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#prirazovaci-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
+2. nesmí to být generátor (používající `yield`) nebo asynchronní funkce (používající`async`).
+
+_Poznámka: Optimalizace koncovým voláním pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern) nebo [`prepattern`](#prepattern)._
+
+Setkáte-li se s `RuntimeError` v souvislosti s maximální hloubkou rekurze, je velmi vhodné přepsat svou funkci aby vyhověla výše uvedenému kriteriu pro optimalizaci koncovým voláním nebo odpovídajícímu kriteriu pro [`recursive_iterator`](#recursive-iterator), obojí by mělo takové chybě zabránit.
+
+_Note: Optimalizace koncového volání (though not tail recursion elimination) se vypne, zadáte-li flag `--no-tco`, což je užitečné, máte-li potíže se čtením svých `tracebacks` a potřebujete maximální výkon._
+
+
+##### Příklad
+
+**Coconut**
+```coconut
+# unlike in Python, this function will never hit a maximum recursion depth error
+def factorial(n, acc=1):
+    case n:
+        match 0:
+            return acc
+        match _ is int if n > 0:
+            return factorial(n-1, acc*n)
+```
+
+_Demonstruje eliminaci koncové rekurze._
+```coconut
+# unlike in Python, neither of these functions will ever hit a maximum recursion depth error
+def is_even(0) = True
+@addpattern(is_even)
+def is_even(n is int if n > 0) = is_odd(n-1)
+
+def is_odd(0) = False
+@addpattern(is_odd)
+def is_odd(n is int if n > 0) = is_even(n-1)
+```
+_Demonstruje optimalizaci koncové rekurze._
+
+**Python**
+
+_Nelze provést bez přepsání funkce._
+
 
 ### Přiřazovací funkce 
 
@@ -1030,26 +1322,30 @@ Zápis definice přiřazovací funkce je stejně snadný jako přiřazení k fun
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def binexp(x) = 2**x
 5 |> binexp |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 def binexp(x): return 2**x
 print(binexp(5))
 ```
 
-### Pattern matching 
+### Funkce pro pattern matching 
 
-Coconut podporuje vyhledávání shody s předlohou (pattern-matching), jíž jsou argumenty v definici funkce. Skladba definice porovnávací funkce je
+Tyto funkce Coconutu jsou normální funkce, kde argumenty jsou vzory k porovnávání, místo proměnných pro přiřazení hodnot.  Skladba definice porovnávací (pattern-matching) funkce je
 ```coconut
-[match] def <name>(<pattern>, <pattern>, ... [if <cond>]):
+[match] def <name>(<arg>, <arg>, ... [if <cond>]):
     <body>
 ```
-Kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce,  `<pattern>` je definován [příkazem `match`](#match) a  `<default>` je volitelná implicitní hodnota, není-li žádný argument zadán. Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. 
+where `<arg>` je definován jako
+```coconut
+[*|**] <pattern> [= <default>]
+```
+kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce,  `<pattern>` je definován [příkazem `match`](#match) a  `<default>` je volitelná implicitní hodnota, není-li žádný argument zadán. Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. 
 
 Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#rozlozene-prirazeni).
 
@@ -1057,7 +1353,7 @@ _Poznámka: Definice porovnávací funkce může být kombinována s definicí p
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def last_two(_ + [a, b]):
     return a, b
@@ -1068,21 +1364,21 @@ range(5) |> last_two |> print
 {"x":1, "y":2} |> xydict_to_xytuple |> print
 ```
 
-###### Python
+**Python**
 
 _Nelze provést bez dlouhé řady kontrol na počátku funkce. Viz kompilovaný kód pro skladbu Pythonu._
 
 
 ### Infixové funkce 
 
-Coconut umožňuje infixové použití funkce, kde je název funkce umístěn mezi operandy a je obklopen zpětnými apostrofy. Volání se zpětným apostrofem (backtick calling) má prioritu mezi 'chaining and piping'.
+Coconut umožňuje infixové volání funkce, kde je výraz, vyhodnocovaný na funkci, obklopen zpětnými apostrofy; argumenty mohou být uvedeny před nebo za funkcí. Infixové volání má prioritu mezi 'chaining and None-coalescing' (řetězením a sloučením) a je asociativní vlevo.
 
-Skladba definice infixové funkce je
+Coconut také podporuje definování jednodušší infixové funkce:
 ```coconut
-def <arg> `<name>` <arg>:  # asi má být `=` místo `:`
+def <arg> `<name>` <arg>:
     <body>
 ```
-kde `<name>` je název funkce, `<arg>` jsou parametry funkce a `<body>` je tělo funkce. Obsahuje-li `<arg>` ?? default ??, musí být parametry uvedeny v závorkách.
+kde `<name>` je název funkce, `<arg>` jsou parametry funkce a `<body>` je tělo funkce. Obsahuje-li `<arg>` implicitní hodnotu, musí být uvedena v závorkách.
 
 _Poznámka: Definici infixové funkce lze kombinovat s definicí přířazovací a/nebo porovnávací (pattern-matching) funkce._
 
@@ -1092,18 +1388,36 @@ Infixové funkce jsou ve funkcionálním programování obvyklé.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def a `mod` b = a % b
 (x `mod` 2) `print`
 ```
 
-###### Python
+**Python**
 ```coconut_python
 def mod(a, b): return a % b
 print(mod(x, 2))
 ```
 
+### Definice funkce s tečkami
+
+Coconut umožňuje použití tečkovaného označení pro přiřazení funkce jako methody objektu, jak je specifikováno v [PEP 542](https://www.python.org/dev/peps/pep-0542/).
+
+##### Příklad
+
+**Coconut:**
+```coconut
+def MyClass.my_method(self):
+    ...
+```
+
+**Python:**
+```coconut_python
+def my_method(self):
+    ...
+MyClass.my_method = my_method
+```
 
 
 ## Příkazy
@@ -1128,7 +1442,7 @@ Selže-li provádění rozloženého přiřazení, potom místo pokračování j
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 def last_two(l):
     _ + [a, b] = l
@@ -1137,7 +1451,7 @@ def last_two(l):
 [0,1,2,3] |> last_two |> print
 ```
 
-###### Python
+**Python**
 
 _Nelze provést bez dlouhé řady kontrol místo příkazu rozloženého přiřazení. Viz kompilovaný kód pro skladbu Pythonu._
 
@@ -1147,13 +1461,13 @@ Narozdíl od Pythonu, který v dekorátoru podporuje pouze jedinou proměnnou ne
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 @ wrapper1 .. wrapper2 $(arg)
 def func(x) = x**2
 ```
 
-###### Python
+**Python**
 ```coconut_python
 def wrapper(func):
     return wrapper1(wrapper2(arg, func))
@@ -1168,38 +1482,35 @@ Coconut podporuje složené příkazy `try`, `if` a `match` na konci příkazu `
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
-try:
-    unsafe_1()
-except MyError:
-    handle_1()
-else: try:
-    unsafe_2()
-except MyError:
-    handle_2()
+if invalid(input_list):
+    raise Exception()
+else: match [head] + tail in input_list:
+    print(head, tail)
+else:
+    print(input_list)
 ```
 
-###### Python
+**Python**
 ```coconut_python
-try:
-    unsafe_1()
-except MyError:
-    handle_1()
+from collections.abc import Sequence
+if invalid(input_list):
+    raise Exception()
+elif isinstance(input_list, Sequence):
+    head, tail = inputlist[0], inputlist[1:]
+    print(head, tail)
 else:
-    try:
-        unsafe_2()
-    except MyError:
-        handle_2()
+    print(input_list)
 ```
 
 ### Příkazy `except` 
 
-Má-li být v Pythonu3 podchyceno více výjimek najednou, musejí být vloženy do závorek aby se v Pythonu2 zabránilo použití čárky místo `as`. Coconut umožňuje použití čárek ve výjimkových příkazech pro odchycení vícerých výjímek bez závorek.
+Má-li být v Pythonu3 podchyceno více výjimek najednou, musejí být vloženy do závorek aby se v Pythonu2 zabránilo použití čárky místo `as`. Coconut umožňuje použití čárek v příkazech `except` pro odchycení vícerých výjímek bez závorek, protože v Python 3 je `as` vždy požadováno pro připojení výjimky k názvu.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 try:
     unsafe_func(arg)
@@ -1207,7 +1518,7 @@ except SyntaxError, ValueError as err:
     handle(err)
 ```
 
-###### Python
+**Python**
 ```coconut_python
 try:
     unsafe_func(arg)
@@ -1217,83 +1528,118 @@ except (SyntaxError, ValueError) as err:
 
 ### Implicitní `pass` 
 
-Coconut umožňuje zjednodušený zápis `class name(base)` a `data name(args)` místo `class name(base): pass` a `data name(args): pass`.
+Coconut umožňuje zjednodušený zápis `class name(base)` a `data name(args)` jako aliasy pro `class name(base): pass` a `data name(args): pass`.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 data Empty
 data Leaf(item)
 data Node(left, right)
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import collections
 
-class Empty(collections.namedtuple("Empty", "")):
+class Empty(collections.namedtuple("Empty", ""), object):
     __slots__ = ()
-class Leaf(collections.namedtuple("Leaf", "n")):
+class Leaf(collections.namedtuple("Leaf", "n"), object):
     __slots__ = ()
-class Node(collections.namedtuple("Node", "l, r")):
+class Node(collections.namedtuple("Node", "l, r"), object):
     __slots__ = ()
 ```
 
-### Pokračování v závorkách 
+### In-line `global` a `nonlocal` přiřazení
 
-Coconut umožňuje u příkazů `del`, `global`, `nonlocal` a `with` rozložení zápisu na více řádků s použitím závorek místo zpětných lomítek `\` jako u Pythonu.
+Coconut umožňuje použití slov `global` nebo `nonlocal` před přiřazením k proměnné nebo k seznamu proměnných, činíce tak přiřazení `globální` případně `nelokální`.
 
 ##### Příklad
 
-###### Coconut
-```coconut
-global (really_long_global_variable_name_the_first_one,
-        really_long_global_variable_name_the_second_one)
-```
-
-###### Python
-```coconut_python
-global really_long_global_variable_name_the_first_one, \
-        really_long_global_variable_name_the_second_one
-```
-
-### Zjednodušené určení `global` a `nonlocal` 
-
-Coconut umožňuje deklaraci `global` či `nonlocal` v jednom řádku bez opakování názvu proměnné.
-
-##### Příklad
-
-###### Coconut
+**Coconut:**
 ```coconut
 global state_a, state_b = 10, 100
 ```
 
-###### Python
+**Python:**
 ```coconut_python
 global state_a, state_b; state_a, state_b = 10, 100
 ```
-
 ### Průchod kódu 
 
 Kvůli kompatibilitě s jinými variantami Pythonu, jako je [Cython](http://cython.org/) nebo [Mython](http://mython.org/),
-podporuje Coconut schopnost protáhnout inertním způsobem libovolný kód kompilátorem. Cokoli umístěného mezi `\(` a `\)` projde netečně kompilátorem, stejně jako řádek, začínající `\\`.
+podporuje Coconut schopnost protáhnout inertním způsobem libovolný kód kompilátorem. Cokoli umístěného mezi `\(` a `\)` projde netečně kompilátorem, stejně jako řádek, začínající `\\`, umožňující navíc následnou indentaci.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 \\cdef f(x):
     return x |> g
 ```
 
-###### Python
+**Python**
 ```coconut_python
 cdef f(x):
     return g(x)
 ```
 
-## Vestavěné funkce 
+
+### Vylepšené závorkové pokračování 
+
+Protože je syntaxe Coconut nadmnožinou syntaxe Python 3, podporuje Cooconut stejnou formu pokračování řádku jako Python. To znamená, že lze použít jak pokračování se zpětným lomítkem nebo implikované pokračování uvnitř kulatých, hranatých či složených závorek.
+
+V Pythonu je ovšem několik případů (např. víceré příkazy `with`), kde lze použít pouze pokračování se zpětným lomítkem. Ve všech těchto případech podporuje Coconut i závorkové pokračování.
+
+Podporu univerzálního použití závorkového pokračování povoluje konvence [PEP 8](https://www.python.org/dev/peps/pep-0008/) :
+
+>Upřednostňovaný způsob ukončování dlouhých řádků je implikované pokračování uvnitř kulatých, hranatých či složených závorek. Dlouhé řádky mohou být uvnitř závorek rozděleny do více kratších řádků. Tento způsob má přednost před používáním zpětných lomítek pro pokračování řádků.
+
+_Note: Použití flagu `--strict` vyloučí použití zpětných lomítek._
+
+##### Příklad
+
+**Coconut:**
+```coconut
+with (open('/path/to/some/file/you/want/to/read') as file_1,
+      open('/path/to/some/file/being/written', 'w') as file_2):
+    file_2.write(file_1.read())
+```
+
+**Python:**
+```coconut_python
+# split into two with statements for Python 2.6 compatibility
+with open('/path/to/some/file/you/want/to/read') as file_1:
+    with open('/path/to/some/file/being/written', 'w') as file_2:
+        file_2.write(file_1.read())
+```
+
+
+## Vestavěné funkce
+
+### Vylepšené vestavěné funkce
+
+Objekty Coconut - `map`, `zip`, `filter`, `reversed` a `enumerate` 
+jsou vylepšené verze svých ekvivalentů v Pythonu, které podporují procedury `reversed`, `repr`, optimalizované (a iterátorové) `krájení` (slicing), `len` (all but `filter`) a mají přidané atributy, jež mohou subtříty použít pro přístup původním argumentům objektu:
+
+- `map`: `_func`, `_iters`
+- `zip`: `_iters`
+- `filter`: `_func`, `_iter`
+- `reversed`: `_iter`
+- `enumerate`: `_iter`, `_start`
+
+##### Příklad
+
+**Coconut:**
+```coconut
+map((+), range(5), range(6)) |> len |> print
+range(10) |> filter$((x) -> x < 5) |> reversed |> tuple |> print
+```
+
+**Python:**
+_Nelze provést bez definování uživatelskéko typu `map`. Úplnou definici `map` lze nalézt v záhlaví Coconut (?).
+ 
 
 ### `addpattern` 
 
@@ -1311,9 +1657,21 @@ def addpattern(base_func):
     return pattern_adder
 ```
 
+**DEPRECATED:** Coconut má také vestavěnou funkci `prepattern`, která přidává vzory v opačném pořadí než `addpattern`; `prepattern` je definována takto:
+```coconut
+def prepattern(base_func):
+    """Decorator to add a new case to a pattern-matching function,
+    where the new case is checked first."""
+    def pattern_prepender(func):
+        return addpattern(func)(base_func)
+    return pattern_prepender
+```
+_Note: Passing `--strict` disables deprecated features._
+
+
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```
 def factorial(0) = 1
 
@@ -1321,32 +1679,8 @@ def factorial(0) = 1
 def factorial(n) = n * factorial(n - 1)
 ```
 
-###### Python
+**Python**
 _Nelze provést bez komplikované definice dekorátoru a dlouhé řady kontrol pro každé porovnávání. Viz kompilovaný kód pro skladbu Pythonu._
-
-### `prepattern` 
-
-Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#porovnavaci-funkce) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Je zhruba ekvivalentní k:
-```
-def prepattern(base_func):
-    """Decorator to add a new case to a pattern-matching function, where the new case is checked first."""
-    def pattern_prepender(func):
-        return addpattern(func)(base_func)
-    return pattern_prepender
-```
-
-##### Příklad
-
-###### Coconut
-```
-def factorial(n) = n * factorial(n - 1)
-
-@prepattern(factorial)
-def factorial(0) = 1
-```
-
-###### Python
-_Nelze provést bez komplikované definice dekorátoru a dlouhé řady kontrol pro každé porovnávání._
 
 ### `reduce` 
 
@@ -1360,18 +1694,18 @@ Funkce `reduce` použije opakovaně funkci se dvěmi proměnnými pro iterovatel
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
-prod = reduce$(*)
-range(1, 10) |> prod |> print
+product = reduce$(*)
+range(1, 10) |> product |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import operator
 import functools
-prod = functools.partial(functools.reduce, operator.mul)
-print(prod(range(1, 10)))
+product = functools.partial(functools.reduce, operator.mul)
+print(product(range(1, 10)))
 ```
 
 ### `takewhile` 
@@ -1395,12 +1729,12 @@ def takewhile(predicate, iterable):
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 negatives = takewhile(numiter, (x) -> x<0)
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import itertools
 negatives = itertools.takewhile(numiter, lambda x: x<0)
@@ -1429,15 +1763,39 @@ def dropwhile(predicate, iterable):
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 positives = dropwhile(numiter, (x) -> x<0)
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import itertools
 positives = itertools.dropwhile(numiter, lambda x: x<0)
+```
+
+### `groupsof`
+
+Coconut poskytuje funkci `groupsof` pro rozdělení (splitting) iterovatelného objektu do skupin určiné délky. Konkretně, `groupsof(n, iterable)` rozdělí `iterábl` to entic délky `n`, případně u poslední entice délky `< n`, není-li délka `iteráblu` dělitelná `n`.
+
+##### Example
+
+**Coconut:**
+```coconut
+pairs = range(1, 11) |> groupsof$(2)
+```
+
+**Python:**
+```coconut_python
+pairs = []
+group = []
+for item in range(1, 11):
+    group.append(item)
+    if len(group) == 2:
+        pairs.append(tuple(group))
+        group = []
+if group:
+    pairs.append(tuple(group))
 ```
 
 ### `tee` 
@@ -1468,22 +1826,44 @@ Tento itertool může vyžadovat významý pomocný úložný prostor (v závisl
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 original, temp = tee(original)
 sliced = temp$[5:]
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import itertools
 original, temp = itertools.tee(original)
 sliced = itertools.islice(temp, 5, None)
 ```
 
+### `reiterable`
+
+Někdy, kdy je zapotřebí aby byl iterátor opakovaně iterován, může být použití `tee` nešikovné. Pro takový případ poskytuje Coconut proceduru `reiterable`, která zabalí daný iterátor tak, že iterace se provádí po objektu `tee` místo po původním iterátoru.
+
+##### Příklad
+
+**Coconut:**
+```coconut
+def list_type(xs):
+    case reiterable(xs):
+        match [fst, snd] :: tail:
+            return "at least 2"
+        match [fst] :: tail:
+            return "at least 1"
+        match (| |):
+            return "empty"
+```
+
+**Python:** _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
+
 ### `consume` 
 
-Coconut poskytuje funkci `consume` pro účinné vyčerpání iterátoru a pro provedení líného výpočtu. Funkce `consume` přijímá volitelný argument, `keep_last`, jehož implicitní hodnota je 0 a určuje kolik položek od konce vrátit jako iterábl (`None` zachová všechny prvky). Ekvivalentní k:
+Coconut poskytuje funkci `consume` pro účinné vyčerpání iterátoru a pro provedení líného výpočtu. Funkce `consume` přijímá volitelný argument, `keep_last`, jehož implicitní hodnota je 0 a určuje kolik položek od konce vrátit jako iterábl (`None` zachová všechny prvky). 
+
+Ekvivalentní k:
 ```coconut
 def consume(iterable, keep_last=0):
     """Fully exhaust iterable and return the last keep_last elements."""
@@ -1496,12 +1876,12 @@ V procesu líného provádění operací na iterátorech je posléze dosaženo m
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 range(10) |> map$((x) -> x**2) |> map$(print) |> consume
 ```
 
-###### Python
+**Python**
 ```coconut_python
 collections.deque(map(print, map(lambda x: x**2, range(10))), maxlen=0)
 ```
@@ -1527,53 +1907,161 @@ def count(start=0, step=1):
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 count()$[10**100] |> print
 ```
 
-###### Python
+**Python**
 _Nelze provést rychle bez iterátorového členění Coconutu, jež vyžaduje mnoho složitých částí. Nezbytné definice v Pythonu lze nalézt v záhlaví Coconut._
 
-### `map` a `zip` 
+### `makedata`
 
-Objekty `map` a `zip` v Coconut jsou vylepšené ekvivalenty Pythonu, které podporují optimalizované normální (a iterátorové) členění, postupy `reversed`, `len`, `repr` a mají přidané atributy, jež mohou použít subtřídy k přístupu k původním argumentům objektu (`map` podporuje `_func` a atributy `_iters` a `zip` podporuje atributy `_iters`).
+Funkce `makedata` poskytuje přímý přístup k bázovému konstruktoru datových typů, vytvořenému příkazem `data`. To je zejména užitečné při psaní alternativních konstruktorů pro datové typy přepisem `__new__`.
 
-##### Příklad
-
-###### Coconut
+Funkce `makedata` přijímá datový typ jako první argument, následovaný potřebnými argumenty pro vytvoření datového typu. Pro objekty `data` se funkce `makedata` chová jako konstruktor výchozího datového typu, přesně jak byl datový typ deklarován. Pro `nedatové` objekty je `makedata` ekvivalentní k:
 ```coconut
-map((+), range(5), range(6)) |> len |> print
+def makedata(data_type, *args, **kwargs):
+    """Returns base data constructor of data_type."""
+    return super(data_type, data_type).__new__(data_type, *args, **kwargs)
 ```
 
-###### Python
-_Nelze provést bez definování uživatelského typu  `map`. Úplnou definici `map` lze nalézt v záhlaví Coconut._
-
-### `datamaker` 
-
-Coconut poskytuje funkci `datamaker` pro přímý přístup k bázovému konstruktoru datových typů, vytvořenému příkazem  `data`. Toto je zejména užitečné při psaní alternativních konstruktorů pro datové typy přepsáním metody `__new__`. Ekvivalentní k:
+**DEPRECATED:** Coconut má také vestavěný `datamaker`, který částečně aplikuje `makedata`; `datamaker` je definován jako:
 ```coconut
 def datamaker(data_type):
-    """Returns base data constructor of data_type."""
-    return super(data_type, data_type).__new__$(data_type)
+    """Get the original constructor of the given data type or class."""
+    return makedata$(data_type)
+```
+_Note: Passing `--strict` disables deprecated features._
+
+##### Příklad
+
+**Coconut:**
+```coconut
+data Tuple(elems):
+    def __new__(cls, *elems):
+        return elems |> makedata$(cls)
+```
+
+**Python:**
+```coconut_python
+import collections
+class Tuple(collections.namedtuple("Tuple", "elems"), object):
+    __slots__ = ()
+    def __new__(cls, *elems):
+        return super(cls, cls).__new__(cls, elems)
+```
+
+### `fmap`
+
+Ve funkcionálním programování přijímá funkce `fmap(func, obj)` datový typ `obj` a vrací nový datový typ s mapovanou `func` pro obsahy. 
+
+Funkce `fmap` může být rovněž použita pro objekty `str`, `list`, `set` a `dict` jako varianta `map`, vracejíc objekt téhož typu. Chování `fmap` může být pro daný objekt změněno definováním metody `__fmap__(self, func)`, jež bude volána při každé invokaci funkce `fmap`.
+
+Pro `dict` nebo každé `collections.abc.Mapping` je `fmap` voláno pro `.items()` mappingu namísto implicitní iterace po jeho klíčích (`.keys()`).
+
+##### Example
+
+**Coconut:**
+```coconut
+[1, 2, 3] |> fmap$(x -> x+1) == [2, 3, 4]
+
+data Nothing()
+data Just(n)
+
+Just(3) |> fmap$(x -> x*2) == Just(6)
+Nothing() |> fmap$(x -> x*2) == Nothing()
+```
+
+**Python:**
+```coconut_python
+list(map(lambda x: x+1, [1, 2, 3])) == [2, 3, 4]
+
+import collections
+class Nothing(collections.namedtuple("Nothing", ""), object):
+    __slots__ = ()
+class Just(collections.namedtuple("Just", "n"), object):
+    __slots__ = ()
+
+Just(*map(lambda x: x*2, Just(3))) == Just(6)
+Nothing(*map(lambda x: x*2, Nothing())) == Nothing()
+```
+
+### `starmap`
+
+Coconut poskytuje modifikovanou verzi `itertools.starmap` která podporuje procedury `reversed`, `repr`, optimized normal (and iterator) slicing, `len` a `_func` a atributy `_iter`.
+
+##### Python Docs
+
+**starmap**(_function, iterable_)
+
+Vytvoří iterátor, který počítá funkci s použitím argumentů, získaných z iteráblu. Používá se místo `map()`, jsou-li argumenty parametrů již seskupeny do entic z jednoho iteráblu (the data has been "pre-zipped"). Rozdíl mezi `map()` a `starmap()` je obdobný rozdílu mezi `function(a,b)` a `function(*c)`. Je zhruba ekvivalentní k:
+
+```coconut_python
+def starmap(function, iterable):
+    # starmap(pow, [(2,5), (3,2), (10,3)]) --> 32 9 1000
+    for args in iterable:
+        yield function(*args)
 ```
 
 ##### Příklad
 
-###### Coconut
+**Coconut:**
 ```coconut
-data trilen(h):
-    def __new__(cls, a, b):
-        return (a**2 + b**2)**0.5 |> datamaker(cls)
+range(1, 5) |> map$(range) |> starmap$(print) |> consume
 ```
 
-###### Python
+**Python:**
 ```coconut_python
-import collections
-class trilen(collections.namedtuple("trilen", "h")):
-    __slots__ = ()
-    def __new__(cls, a, b):
-        return super(cls, cls).__new__(cls, (a**2 + b**2)**0.5)
+import itertools, collections
+collections.deque(itertools.starmap(print, map(range, range(1, 5))), maxlen=0)
+```
+
+### `scan`
+
+Coconut poskytuje modifikovanou verzi `itertools.accumulate` s opačným pořadím argumentů než má `scan`, který rovněž podporuje `repr`, `len` a `func` a atributy `iter`. `scan` pracuje stejně jako
+ [`reduce`](#reduce), kromě toho, že místo vracení poslední akumulované hodnoty, vrací iterátor se všemi mezilehlými hodnotami.
+
+##### Python Docs
+
+**scan**(_func, iterable_)
+
+Vytvoří iterátor, který vrací akumulované výsledky některých funkcí pro dva argumenty. Typy elementů vstupního iteráblu musí být akceptovatelné u argumentů funkce. Například pro sčítání mohou být elementy jakéhokoli sčítatelného typu včetně Decimal nebo Fraction. Je-li vstupní iterábl prázdný, je výstupní iterábl rovněž prázdný.
+
+Jest to zhruba ekvivalentní k:
+```coconut_python
+def scan(func, iterable):
+    'Return running totals'
+    # scan(operator.add, [1,2,3,4,5]) --> 1 3 6 10 15
+    # scan(operator.mul, [1,2,3,4,5]) --> 1 2 6 24 120
+    it = iter(iterable)
+    try:
+        total = next(it)
+    except StopIteration:
+        return
+    yield total
+    for element in it:
+        total = func(total, element)
+        yield total
+```
+
+##### Example
+
+**Coconut:**
+```coconut
+input_data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]
+running_max = input_data |> scan$(max) |> list
+```
+
+**Python:**
+```coconut_python
+input_data = [3, 4, 6, 2, 1, 9, 0, 7, 5, 8]
+running_max = []
+max_so_far = input_data[0]
+for x in input_data:
+    if x > max_so_far:
+        max_so_far = x
+    running_max.append(x)
 ```
 
 ### `recursive iterator` 
@@ -1582,8 +2070,8 @@ Coconut poskytuje dekorátor `recursive_iterator`, který poskytuje výraznou op
 
 1. vaše funkce buď vždy `vrací` iterátor nebo generuje iterátor pomocí `yield`,
 2. při opakovaném volání pro tytéž argumenty produkuje vaše funkce tentýž iterátor (vaše funkce je bezestavová),
-3. vaše funkce volá samu sebe pro tytéž argumenty,
-4. všechny argumenty, zadávané funkci jsou serializovatelné (pickleable).
+3. vaše funkce je volána (obvykle volá samu sebe) několikrát pro tytéž argumenty.
+
 
 Setkáte-li se s `RuntimeError` následkem maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncoveho-volani), jež obojí by mělo takovým chybám zabránit.
 
@@ -1600,15 +2088,16 @@ které poběží uspokojivě.
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 @recursive_iterator
 def fib() = (1, 2) :: map((+), fib(), fib()$[1:])
 ```
 
-###### Python
+**Python**
 
 _Nelze provést bez dlouhé definice dekorátoru._
+
 
 ### `parallel map` 
 
@@ -1624,12 +2113,12 @@ Ekvivalentní k `map(func, *iterables)` až nato, že _func_ je provedena asynch
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 parallel_map(pow$(2), range(100)) |> list |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import functools
 import concurrent.futures
@@ -1649,12 +2138,12 @@ Ekvivalentní k `map(func, *iterables)` až nato, že _func_ je provedena asynch
 
 ##### Příklad
 
-###### Coconut
+**Coconut**
 ```coconut
 concurrent_map(get_data_for_user, get_all_users()) |> list |> print
 ```
 
-###### Python
+**Python**
 ```coconut_python
 import functools
 import concurrent.futures
@@ -1666,37 +2155,8 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
 Objekt `MatchError` je vyvolán, když selže [destructuring assignment](#rozlozene-prirazeni), načež je `MatchError` poskytnut jako vestavěná procedura pro odchycení takovýchto chyb. Objekty `MatchError` podporují dva atributy, `pattern`, což je řetězec, popisující selhávající předlohu a `value`, což je objekt, který selhal při porovnávání s předlohou.
 
-## Utilita Coconut 
 
-### Zvýraznění skladby 
-
-Současné možnosti pro zvýraznění skladby v Coconut jsou tyto:
-
-1. use **[SublimeText](https://www.sublimetext.com/)** (instructions below),
-2. use an editor that supports **[Pygments](http://pygments.org/)** (instructions below),
-3. use [`coconut.vim`](https://github.com/manicmaniac/coconut.vim), a third-party **[Vim](http://www.vim.org/)** highlighter,
-4. use [`coconut-mode`](https://github.com/NickSeagull/coconut-mode), a third-party **[Emacs](https://www.gnu.org/software/emacs/)** highlighter, or
-4. just treat Coconut as Python.
-
-Pokyny pro nastavení skladby zvýrazňování pro SublimeText a Pygments jsou uvedeny níže. Pokud některý z výše uvedených zvýrazňovačů nechodí, potom by mělo stačit nastavit editor tak, aby interpretoval všechny soubory `.coco` (také `.coc` a `.coconut`, byť `.coco` je preferovaná přípona) jako kód Pythonu, neboť se tak dostatečně zvýrazní většina vašeho kódu.
-
-#### SublimeText 
-
-Zvýrazňování skladby Coconut v editoru SublimeText vyžaduje aby byl instalován standardní správce paketů [Package Control](https://packagecontrol.io/installation). Pokud tomu tak je, potom:
-
-1. otevřte příkazovou paletu SublimeTextu stisknutím  `Ctrl+Shift+P`,
-2. potvrďte a zvolte `Package Control: Install Package`,
-3. potvrďte a zvolte `Coconut`.
-
-Abyste se přesvědčili, že všechno chodí jak má, otevřte soubor `.coco` file a ujistěte se, že se `Coconut` objeví v pravém dolním rohu. Objeví-li se něco jiného, jako třeba `Plain Text`, klikněte na to, zvolte `Open all with current extension as...` a potom vyberte `Coconut`.
-
-#### Pygments 
-
-Tentýž příkaz `pip install coconut`, který instaluje interaktivní utilitu Coconut, instaluje také `coconut` lexer aplikace Pygments. Jak tento lexer použít záleží na použité 'Pygments-enabled' aplikaci, ale obecně se zvolí `coconut` jako zvýrazňovaný jazyk a/nebo použije se platná extenze souboru Coconut (`.coco`, `.coc` nebo `.coconut`) a Pygments by se v tom měl vyznat. Tato dokumentace je například generována pomocí [Sphinx](http://www.sphinx-doc.org/en/stable/). Zvýraznění, které vidíme, bylo vytvořeno přidáním řádku
-```coconut_python
-highlight_language = "coconut"
-```
-v souboru `conf.py` Coconutu.
+## Moduly Coconut 
 
 ### `coconut.coconut` 
 
@@ -1706,7 +2166,7 @@ Všechny nativní objekty Coconutu jsou přístupné z `coconut.__coconut__`. Do
 
 ##### Example
 
-###### Python
+**Python**
 ```coconut_python
 from coconut.__coconut__ import parallel_map
 ```
@@ -1717,9 +2177,11 @@ Někdy je užitečné mít možnost použít kompilátor Coconutu z kódu místo
 
 #### `parse` <a id="parse"></a>
 
-**coconut.convenience.parse**(_code,_ **[**_mode_**]**)
+**coconut.convenience.parse**([**_code,_ **[**_mode_**]]**)
 
 Patrně nejužitečnější z 'výhodných' funkcí je `parse`, která přijme kód Coconut a vrací ekvivalentní kompilovaný kód Pythonu. Druhý argument, _mode_, se použije k indikaci kontextu pro parsing.
+
+Není-li _code_ zadán, vrátí `parse` pouze dané záhlaví _mode_, jež může být provedeno pro nastavení exekučního prostředí, ve kterém může být budoucí kód parsován a proveden bez záhlaví.
 
 Každý _mode_ má dvě komponenty: jaký parser používá a jaké záhlaví předesílá (prepends). Parser určuje, jaký kód Coconutu je přípustný jako vstup a záhlaví určuje, jak může být kompilovaný Python použit. Možné hodnoty _mode_ jsou:
 
@@ -1750,12 +2212,22 @@ Každý _mode_ má dvě komponenty: jaký parser používá a jaké záhlaví p�
     + header: none
 - `"debug"`:
     + parser: debug
-        Can parse any Coconut code and allows leading whitespace.
-    + header: none
+        Can parse any Coconut code and allows leading whitespace, and has no trailing newline.
+		+ header: none
 
+##### Příklad
+
+```coconut_python
+from coconut.convenience import parse
+exec(parse())
+while True:
+    exec(parse(input(), mode="block"))
+```
+
+		
 #### `setup` 
 
-**coconut.convenience.setup**(_target, strict, minify, line\_numbers, keep\_lines_**)**
+**coconut.convenience.setup**(_target, strict, minify, line\_numbers, keep\_lines_, no\_tco_)
 
 `setup` lze použít k zadání flagů příkazového řádku, použitých v akci `parse`. Možné hodnoty flagů jsou:
 
@@ -1764,6 +2236,8 @@ Každý _mode_ má dvě komponenty: jaký parser používá a jaké záhlaví p�
 - _minify_: `False` (default) or `True`
 - _line\_numbers_: `False` (default) or `True`
 - _keep\_lines_: `False` (default) or `True`
+- _no\_tco_: `False` (default) or `True`
+
 
 #### `cmd` 
 
@@ -1788,3 +2262,4 @@ Vyhledá řetězec obsahující informaci o verzi Coconut. Nepovinný argument _
 #### `CoconutException` 
 
 Je-li v 'convenience' funkci detekována chyba, je aktivováno hlášení `CoconutException`. `coconut.convenience.CoconutException` umožňuje odchycení takových chyb.
+
