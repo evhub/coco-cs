@@ -1,23 +1,11 @@
-# Frequently Asked Questions
+# Coconut FAQ
 
-<!-- MarkdownTOC -->
+```eval_rst
+.. contents::
+    :local:
+```
 
-1. [Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu?](#mohu-pouzit-moduly-pythonu-z-coconut-a-moduly-coconut-z-pythonu)
-1. [Které verze Pythonu Coconut podporuje?](#ktere-verze-pythonu-coconut-podporuje)
-1. [Kde najdu záznam o posledních změnách Coconut?](#kde-najdu-zaznam-o-poslednich-zmenach-coconut)
-1. [Pokoušel jsem se napsat rekurzivní iterátor a můj Python způsobil chybu segmentace (segfault)!](#pokousel-jsem-se-napsat-rekurzivni-iterator-a-muj-python-zpusobil-chybu-segmentace)
-1. [Jsem-li perfektně spokojený s Pythonem, proč bych se měl učit Coconut?](#jsem-li-perfektne-spokojeny-s-pythonem-proc-bych-se-mel-ucit-coconut)
-1. [Přináší Coconut také nějakou pomůcku pro ladění kódu?](#prinasi-coconut-take-nejakou-pomucku-pro-ladeni-kodu)
-1. [Nemám rád funkcionální programování, měl bych se přesto učit Coconut?](#nemam-rad-funkcionalni-programovani-mel-bych-se-presto-ucit-coconut)
-1. [Neznám funkcionální programování, mám se přesto pustit do Coconut?](#neznam-funkcionalni-programovani-mam-se-presto-pustit-do-coconut)
-1. [Neznám Python moc dobře, měl bych se přesto učit Coconut?](#neznam-python-moc-dobre-mel-bych-se-presto-ucit-coconut)
-1. [Proč není Coconut čistě funkcionální?](#proc-neni-coconut-ciste-funkcionalni)
-1. [Neuškodí transpilovaný jazyk jako Coconut komunitě Pythonu?](#neuskodi-transpilovany-jazyk-jako-coconut-komunite-pythonu)
-1. [Chci přispívat do Coconut, jak mohu začít?](#chci-prispivat-do-coconut-jak-mohu-zacit)
-1. [Proč název Coconut?](#proc-nazev-coconut)
-1. [Kdo vytvořil Coconut?](#kdo-vytvoril-coconut)
-
-<!-- /MarkdownTOC -->
+## Frequently Asked Questions
 
 ### Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu? 
 
