@@ -1,7 +1,9 @@
-requirements: "requirements.txt"
+
 
 python:
     version: 3
+    extra_requirements:
+        - docs
 
 formats:
     - htmlzip

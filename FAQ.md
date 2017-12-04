@@ -1,9 +1,10 @@
 # Coconut FAQ
 
+<!-- MarkdownTOC
 ```eval_rst
 .. contents::
     :local:
-```
+```           -->
 
 ## Frequently Asked Questions
 
