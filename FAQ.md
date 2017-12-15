@@ -1,12 +1,10 @@
-# Coconut FAQ
+## Frequently Asked Questions
 
-<!-- MarkdownTOC
+<!--
 ```eval_rst
 .. contents::
     :local:
-```           -->
-
-## Frequently Asked Questions
+```     -->        
 
 ### Mohu použít moduly Pythonu z Coconut a moduly Coconut z Pythonu? 
 
