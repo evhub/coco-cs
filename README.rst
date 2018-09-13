@@ -8,7 +8,11 @@ Coconut
    DOCS
    FAQ
 
-`Coconut <http://coconut-lang.org/>`_ je varianta jazyka `Python <https://www.python.org/>`_ vytvořená pro jednoduché a elegantní Pythonické **funkcionální programování**.
+Coconut (`coconut-lang.org`__) je varianta jazyka `Python <https://www.python.org/>`_, která k syntaxi Pythonu **přidává** nové vlastnosti pro jednoduché a elegantní Pythonické **funkcionální programování**.
+
+__ Coconut_
+.. _Coconut: http://coconut-lang.org/
+
 
 Coconut je vyvíjen na `GitHub <https://github.com/evhub/coconut>`_ a hostován na `PyPI <https://pypi.python.org/pypi/coconut>`_.
 
