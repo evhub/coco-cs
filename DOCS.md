@@ -553,7 +553,7 @@ could_be_none()?.attr[index].method()
  calculate_default_value())(could_be_none())
 (lambda result: None if result is None else
  result.attr[index].method())(could_be_none())
-
+```
 ### Alternativy Unicode
 
 Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternativy jsou poměrně nápovědné, se záměrem reflektovat vzhled nebo účel originálního symbolu. 
