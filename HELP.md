@@ -1,42 +1,9 @@
 # Tutoriál
 
-<!-- MarkdownTOC -->
-
-1. [Úvod](#uvod)
-    1. [Instalace](#instalace)
-1. [Začínáme](#zaciname)
-    1. [Použití překladače](#pouziti-prekladace)
-    1. [Použití kompilátoru](#pouziti-kompilatoru)
-    1. [Použití IPython / Jupyter](#pouziti-ipython-jupyter)
-    1. [Případové studie](#pripadove-studie)
-1. [Případová studie 1: `factorial`](#pripadova-studie-1-factorial)
-    1. [Imperativní metoda](#imperativni-metoda)
-    1. [Rekurzivní metoda](#recurzivni-metoda)
-    1. [Iterativní metoda](#iterativni-metoda)
-    1. [Metoda `addpattern`](#metoda-addpattern)
-1. [Případová studie 2: `quick_sort`](#pripadova-studie-2-quicksort)
-    1. [Třídění sekvence](#trideni-sekvence)
-    1. [Třídění iterátoru](#trideni-iteratoru)
-1. [Případová studie 3: `vector` - část I](#pripadova-studie-3-vector-part-i)
-    1. [2-vector](#2-vector)
-    1. [Konstruktor pro n-Vector](#konstruktor-pro-n-vector)
-    1. [Metody pro n-Vector](#metody-pro-n-vector)
-1. [Případová studie 4: `vector_field`](#pripadova-studie-4-vectorfield)
-    1. [`diagonal_line`](#diagonalline)
-    1. [`linearized_plane`](#linearizedplane)
-    1. [`vector_field`](#vectorfield)
-    1. [Aplikace](#aplikace)
-1. [Případová studie 5: `vector` -část II](#pripadova-studie-5-vector-part-ii)
-    1. [`__truediv__`](#truediv)
-    1. [`.unit`](#unit)
-    1. [`.angle`](#angle)
-1. [Vyplnění mezer](#vyplneni-mezer)
-    1. [Líné seznamy](#line-seznamy)
-    1. [Skladba funkcí](#skladba-funkci)
-    1. [Implicitní parciály](#implicitni-parcialy)
-    1. [Další čtení](#dalsi-cteni)
-
-<!-- /MarkdownTOC -->
+```eval_rst
+.. contents::
+    :local:
+```
 
 ## Úvod 
 
@@ -63,7 +30,7 @@ a mnoho dalšího!
 
 ### Instalace 
 
-Ve své podstatě je Coconut kompilátor, který převádí kód v Coconut na kód v Pythonu. To znamená, že tam, kde lze použít skript Pythonu, lze také použít skript Coconut. Pro přístup k tomuto kompilátoru poskytuje Coconute utilitu CLI (command line interface), která dovede:
+Ve své podstatě je Coconut kompilátor, který převádí kód v Coconut na kód v Pythonu. To znamená, že tam, kde lze použít skript Pythonu, lze také použít skript Coconut. Pro přístup k tomuto kompilátoru poskytuje Coconut utilitu CLI (command line interface), která dovede:
 
 - kompilovat jednotlivé soubory nebo celé projekty,
 - překládat za pochodu kód Coconut,
@@ -78,7 +45,7 @@ Instalace Coconut je velmi jednoduchá:
 pip install coconut
 ```
 
-_Note: Setkáváte-li se s chybami, zkuste spustit výše uvedený příkaz s flagem `--user`. Ujistěte se, že umístění instalace Coconut (v Unixu `/usr/local/bin` pokud jste nepoužil `--user` nebo `${HOME}/.local/bin/` pokud ano) je uvedeno v proměnné prostředí `PATH`. Pokud se při instalaci pomocí `pip`stále vyskytují chyby, můžete instalovat Coconut pomocí `conda` podle těchto [pokynů](DOCS.html#using-conda)._
+_Note: Setkáváte-li se s chybami, zkuste spustit výše uvedený příkaz s flagem `--user`. Ujistěte se, že umístění instalace Coconut (v Unixu `/usr/local/bin` pokud jste nepoužil `--user` nebo `${HOME}/.local/bin/`) pokud ano je uvedeno v proměnné prostředí `PATH`. Pokud se při instalaci pomocí `pip`stále vyskytují chyby, můžete instalovat Coconut pomocí `conda` podle těchto [pokynů](DOCS.html#using-conda)._
 
 Pro kontrolu, že instalace proběhla správně, zkuste na příkazový řádek zadat
 ```
@@ -86,7 +53,11 @@ coconut -h
 ```
 což by mělo zobrazit nápovědu pro Coconut.
 
+_Note: If you're having trouble installing Coconut, or if anything else mentioned in this tutorial doesn't seem to work for you, feel free to [ask for help on Gitter](https://gitter.im/evhub/coconut) and somebody will try to answer your question as soon as possible._
 
+### Bez instalace
+
+Chcete-li používat Coconut bez jeho instalování, zkuste [online interpreter](https://cs121-team-panda.github.io/coconut-interpreter).
 
 ## Začínáme 
 
@@ -109,92 +80,96 @@ Pro případ, že jste to dříve přehlédli - _veškerý platný Python 3 je p
 Z toho vyplývá, že jste-li důvěrně seznámen s Pythonem, jste již z větší části seznámen se skladbou Coconut a jeho celou standardní knihovnou. Zkusme pro ukázku zadat nějaký jednoduchý kód Pythonu do překladače Coconut:
 
 ```coconut_pycon
->>> 'hello, world!'
-hello, world!
+>>> "hello, world!"
+'hello, world!'
 >>> 1 + 1
 2
 ```
+### Psaní zdrojových souborů
 
-### Použití kompilátoru 
+Zajisté - být schopen za pochodu interpretovat kód Coconutu, je báječné - bylo by to však málo prospěšné bez schopnosti psát a kompilovat větší programy. Sestavení jednoduchého programu "hello, world!" si nyní ukážeme.
 
-Ovšemže, být schopen za běhu interpretovat kód Coconut je velká věc ale bez schopnosti psát a kompilovat programy by naše programování nebylo příliš užitečné. Pojďme si proto napsat první program v Coconut: "Hello, world!".
+Nejprve vytvoříme soubor, do něhož svůj kód vložíme. Přípona zdrojových souborů pro Coconut je `.coco`, takže vytvořte soubor `hello_world.coco`. Poté byste měl věnovat čas nastavení vašeho textového editoru na řádné zvýrazňování kódu Coconut. Příslušné pokyny naleznete v dokumentaci [Zvýraznění skladby](DOCS.html#syntax-highlighting).
 
-Nejprve vytvoříte soubor, do něhož náš kód vložíte. Doporučená extenze pro zdrojové soubory Coconut je `.coco`, vytvořte tedy soubor s názvem `hello_world.coco`. Poté, co to uděláte, měli byste nastavit svůj textový editor na správné zvýrazňování zdrojového kódu. Příslušné instrukce naleznete v odstavci [Zvýraznění skladby](DOCS.html#zvyrazneni-skladby). 
-
-Nyní vložíme kód do souboru `hello_world.coco`. Na rozdíl od Pythonu, kde záhlaví a různé importy jsou obvyklé a velmi často velmi nezbytné,
+Nyní do našeho souboru `hello_world.coco` vložíme kód. Na rozdíl od Pythonu, jehož záhlaví jsou obvyklá a často nezbytná,
 ```coconut_python
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 from __future__ import print_function, absolute_import, unicode_literals, division
 ```
-provede kompilátor Coconut potřebné importy automaticky, takže jediné o co se musíte starat, je vlastní kód.
+provede to kompilátor Coconut za nás automaticky, takže se o formální nezbytnosti vůbec nemusíme starat a můžeme se věnovat přímo svému kódu. Vložíme tedy kód našeho programu "hello, world!".
 
-V čistém Pythonu 3 má příkaz k tisku formát:
+V Python 3 je text programu tento:
 ```coconut_python
 print("hello, world!")
 ```
-a stejně tak i v Coconut, kde navíc je možné použít potrubní (pipeline) usměrnění v zápisu:
+Byť tento kód chodí v Coconut také, lze jej specielně pro Coconut napsat v alternativní pojítkové formě (pipeline-style):
 ```coconut
-"hello, world!" |> print
+>>> "hello, world!" |> print
 ```
-z něhož je zřetelně vidět, jak operátor `|>` způsobí předání řetězce coby argument následné funkci, jíž je v tomto případě příkaz k tisku. Nyní náž jednoduchý program "hello_world" uložíme a zkusíme jej spustit. 
+Na příkladu pěkně vidíme, jak operátor Coconutu `|>` umožňuje pojítky směrované (pipeline-style) programování: předává objekt z funkce do funkce s postupně odlišnými operacemi. V tomto případě vkládáme objekt `"hello, world!"` do operace `print`. 
+Uložme nyní náš jednoduchý program "hello, world!" program a zkusme jej spustit.
 
-Kompilování souborů a projektů utilitou Coconut je vemi jednoduché. Zapíšeme pouze
+### Použití kompilátoru 
+
+Kompilování souborů a projektů utilitou CLI je vemi jednoduché. Nacédujeme (`cd`) se do adresáře se souborem `hello_world.coco` a zapíšeme
 ```
-coconut hello_world.coco
+>>> coconut hello_world.coco
 ```
 což vytvoří výstup
 ```
 Coconut: Compiling         hello_world.coco ...
 Coconut: Compiled to       hello_world.py .
 ```
-Soubor `hello_world.py` uložte do stejného adresáře jako `hello_world.coco` a měl byste být schopen spustit soubor příkazem 
+a nově vytvořený soubor `hello_world.py` vloží do stejného adresáře jako `hello_world.coco`. Potom je možné tento soubor spustit příkazem
 ```
-python hello_world.py
+>>> python hello_world.py
 ```
-což by mělo vyprodukovat výstup `hello, world!`.
+což by mělo v konzole vyprodukovat výstup `hello, world!`.
 
-_Note: Můžete provést kompilaci a spuštění v jednom kroku, použijete-li flag `--run`.
+_Note: Můžete provést kompilaci a spuštění v jednom kroku, použijete-li flag `--run` (zkráceně `-r`).
 
-Kompilování jednotlivých souborů ovšem není jediný způsob použití kompilátoru Coconut. Můžeme také kompilovat všechny soubory v daném adresáři najednou a to pouhým uvedením názvu adresáře.
+Kompilování jednotlivých souborů postupně není jediný způsob jejich kompilace. Můžeme také kompilovat všechny soubory v daném adresáři najednou a to pouhým uvedením názvu adresáře jako prvního argumentu. Máme-li například soubory `havel.coco` a `ravel.coco` v adresáři `F:\codetest\coconut\compil`, zařídíme jejich kompilaci příkazem
+```
+F:\codetest\coconut\compil> coconut ./
+Compiling        havel.coco ...
+Compiled to      havel.py
+Compiling        ravel.coco ...
+Compiled to      ravel.py
+```
+V adresáři `compil` se navíc vytvoří soubor `__coconut__.py`.
 
 Kompilátor si sám vyhledá všechny kompilovatelné soubory a vytvoří pomocný soubor `__coconut__.py`, do něhož uloží potřebné informace z jednotlivých souborů.
 
-Kompilátor Coconut  podporuje velké množství různých kompilačních možností - viz nápověda `coconut -h`. Nejužitečnější z nich je opce `--linenumbers` (nebo zkráceně `-l`), která přidává čísla řádků ze zdrojového kódu do kompilovaného kódu, umožňujíce tak při ladění vidět číslo zdrojového kódu, odpovídající chybujícímu řádku kompilovaného kódu.
+Kompilátor Coconutu podporuje velké množství různých kompilačních možností - viz nápověda `coconut -h`. Nejužitečnější z nich je opce `--linenumbers` (nebo zkráceně `-l`), která přidává čísla řádků ze zdrojového kódu do kompilovaného kódu, umožňujíce tak při ladění vidět číslo zdrojového kódu, odpovídající chybujícímu řádku kompilovaného kódu.
+
+_Note: Nepotřebujete-li plnou kontrolu kompilátoru, můžete použít [automatickou kompilaci](DOCS.html#automatic-compilation).
 
 ### Použití IPython/Jupyter 
 
 Coconut usiluje o rozsáhlou podporu zavedených nástrojů pro vědecké výpočty v Pythonu.
 
-To zahrnuje podporu aplikace [IPython](http://ipython.org/) (jádro Pythonu pro framework [Jupyter](http://jupyter.org/)) místo klasické konzoly Pythonu. Coconut je použit jak jako jádro pro notebooky a konzoly Jupytera, tak jako rozšíření uvnitř jádra IPythonu.
-
-Pro spuštění notebooku Jupytera s Coconut jako jádrem použijete příkaz
+Za tím účlem poskytuje Coconut podporu aplikace [IPython/Jupiter](DOCS.html#ipython-jupyter-support). Pro spuštění notebooku Jupytera s Coconut jako jádrem, použijete příkaz
 ```
 coconut --jupyter notebook
 ```
-a pro spuštění konzoly Jupytera použijete příkaz
-```
-coconut --jupyter console
-```
-nebo lze ekvivalentně v obou příkazech zaměnit `--ipython` za `--jupyter`.
-
 
 ### Případové studie 
 
 Protože byl Coconut vytvořen se záměrem aby byl užitečný, bude nejlépe jej předvést v akci při řešení konkrétních problémů, které jsou v tomto tutoriálu označeny jako případové studie.
 
-Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [dokumentaci](http://coconut.readthedocs.io/cs/latest/DOCS.html). 
+Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [dokumentaci](DOCS.html). 
 
 ## Případová studie 1: `factorial` 
 
-V první ukázce budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`. 
+V první studii budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`. 
 To je poněkud dětinský příklad, protože tuto úlohu zvládne Python snadno také ale poslouží k demonstraci některých základních vlastnoctí Coconut a jejich výhodného použití.
 
-Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři kategorie: imperativní, recurzivní, iterativní a s použitím `addpattern`.
+Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři hlavní kategorie: imperativní, recurzivní, iterativní a s použitím `addpattern`.
 
 ### Imperativní metoda 
 
-Imperativní přístup bychom při psaní `factoriálu` použili v jazyce typu C. Imperativní přístupy zahrnují mnohé změny stavu, kdy jsou pravidelně měněny proměnné při procházení smyčkou. Imperativní přístup v Coconut vypadá nějak takto:
+Imperativní přístup bychom při psaní `factoriálu` použili v jazyce typu C. Imperativní přístupy zahrnují mnohé změny stavu, kdy jsou pravidelně měněny proměnné při procházení smyčkou. Imperativní přístup v Coconut k problému `factorial` vypadá nějak takto:
 ```coconut
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -212,13 +187,13 @@ def factorial(n):
 0 |> factorial |> print # 1
 3 |> factorial |> print # 6
 ```
-Předtím, než se budeme zabývat průběhem výpočtu, ověřme si nejprve testovací případy. Kdybychom psali skutečný program, uložili bychom jej do souboru, jenž bychom kompilovali ale protože si jenom zkoušíme věci, vystačíme si s překopírováním kódu do překladače. Měli bychom dostat `1`, `6` a dvakrát `TypeError`.
+Předtím, než se budeme podrobně zabývat průběhem výpočtu, prověřme si nejprve jeho testovací případy. Kdybychom psali skutečný program, uložili bychom jej do souboru, jenž bychom kompilovali ale protože si jenom zkoušíme věci, vystačíme si s překopírováním kódu do překladače. Měli bychom dostat dvakrát `TypeError`, potom `1` a `6`.
 
-Nyní, když jsme si ověřili, že nám kód chodí správně, pohleďmě o co v něm kráčí. Protože je imperativní přístup zcela nefunkcionální, Coconut nám v tomto případě příliš nepomůže. Avšak i zde činí použití infixové notace (vložení funkce `isinstance` mezi argumenty: `n` a `int`) kód čistší a čitelnější.
+Nyní, když jsme si ověřili, že nám kód chodí správně, pohleďmě o co v něm kráčí. Protože je imperativní přístup zcela nefunkcionální, Coconut nám v tomto případě příliš nepomůže. Avšak i zde použití infixové notace (vložení funkce mezi své argumenty `n` a `int`: `` n `isinstance` int `` ) činí kód čistší a čitelnější.
 
 ### Rekurzivní metoda 
 
-Rekurzivní metoda je první ze zcela funkcionálních přístupů a to v tom, že nezahrnuje změnu stavu a smyčky jako u imperativního přístupu. Rekurzivní přístup se vyhýbá potřebě měnit proměnné tím, že tato změna je implicitně zahrnuta v rekurzivním volání funkce. Zde je rekurzivní přístup k problému `factorial`:
+Rekurzivní přístup je první ze zcela funkcionálních přístupů a to v tom, že nezahrnuje změnu stavu a smyčky jako u imperativního přístupu. Rekurzivní přístup se vyhýbá potřebě měnit proměnné tím, že tato změna je implicitně zahrnuta v rekurzivním volání funkce. Zde je rekurzivní přístup k problému `factorial`:
 ```coconut
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -239,14 +214,13 @@ def factorial(n):
 
 Překopírujte si kód a testy do překladače. Měl byste dostat stejné vysledky jako v imperativní verzi.
 
-Proberme si specifika syntaxe v tomto příkladu. První věcí je `case n`. Tento příkaz spouští blok `case`, v němž se mohou vyskytnout pouze příkazy `match`. Každý příkaz `match` se pokouší porovnat svou předlohu s hodnotou v bloku `case`. U první úspěšné shody jsou realizována všechna připojení proměnných. Navíc, jak je tomu v tomto případě, mohou mít příkazy `match` také kontrolky (guards) `if`, které deklarují podmínku pro další provedení kódu. Posléze, za blokem `case` je příkaz `else` který se provede jen v případě absence jakékoliv shody.
+Proberme si specifika syntaxe v tomto příkladu. Příkaz `case n:` spouští blok se dvěma příkazy `match`. Každý příkaz `match` se pokouší porovnat svou deklaraci (pattern) s argumentem bloku `case`. Příkaz `else` se provede jen v případě absence jakékoliv shody.
 
-Konkretně v tomto příkladě ověřuje první příkaz `match`, zda je `n` shodné s `0`. Pakliže ano, provede se `return 1`. Následně druhý příkaz `match` ověřuje, zda se `n` shoduje s `x is int`, což 
-ověřuje, zda je `n` celé číslo (s použitím `isinstance`) a pokud ano, přiřadí `x = n`, potom kontroluje, zda je `x > 0` a pokud ano, provede `return x * factorial(x-1)`. Pokud se neprovede žádný z obou příkazů, příkaz `else` spustí a provede `raise TypeError("argument faktoriálu musí být celé číslo >= 0")`. 
+Konkretně v tomto příkladě ověřuje `match`, zda je `n` shodné s `0`. Pakliže ano, provede se `return 1`. Pokud ne, prověřuje se druhý `match`, v němž je zavedena lokální poměnná `x` s počáteční hodnotou `x = n` a v níž je opakovaně (rekurzivně) volána funkce `factorial(x)` pro snižující se hodnotu argumentu. V okamžiku, kdy `x=1`, vrátí příkaz `return` součin čísel `1` až `n-1`. Pokud se neprovede žádný z obou příkazů, příkaz `else` spustí a provede `raise TypeError("argument faktoriálu musí být celé číslo >= 0")`. 
 
-I když je tento příklad velmi prostý, je postup v něm použitý,  jedním z nejmocnějších i nejsložitějších postupů v Coconut. Tento postup se nazývá  **pattern-matching** neboli  _porovnávání se vzorem_. Jak jsme viděli, pivotním slovem v tomto konstruktu je klíčové slovo `match`, které jsme v našem příkladě používali opakovaně pro ověření různých případů (`case`).
+I když je tento příklad velmi prostý, je postup v něm použitý,  jedním z nejmocnějších i nejsložitějších postupů v Coconut. Tento postup se nazývá  **pattern-matching** neboli  _porovnávání s předlohou_. Jak jsme viděli, pivotním slovem v tomto konstruktu je klíčové slovo `match`, které jsme v našem příkladě používali opakovaně pro ověření různých případů (`case`).
 
-Jako intuitivní vodítko si lze představit _přiřazení_ tam, kde vidíme klíčové slovo `match`.  Případně si lze uvědomit, že všechny příkazy `match` mohou být konvertovány na ekvivalentní příkazy `destructuring` přiřazení, které jsou rovněž platným konstruktem Coconut. V tomto případě by ekvivalentním `rozkladným přiřazením` k funkcí `factorial` nahoře bylo:
+Jako intuitivní vodítko si lze představit _přiřazení_ tam, kde vidíme klíčové slovo `match`.  Případně si lze uvědomit, že všechny příkazy `match` mohou být konvertovány na ekvivalentní příkazy rozkladného (destructuring) přiřazení, které jsou rovněž platným konstruktem Coconut. V tomto případě by ekvivalentním `rozkladným přiřazením` k funkcí `factorial` nahoře bylo:
  
 ```coconut
 def factorial(n):
@@ -276,13 +250,13 @@ def factorial(n):
 3 |> factorial |> print  # 6	
 ```
 
-Nejprve copy and paste! I když by toto rozkladné přiřazení mělo pracovat, je mnohem nemotornější než příkaz `match` v případě, že očekáváte, že by mohlo dojít selhání, což je důvod pro existenci příkazu `match`. Ekvivalent rozkladného (destructuring) přiřazení však objasňuje, co přesně pattern-matching dělá - ukazujíc na to, že příkazy `match` jsou vlastně něco jako příkazy rozkladného přiřazení. 
+Nejprve copy and paste! I když by toto rozkladné přiřazení mělo pracovat, je mnohem nemotornější než příkaz `match` v případě, že očekáváte, že by mohlo dojít k selhání, což je důvod pro existenci příkazu `match`. Ekvivalent rozkladného (destructuring) přiřazení však objasňuje, co přesně pattern-matching dělá - ukazujíc na to, že příkazy `match` jsou vlastně něco jako příkazy rozkladného přiřazení. 
 
 In fact, to be explicit about using destructuring assignment instead of normal assignment, the `match` keyword can be put before a destructuring assignment statement to signify it as such.
 	
 Při používání příkazů pro pattern-matching a destructuring assignment v dalších uázkách bude užitečné, když si pomyslíme _přiřazení_ pokaždé, když uvidíme klíčové slovo `match`.
 
-Dalším snadným vylepšením naší funkce `factorial` je použití žolíkového označení  `_`. Vlastně nepotřebujeme přiřadit `x` jako novou proměnnou, protože má stejnou hodnotu jako `n`, takže když použijeme `_` místo `x`, Coconut tuto proměnnou nikdy nepřiřadí. Naši funkci `factorial` můžeme tedy přepsat takto:
+Dalším snadným vylepšením naší funkce `factorial` je použití žolíkového označení  `_`. Vlastně nepotřebujeme přiřadit `x` jako novou proměnnou, protože má stejnou hodnotu jako `n`, takže když použijeme `_` místo `x`, Coconut tuto proměnnou vlastně nikdy nepřiřadí. Naši funkci `factorial` můžeme tedy přepsat takto:
 ```coconut
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -303,7 +277,7 @@ def factorial(n):
 
 Copy, paste! Tato nová funkce `factorial` by se měla chovat úplně stejně jako předtím.
 
-Až dosud jsme se u rekurzivní metody zabývali pouze porovnáním předlohy (pattern matching) ale ve skutečnosti existuje další způsob, jímž můžeme vylepšit naši funkci `factorial`. Coconut provádí automatickou optimalizaci koncového volání, což znamená že kdykoli funkce vrací přímo volání jiné funkce, zadrží (optimize away) Coconut další volání. Naši funkci `factorial` tedy přepíšeme pro použití koncového volání:
+Až dosud jsme se u rekurzivní metody zabývali pouze porovnáním předlohy (pattern matching) ale ve skutečnosti existuje další způsob, jímž můžeme vylepšit naši funkci `factorial`. Coconut provádí automatickou optimalizaci koncového volání, což znamená že kdykoli funkce přímo vrací volání jiné funkce, zadrží (optimalizuje) Coconut další volání. Naši funkci `factorial` tedy přepíšeme pro použití koncového volání (tail call):
 ```coconut
 def factorial(n, acc=1):
     """Compute n! where n is an integer >= 0."""
@@ -322,7 +296,7 @@ def factorial(n, acc=1):
 3 |> factorial |> print # 6
 ```
 
-Copy, paste! Tato nová funkce `factorial` je ekvivalentní originální verzi s tou výjimkou, že nikdy nevyvolá `RuntimeError` v důsledku dosažení maximální hloubky rekurze v Pythonu, protože Coconut odstaví (optimize away) koncové rekurzivní volání.
+Copy, paste! Tato nová funkce `factorial` je ekvivalentní originální verzi s tou výjimkou, že nikdy nevyvolá `RuntimeError` v důsledku dosažení maximální hloubky rekurze v Pythonu, protože Coconut odstaví (optimalizuje) koncové rekurzivní volání.
 
 ### Iterativní metoda 
 
@@ -345,7 +319,7 @@ def factorial(n):
 3 |> factorial |> print # 6
 ```
 
-Copy, paste! Tato definice se od rekurzivní definice liší pouze v jednom řádku. To je záměrné, protože jak iterativní, tak rekurzivní přístupy jsou funkcionální. Odlišný řádek je tento:
+Copy, paste! Tato definice se od rekurzivní definice liší pouze v jednom řádku, což je záměrné, protože jak iterativní, tak rekurzivní přístupy jsou funkcionální. Odlišný řádek je tento:
 ```coconut
 return range(1, n+1) |> reduce$(*)
 ```
@@ -373,7 +347,7 @@ Nejprve operátorová funkce. Operátorová funkce se v Coconut vytvoří uzavř
 
 _Note: Kdybychom povolili režim `--strict`, jenž hlídá náš kód z hlediska úpravy textu, dostali bychom chybové hlášení, kdykoliv bychom použili příkaz `lambda` Pythonu._
 
-Nyní k částečné aplikaci. Lze si myslet, že částečná aplikace je _volání líné funkce_ s operátorem lenosti `$`, kde _lenost_ znamená: "nevyhodnocuj, dokud nemusíš". Je-li v Coconut volání funkce předznamenáno znakem `$`, jako v tomto případě, je normální provedení funkce nahrazeno novou funkcí s již poskytnutými argumenty, takže je funkce volána jak pro částečně použité argumenty, tak pro nové argumenty (v tomto pořadí). V tomto případě je `reduce$(*)` ekvivalentní k `(*args, **kwargs) -> reduce((*), *args, **kwargs)`.
+Nyní k částečné aplikaci funkce. Lze si myslet, že částečná aplikace je _volání líné funkce_ s operátorem lenosti `$`, kde _lenost_ znamená: "nevyhodnocuj, dokud nemusíš". Je-li v Coconut volání funkce předznamenáno znakem `$`, jako v tomto případě, je normální provedení funkce nahrazeno novou funkcí s již poskytnutými argumenty, takže je funkce volána jak pro částečně použité argumenty, tak pro nové argumenty (v tomto pořadí). V tomto případě je `reduce$(*)` ekvivalentní k `(*args, **kwargs) -> reduce((*), *args, **kwargs)`.
 
 Spojíme-li to vše dohromady, vidíme jak jediný řádek kódu
 ```coconut
@@ -419,7 +393,7 @@ Copy, paste! Tato verze by měla pracovat stejně jako předchozí, až nato že
 
 *Nejprve* zápis přiřazovací funkce. To je docela prosté. Je-li funkce definována s rovnítkem `=` místo dvojtečkou `:`, musí být poslední řádek výrazem, jenž je také automaticky vracen.
 
-*Dále* definice porovnávací (pattern-matching) funkce. Tato definice zajišťuje provedení přesně toho, co je uvedeno v názvu - porovnání všech argumentů funkce se zadaným vzorem. Pokud se vzor neshoduje s žádným z argumentů (nebo je-li zadán nesprávný počet argumentů), vyvolá funkce chybové hlášení `MatchError`. Chcete-li (podobně jako u rozkladného přiřazení) explicitně deklarovat definici p-m funkce, přidat `match` před `def`.
+*Dále* definice porovnávací (pattern-matching) funkce. Tato definice zajišťuje provedení přesně toho, co je uvedeno v názvu - porovnání všech argumentů funkce se zadaným vzorem. Pokud se vzor neshoduje s žádným z argumentů (nebo je-li zadán nesprávný počet argumentů), vyvolá funkce chybové hlášení `MatchError`. Chcete-li explicitně deklarovat definici p-m funkce, můžete přidat `match` před `def`.
 
 *Za třetí*, `addpattern`. Dekorátor `addpattern` přijímá jako argument předtím definovanou p-m funkci a vrací dekorátor, který dekoruje novou m-p funkci přidáním nového vzoru jako další případ (case) ke starým vzorům. Dekorátor `addpattern` dělá tedy přesně to, co říká - přidává další vzor k existující p-m funkci.
 
@@ -447,7 +421,7 @@ Ve druhé případové studii budeme používat algoritmus [quick sort](https://
 
 ### Třídění sekvence 
 
-Nejprve `quick_sort` pro seznamy. Použijeme rekurzivní přístup založený na dekorátoru `addpattern` - podobný k přístupu, použitého u posledně psané funkce `factorial` k omezení počtu indentací. Bez dalších okolků, zde je naše implementace `quick_sort` pro seznamy:
+Nejprve `quick_sort` pro seznamy. Použijeme rekurzivní přístup založený na dekorátoru `addpattern` - podobný k přístupu, použitého u posledně psané funkce `factorial` k omezení počtu odsazení. Bez dalších okolků, zde je naše implementace `quick_sort` pro seznamy:
 ```coconut
 def quick_sort([]) = []
 
@@ -467,7 +441,11 @@ def quick_sort([head] + tail) =
 [4,3,2,1,0] |> quick_sort |> print # [0,1,2,3,4]
 [3,0,4,2,1] |> quick_sort |> print # [0,1,2,3,4]
 ```
-Copy, paste! Zde je pouze jedna nová věc: head-tail pattern-matching. Máme zde schema čelo-chvost (`[head] + tail`), které má obecně formu seznamu nebo entice přidanou k proměnné. Když se tato forma vyskytne v jakémkoli p-m kontextu, je s porovnávanou hodnotou zacházeno jako se sekvencí, seznamem nebo enticí porovnávanou s počátkem této sekvence, jejiž zbytek je vázán k proměnné. V tomto případě používáme schema head-tail, abychom odstranili čelo, jež můžeme použít jako pivot pro rozštěpení zbytku seznamu.
+Copy, paste! Zde jsou pouze dvě nové věci: head-tail pattern-matching a příkazy `where`. 
+
+Příkazy `where` velmi průzračné a jistě jste jejich působení sami objevili. Příkaz `where` je způsob výpočtu pro vložené upřesnění.
+
+Head-tail pattern-matching ('porovnání předlohy od čela až po chvost'), zde vidíme jako`[head] + tail`, jenž má formu seznamu nebo entice přidanou k proměnné. Když se tato forma vyskytne v jakémkoli p-m kontextu, je s porovnávanou hodnotou zacházeno jako se sekvencí, seznamem nebo enticí porovnávanou s počátkem této sekvence, jejiž zbytek je vázán k proměnné. V tomto případě používáme schema head-tail, abychom odstranili čelo, jež můžeme použít jako pivot pro rozštěpení zbytku seznamu.
 
 ### Třídění iterátoru 
 
@@ -493,7 +471,7 @@ def quick_sort(l):
 ```
 Copy, paste! Tento `quick_sort` algoritmus používá řadu nových konstruktů, takže hrr na ně.
 
-Nejprve je to operátor `::`, který se zde objevuje jak v porovnávání shody, tak samostatně. V podstatě to je líný operátor `+` pro iterátory, který spojuje nebo řetězí líně dva iterátory, nic nevyhodnocujíc, není-li žádáno; lze jej použít pro vytváření nekonečných iterátorů. V porovnání shody tuto operaci invertuje, rozkládaje (destructuring) počátek iterátoru na předlohu a zbytek, který váže k proměnné.
+Nejprve je to operátor `::`, který se zde objevuje jak v porovnávání shody (pattern-matching), tak samostatně. V podstatě to je líný operátor `+` pro iterátory, který spojuje nebo řetězí líně dva iterátory, nic nevyhodnocujíc, není-li žádáno; lze jej použít pro vytváření nekonečných iterátorů. V porovnání shody tuto operaci invertuje, rozkládaje (destructuring) počátek iterátoru na předlohu a zbytek, který váže k proměnné.
 
 Což nás přivádí k další nové věci, zápisu `match ... in ...`. Zápis
 ```coconut
@@ -711,7 +689,7 @@ Copy, paste! Je to pěkná řádka řádků. Když si to však poučeně prochá
 
 V poslední případové studii nebudu kód psát já a vy přihlížet, ale budete jej psát vy a já vám posléze ukážu, jak bych to napsal sám.
 
-Premiovou výzvou u tohoto odstavce bude napsat každou definovanou funkci do jednoho řádku. Zkuste přitom použít přiřazovací funkce:
+Bonusovou výzvou u tohoto odstavce bude napsat každou definovanou funkci do jednoho řádku. Zkuste přitom použít přiřazovací funkce:
 
 Nejprve si uveďme obecný cíl této případové studie. Chceme napsat program, který nám umožní vytvářet nekonečná pole vektorů, přes něž můžeme iterovat a s nimiž můžeme provádět různé operace. V tomto případě se budeme zajímat jenom o vektory s kladnými komponenty.
 
@@ -1100,6 +1078,19 @@ Líné seznamy jsou líně vyhodnocované iterátorové literály, podobné ve s
 ```coconut
 abc = (| a, b, c |)
 ```
+Jako u všech iterátorů Pythonu, lze volat `next` k získání následného objektu v iterátoru. S použitím líného seznamu je možné definovat hodnoty, použité ve výrazech dle potřeby bez vyvolání hlášení `NameError`:
+
+```coconut
+abcd = (| d(a), d(b), d(c) |)  # a, b, c, and d are not defined yet
+def d(n) = n + 1
+
+a = 1
+next(abcd)  # 2
+b = 2
+next(abcd)  # 3
+c = 3
+next(abcd)  # 4
+```
 
 ### Skladba funkcí 
 
@@ -1107,10 +1098,38 @@ Skladba funkcí v Coconut se zajišťuje operátorem `..`, který přijímá dv�
 ```coconut
 zipsum = map$(sum)..zip
 ```
-
-Skladba funkcí se také zbavuje potřeby mnoha závorek při zřetězeném volání funkcí, jako zde:
+Jsou-li skládané funkce uzavřeny v závorkách, lze do nich vložit argumenty:
 ```coconut
-plus1..square(3) == 10
+def plus1(x) = x + 1
+def square(x) = x * x
+
+(plus1..square)(3) == 10  # True
+```
+Funkce s různými aritami lze skládat dohromady, pokud jsou uvedeny ve správném pořadí. Při nesprávném pořadí je vyvoláno hlášení `TypeError`. V tomto příkladu spojíme unární funkci s binární:
+```coconut
+def add(n, m) = n + m  # binary function
+def square(n) = n * n  # unary function
+
+(add..square)(3, 1)    # Raises TypeError: square() takes exactly 1 argument (2 given)
+(square..add)(3, 1)    # 16
+```
+
+Jiný důležitý trik zahrnuje skládání funkce s funkcí vyššího řádu:
+```coconut
+def inc_or_dec(t):
+    # Our higher-order function, which returns another function
+    if t:
+        return x -> x+1
+    else:
+        return x -> x-1
+
+def square(n) = n * n
+
+square_inc = square..inc_or_dec(True)
+square_dec = square..inc_or_dec(False)
+square_inc(4)  # 25
+square_dec(4)  # 9
+
 ```
 _Note: Coconut také podporuje skladebné pojítkové (pipe) operátory  `..>`, `<..`, `..*>` a `<*..`._
 
@@ -1127,6 +1146,8 @@ iter$[]
 .[slice]
 .$[slice]
 ```
+Úplné vysvětlení co každý implicitní parciál dělá lze nalézt v části [implicit partials](DOCS.html#implicit-partial-application).
+
 
 ### Anotace typů
 
@@ -1141,7 +1162,7 @@ Bohužel, tyto anotace typu existují pouze v Python 3. Coconut ovšem kompiluje
 
 ### Další čtení 
 
-Všechny vlastnosti popsané v tomto tutoriálu, stejně jako řada dalších, jsou podrobně dokumentovány v podrobné [dokumentaci](http://coconut.readthedocs.io/cs/latest/DOCS.html).
+Všechny vlastnosti popsané v tomto tutoriálu, stejně jako řada dalších, jsou podrobně dokumentovány v podrobné [dokumentaci](DOCS.html).
 
 Also, if you have any other questions not covered in this tutorial, feel free to ask around at Coconut's [Gitter](https://gitter.im/evhub/coconut), a GitHub-integrated chat room for Coconut developers.
 
