@@ -18,13 +18,11 @@ Kompilátor jazyka Coconut převádí kód Coconut na kód Pythonu. Primární z
 
 Zatímco většina kódu v Coconut vychází ze snahy umožnit a zjednodušit funkcionální programování v Pythonu, další inspirace pochází z [Haskellu](https://www.haskell.org/), [CoffeeScriptu](http://coffeescript.org/), [F#](http://fsharp.org/) a z extenze Pythonu  [patterns.py](https://github.com/Suor/patterns).
 
-## Kompilace bez instalace
-
 Chcete-li vyzkoušet Coconut ve svém webovém prohlížeči, můžete použít [online interpreter](https://cs121-team-panda.github.io/coconut-interpreter).
  
-### Instalace
+## Instalace
 
-#### Použití Pip 
+### Použití Pip 
 
 Protože je Coconut hostován v [Python Package Index](https://pypi.python.org/pypi/coconut), lze jej snadno instalovat s použitím `pip`. Jednoduše nainstalujte [Python](https://www.python.org/downloads/), otevřte příkazový řádek (cmd) a zadejte
 ```
@@ -36,7 +34,7 @@ _Note: Máte-li nainstalovanou starou verzi Coconut a chcete ji aktualizovat, za
 
 Když při spuštění `pip install coconut` narazíte na chybu, spusťte příkaz znovu s volbou `--user`. Když `pip install coconut` chodí ale nemáte přístup k příkazu `coconut`, ujistěte se, že umístění vaší instalace Coconut je uvedeno v proměnné prostředí `PATH`. V UNIXu to je `/usr/local/bin` (bez `--user`) nebo `${HOME}/.local/bin/` (s `--user`).
  
-#### Použití Conda
+### Použití Conda
 
 Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.ioo/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Pouze [install `conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
 ```
@@ -1531,8 +1529,6 @@ with open('/path/to/some/file/you/want/to/read') as file_1:
 
 
 ## Vestavěné funkce
-
-### Vylepšené vestavěné funkce
 
 Objekty `map`, `zip`, `filter`, `reversed` a `enumerate` 
 jsou vylepšené verze svých ekvivalentů v Pythonu, které podporují procedury `reversed`, `repr`, optimalizované (a iterátorové) `krájení` (slicing), `len` (vše až na `filter`) a mají přidané atributy, jež mohou subtříty použít pro přístup původním argumentům objektu:
