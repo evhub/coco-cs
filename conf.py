@@ -33,6 +33,11 @@ from sphinx_bootstrap_theme import get_html_theme_path
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+source_parsers = {
+    '.md': CommonMarkParser, }
+	
+source_suffix = ['.rst', '.md']
+
 # -----------------------------------------------------------------------------------------------------------------------
 # README:
 # -----------------------------------------------------------------------------------------------------------------------
