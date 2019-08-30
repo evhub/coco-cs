@@ -45,7 +45,8 @@ Instalace Coconut je velmi jednoduchá:
 pip install coconut
 ```
 
-_Note: Setkáváte-li se s chybami, zkuste spustit výše uvedený příkaz s flagem `--user`. Ujistěte se, že umístění instalace Coconut (v Unixu `/usr/local/bin` pokud jste nepoužil `--user` nebo `${HOME}/.local/bin/`) pokud ano je uvedeno v proměnné prostředí `PATH`. Pokud se při instalaci pomocí `pip`stále vyskytují chyby, můžete instalovat Coconut pomocí `conda` podle těchto [pokynů](DOCS.html#using-conda)._
+_Note: Máte-li problém s instalací Coconut, zkuste postup uvedený v [dokumentaci o instalaci](DOCS.html#installation)._
+
 
 Pro kontrolu, že instalace proběhla správně, zkuste na příkazový řádek zadat
 ```
@@ -373,13 +374,12 @@ def factorial(n):
         raise TypeError("the argument to factorial must be an integer >= 0")
 ```
 
-Použijeme-li vestavěnou funkci  [`addpattern`](DOCS.html#addpattern), můžeme zredukovat tři identační úrovně na jednu. Pohleďte:
+Použijeme-li syntaxi [`addpattern`](DOCS.html#addpattern), můžeme zredukovat tři identační úrovně na jednu. Pohleďte:
 ```
-def factorial(0):
-    return 1
+def factorial(0) = 1
 
-@addpattern(factorial)
-def factorial(n is int if n > 0):
+addpattern def factorial(n is int if n > 0):
+
     """Compute n! where n is an integer >= 0."""
     return range(1, n+1) |> reduce$(*)
 
@@ -395,15 +395,15 @@ Copy, paste! Tato verze by měla pracovat stejně jako předchozí, až nato že
 
 *Dále* definice porovnávací (pattern-matching) funkce. Tato definice zajišťuje provedení přesně toho, co je uvedeno v názvu - porovnání všech argumentů funkce se zadaným vzorem. Pokud se vzor neshoduje s žádným z argumentů (nebo je-li zadán nesprávný počet argumentů), vyvolá funkce chybové hlášení `MatchError`. Chcete-li explicitně deklarovat definici p-m funkce, můžete přidat `match` před `def`.
 
-*Za třetí*, `addpattern`. Dekorátor `addpattern` přijímá jako argument předtím definovanou p-m funkci a vrací dekorátor, který dekoruje novou m-p funkci přidáním nového vzoru jako další případ (case) ke starým vzorům. Dekorátor `addpattern` dělá tedy přesně to, co říká - přidává další vzor k existující p-m funkci.
+*Za třetí*, `addpattern`. Dekorátor `addpattern` vytvoří novou srovnávací funkci přidáním nového vzoru (pattern) ke staré srovnávací funkci, kterou nahrazuje. Dekorátor `addpattern` dělá tedy přesně to, co říká - přidává další vzor k existující pattern-matching funkci.
 
 
 Dekorátorem `addpattern` můžeme přepsat nejenom imperativní přístup, jak jsme právě provedli, ale můžeme také přepsat rekurzivní přístup, jak vidno zde:
 ```coconut
 def factorial(0) = 1
 
-@addpattern(factorial)
-def factorial(n is int if n > 0):
+addpattern def factorial(n is int if n > 0):
+
     """Compute n! where n is an integer >= 0."""
     return n * factorial(n - 1)
 
@@ -426,8 +426,8 @@ Nejprve `quick_sort` pro seznamy. Použijeme rekurzivní přístup založený na
 def quick_sort([]) = []
 
 
-@addpattern(quick_sort)
-def quick_sort([head] + tail) =
+@addpattern def quick_sort([head] + tail) =
+
     """Sort the input sequence using the quick sort algorithm."""
 	
     (quick_sort([x for x in tail if x < head])
@@ -577,7 +577,7 @@ Copy, paste! Nově se zde dozvídáme, jak psát konstruktory `data`. Protože j
 V tomto případě konstruktor kontroluje, zda nebylo zadáno nic jiného než další `vector`, v kterémžto případě jej vrací. Jinak vrací výsledek 
 volání výchozího konstruktoru, jehož formou je `vector(pts)`, neboť takto jsme deklarovali datový typ. Používáme sekvenční p-m ke zjištění, zda jsme zadali jediný vektor, což je pouze seznam nebo entice vzorů, s nimiž je porovnáván obsah sekvence.
 
-Dalším novým konstruktem zde použitým je operátor `|*>` neboli star-pipe, který funguje úplně stejně jako normální pojítko, kromě toho, že místo volání funkce s jedním argumentem, volá ji tolika argumenty, kolik je elementů v zadané sekvenci. Rozdíl mezi `|*>` a `|>` je analogický rozdílu mezi `f(args)` a `f(*args)`.
+Dalším novým konstruktem zde použitým je operátor `|*>` neboli star-pipe, který funguje úplně stejně jako normální pojítko, kromě toho, že místo volání funkce s jedním argumentem, volá ji tolika argumenty, kolik je elementů v zadané sekvenci. Rozdíl mezi `|>` a `|*>` je analogický rozdílu mezi `f(args)` a `f(*args)`.
 
 ### Metody pro n-vector  
 

@@ -76,7 +76,7 @@ I certainly hope not! Na rozdíl od většiný transpilovaných (transpilled) ja
 
 ### Chci používat Coconut v produkčním prostředí; jak dosáhnu maximálního výkonu?
 
-Za prvé, budete potřebovat rychlý kompilátor, takže byste měl buďto  [instalovat Coconut s volbou `cPyparsing`](DOCS.html#installation) nebo použít [`PyPy`](https://pypy.org/). Za druhé, existují dvě jednoduché věci, které můžete udělat, abyste přinutili Coconut rychleji produkovat Python: kompilovat se specifikací `--no-tco` a kompilovat se specifikací `--target` pro určitou verzi Pythonu, na níž má váš kód běžet. Zadání specifikace `--target` pomůže optimalizovat kompilovaný kód pro danou verzi Pythonu a byť je koncová optimalizace [(Tail Call Optimization)](DOCS.html#tail-call-optimization) užitečná, 
+Za prvé, budete potřebovat rychlý kompilátor, takže byste měl buďto použít [`cPyparsing`](https://github.com/evhub/cpyparsing) nebo použít [`PyPy`](https://pypy.org/). Za druhé, existují dvě jednoduché věci, které můžete udělat, abyste přinutili Coconut rychleji produkovat Python: kompilovat se specifikací `--no-tco` a kompilovat se specifikací `--target` pro určitou verzi Pythonu, na níž má váš kód běžet. Zadání specifikace `--target` pomůže optimalizovat kompilovaný kód pro danou verzi Pythonu a byť je koncová optimalizace [(Tail Call Optimization)](DOCS.html#tail-call-optimization) užitečná, 
 obvykle výrazně zpomalí její provedení, takže nepoužití této možnosti způsobí výrazný nárůst výkonu.
 
 ### Chci přispívat do Coconut, jak mohu začít? 
