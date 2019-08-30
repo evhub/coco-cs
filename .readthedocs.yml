@@ -5,7 +5,7 @@ python:
         - docs
 
 formats:
-    - htmlzip
-    - pdf
+   - htmlzip
+   - pdf
 
-#    - epub
+   - epub
