@@ -32,34 +32,33 @@ což nainstaluje Coconut a jeho požadované závislosti.
 
 _Note: Máte-li nainstalovanou starou verzi Coconut a chcete ji aktualizovat, zadejte `pip install --upgrade coconut`._
 
-Když při spuštění `pip install coconut` narazíte na chybu, zkuste místo toho
+Když při spuštění `pip install coconut` narazíte na chybu, zkuste místo toho zadat v `bash` (UNIX):
 ```bash
 COCONUT_PURE_PYTHON=TRUE pip install --user --upgrade coconut
 ```
-v `bash` (UNIX) nebo
+ nebo v `cmd` (Windows):
 ```bash
 cmd /c "set COCONUT_PURE_PYTHON=TRUE&& pip install --user --upgrade coconut"
 ```
-v `cmd` (Windows), což přinutí Coconut použít modul [`pyparsing`](https://github.com/pyparsing/pyparsing) místo rychlejšího modulu [`cPyparsing`](https://github.com/evhub/cpyparsing). Pokud se vám stále vrací chyba, můžete ještě zkusit [manažer conda](#using-conda).
+což přinutí Coconut použít modul [`pyparsing`](https://github.com/pyparsing/pyparsing) místo rychlejšího modulu [`cPyparsing`](https://github.com/evhub/cpyparsing). Pokud se vám stále vrací chyba, můžete ještě zkusit [manažer conda](#using-conda).
+
 Když `pip install coconut` chodí ale nemáte přístup k příkazu `coconut`, ověřte si, že umístění instalace Coconut je uvedeno v proměnné prostředí `PATH`. V systému UNIX to je `/usr/local/bin` (bez `--user`) nebo `${HOME}/.local/bin/` (s `--user`).
  
 ### Použití Conda
 
-Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.ioo/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Pouze [install `conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
+Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.ioo/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Instalujte [`conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
 ```
 conda config --add channels conda-forge
 conda install coconut
 ```
 což řádně vytvoří a sestaví `conda recipe` z [`conda-forge` feedstock] (https://github.com/conda-forge/coconut-feedstock).
 
-_Note: Pro použití `conda` k instalaci alternativního `coconut-develop`,   
- nahraďte slovo `coconut` souslovím `coconut-develop` v posledních třech příkazech nahoře._
 
 ### Volitelné závislosti
 
 Coconut má také volitelné dependence, instalovatelné zadáním
 ```
-pip install coconut [název volitelné závislosti]
+pip install coconut [název_volitelné_závislosti]
 ```
 nebo pro instalaci více dependencí,
 ```
@@ -69,10 +68,10 @@ pip install coconut [opt_dep_1, opt_dep_2]
 
 - `all`: alias pro `jupyter, watch, jobs, mypy, asyncio`  (doporučný způsob  
    instalace úplné verze Coconut) 
-- `jupyter/ipython`: umožňuje použití flagu `--jupyter` / `--ipython`
-- `watch`: umožňuje flag `--watch`
-- `jobs`: umožňuje flag `--jobs`
-- `mypy`: umožňuje flag `mypy`
+- `jupyter/ipython`: flagem `--jupyter` / `--ipython`
+- `watch`: flagem `--watch`
+- `jobs`: flagem `--jobs`
+- `mypy`: flagem `mypy`
 - `asyncio`: umožňuje použití knihovny [`asyncio`](https://docs.python.org/3/library/asyncio.html) 
 na starší verze Pythonu s využitím aplikace [`trollius`](https://pypi.python.org/pypi/trollius),
 
@@ -87,7 +86,7 @@ Případně, chcete-li si vyzkoušet poslední a nejlepší Coconut, zapište
 ```
 pip install coconut-develop
 ```
-což nainstaluje nejposlednější chodící verzi Coconutu z [větve `develop`](https://github.com/evhub/coconut/tree/develop). Volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše. Více informací o aktuální vývojové sestavě najdete na [vývojářské verzi](http://coconut.readthedocs.io/en/develop/DOCS.html) této dokumentace. Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji vytvořením [nového issue](https://github.com/evhub/coconut/issues/new).
+což nainstaluje nejposlednější chodící verzi Coconutu z větve [`develop`](https://github.com/evhub/coconut/tree/develop). Volitelná instalace závislostí je podporována stejným způsobem, jak popsáno výše. Více informací o aktuální vývojové sestavě najdete ve [vývojářské verzi](http://coconut.readthedocs.io/en/develop/DOCS.html) této dokumentace. Buďte varováni: `coconut-develop` může být nestabilní — narazíte-li na chybu, prosím ohlašte ji vytvořením nového [issue](https://github.com/evhub/coconut/issues/new).
 
 ## Kompilace
 
@@ -117,7 +116,7 @@ dest            cílová složka pro compilované soubory  (implicitně jí je z
 -v, --version           print Coconut and Python version information
 -t version, --target version
                         specify target Python version (defaults to universal)
--i, --interact			force the interpreter to start (otherwise starts if no
+-i, --interact          force the interpreter to start (otherwise starts if no
                         other command is given) (implies --run)
 -p, --package           compile source as part of a package (defaults to only
                         if source is a directory)
@@ -162,7 +161,7 @@ dest            cílová složka pro compilované soubory  (implicitně jí je z
 ```
 
 ### Skripty Coconutu
-```
+
 Ke spuštění souboru Coconut jako skriptu poskytuje Coconut příkaz
 ```
 coconut-run <source> <args>
@@ -171,9 +170,9 @@ jako alias pro
 ```
 coconut --run --quiet --target sys <source> --argv <args>
 ```
-který se potichu zkompiluje a spustí `<source>`, předávajíc skriptu jakýkoliv dodatečný argument, napodobujíc tak práci příkazu pythonu.
+který se potichu zkompiluje a spustí `<source>`, předávajíc skriptu jakýkoliv dodatečný argument, napodobujíc tak práci příkazu v Pythonu.
 
-`coconut-run` může být použit v řádku s shebangem Unixu pro vytvoření skriptu Coconut přidáním následujícího řádku na začátek skriptu:
+`coconut-run` může být použit v řádku s `shebangem` Unixu pro vytvoření skriptu Coconut přidáním následujícího řádku na začátek skriptu:
 ```bash
 #!/usr/bin/env coconut-run
 ```
@@ -361,7 +360,7 @@ Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příka
 
 Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty nebo když je vyžadován jen jeden argument (vyjádřený znakem `_`).
 
-_Note: Je-li normální skladba lambdy nedostatečná, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazu lambda](#prikaz-lambda)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
+_Note: Je-li normální skladba lambdy nepostačující, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazové lambdy](#prikaz-lambda)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
 
 
 ##### Zdůvodnění
