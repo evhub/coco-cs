@@ -184,23 +184,24 @@ Zdrojové soubory používají extenze `.coco` (upřednostněno), `.coc` nebo `.
 
 ### Kompilační režimy 
 
-Soubory, kompilované konzolou `coconut` se mohou lišit v závislosti na kompilačních parametrech. Je-li kompilována celá složka souborů (ve které bude kompilátor rekurzivně vyhledávat soubory s extenzí `.coco`, `.coc` nebo `.coconut`), vytvoří se soubor `__coconut__.py`, pro ukládání nezbytných funkcí (package mode), zatímco při kompilaci jediného souboru se nezbytné informace ukládají v záhlaví uvnitř souboru (standalone mode). Standalone mode je lepší pro jednotlivé soubory, protože se obejde bez nadbytečného importování `__coconut__.py`, avšak package mode je lepší pro velké pakety, protože se nemusí v každém souboru spouštět kód v záhlaví, jelikož může být jednoduše importován z `__coconut__.py`.
+Soubory, kompilované CLI konzolou `coconut` se mohou lišit v závislosti na kompilačních parametrech. Je-li kompilována celá složka souborů (ve které bude kompilátor rekurzivně vyhledávat soubory s extenzí `.coco`, `.coc` nebo `.coconut`), vytvoří se soubor `__coconut__.py` pro ukládání nezbytných funkcí (package mode), zatímco při kompilaci jediného souboru se nezbytné informace ukládají v záhlaví uvnitř souboru (standalone mode). Standalone mode je lepší pro jednotlivé soubory, protože se obejde bez nadbytečného importování `__coconut__.py`, avšak package mode je lepší pro velké pakety, protože se nemusí v každém souboru spouštět kód v záhlaví, jelikož může být jednoduše importován z `__coconut__.py`.
 
 Je-li `zdrojovým` argumentem pro CLI konzolu soubor, provede se implicitně samostatná kompilace, zatímco je-li jím složka, provede se rekurzivní vyhledávání všech souborů `.coco` (nebo `.coc` či `.coconut`), pro něž se provede paketová kompilace. Coconut takto ve většině provede správnou volbu režimů. Je-li však důležité aby se nevytvářely žádné dodatečné soubory jako např. `__coconut__.py`, potom lze přinutit CLI konzolu aby použila určený režim použitím flagů `--package` (`-p`) a `--standalone` (`-a`).
 
 ### Kompatibilní verze Pythonu 
 
-Protože je skladba Coconut založena na Python3, měl by kód Coconut, kompilovaný kompilátorem Coconut v univerzálním režimu (implicitní  `--target`) běžet v libovolné verzi Pythonu `>= 2.6` nebo `>= 3.2` - buď [CPython](https://www.python.org/) nebo [PyPy](http://pypy.org/).
+Protože je skladba Coconut založena na Python 3, měl by kód Coconut, kompilovaný kompilátorem Coconut v univerzálním režimu (implicitní  `--target`) běžet v libovolné verzi Pythonu `>= 2.6` nebo `>= 3.2` - buď [CPython](https://www.python.org/) nebo [PyPy](http://pypy.org/).
 
-Aby byly nativní objekty (built-ins) Coconut univerzálně přístupné pro různé verze Pythonu, přepisuje **Coconut automaticky built-iny Pythonu 2 na příslušné protějšky Pythonu3**. Navíc, Coconut také přepisuje některé built-iny Pythonu3 z optimalizačních důvodů. Je-li žádán přístup k původním verzím přepsaných built-inů, lze je získat s použitím prefixu `py_`.
+Aby byly nativní objekty (built-ins) Coconut univerzálně přístupné pro různé verze Pythonu, přepisuje **Coconut automaticky built-iny Pythonu 2 na příslušné protějšky Pythonu 3**. Navíc, Coconut také přepisuje některé built-iny Pythonu 3 z optimalizačních důvodů. Je-li žádán přístup k původním verzím přepsaných built-inů, lze je získat s použitím prefixu `py_`.
 
-Pro kompatibilitu se standardní knihovnou **mapuje Coconut automaticky importy pod názvy Python3 s importy pod názvy Python2**. Takto se Coconut automaticky postará o všechny moduly standardní knihovny, které byly přejmenovány z Python2 na Python3, pokud je použit pouze Python3. Ovšem, pro moduly nebo objekty, které existují pouze v Python3, neumí Coconut kompatibilitu zajistit.
+Pro kompatibilitu se standardní knihovnou **mapuje Coconut automaticky importy pod Python3 s importy pod Python2**. Takto se Coconut automaticky postará o všechny moduly standardní knihovny, které byly přejmenovány z Python2 na Python3, pokud je použit pouze Python3. Ovšem, pro moduly nebo objekty, které existují pouze v Python 3, neumí Coconut kompatibilitu zajistit.
 
-Konečně, zatímco se Coconut pokusí kompilovat skladbu Python3 na jeho univerzální ekvivalent, následující konstrukty nemají žádný ekvivalent v Python2 a vyžadují specifikaci alespoň `3` před svým použitím:
-- destructuring assignment with `*`s (use Coconut pattern-matching instead),
+Konečně, zatímco se Coconut pokusí kompilovat skladbu specifickou pro Python 3 na její univerzální ekvivalent, následující konstrukty nemají žádný ekvivalent v Python 2 a vyžadují specifikaci alespoň `3` před svým použitím:
 - the `nonlocal` keyword,
 - `exec` used in a context where it must be a function,
 - keyword class definition,
+- keyword-only function arguments (use pattern-matching function definition instead),
+- destructuring assignment with `*`s (use pattern-matching instead),
 - tuples and lists with `*` unpacking or dicts with `**` unpacking (requires `--target 3.5`),
 - `@` as matrix multiplication (requires `--target 3.5`),
 - `async` and `await` statements (requires `--target 3.5`),
@@ -211,7 +212,7 @@ Konečně, zatímco se Coconut pokusí kompilovat skladbu Python3 na jeho univer
 ### Přípustné cíle 
 
 
-Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, měl by být cíl určen flagem `--target`. Daný cíl (target) ovlivní pouze kompilovaný kód a zda je určitá syntaxe Pythonu3 (viz výše) povolena. Tam, kde se standardy skladeb pro Python3 a Python2 liší, bude skladba Coconut vždy používat skladbu Python3 pro všechny cíle. Podporované cíle jsou:
+Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, měl by být cíl určen flagem `--target`. Daný cíl (target) ovlivní pouze kompilovaný kód a zda je určitá syntaxe Pythonu 3 (viz výše) povolena. Tam, kde se standardy skladeb pro Python 3 a Python 2 liší, bude skladba Coconut vždy používat skladbu Python 3 pro všechny cíle. Podporované cíle jsou:
 
 - universal (default) (will work on _any_ of the below),
 - `2`, `2.6` (will work on any Python `>= 2.6` but `< 3`),
@@ -229,20 +230,23 @@ _Note: Tečky jsou ve specifikacích cíle ignorovány, takže cíl `2.7` je ekv
 
 ### Režim `strict`  
 
-Je-li povolen flag `--strict` (or `-s`), ohlásí Coconut chyby pro různé problémy stylu. Jsou jimi
-- mixing of tabs and spaces (without `--strict` will show a Warning),
-- use of `from __future__` imports (without `--strict` will show a Warning)
-- missing new line at end of file ),
-- trailing whitespace at end of lines,
-- semicolons at end of lines,
-- use of the Python-style `lambda` statement,
-- inheriting from `object` in classes (Coconut does this automatically)
-- use of `u` to denote Unicode strings (all Coconut strings aru Unicode
-  strings)
-- use of backslash continuations (use [parenthetical continuation](#
-  pokracovani-v-zavorkach) instead).
+Je-li zadán flag `--strict` (nebo zkráceně `-s`), provede Coconut další kontroly kompilovaného kódu. Použití tohoto režimu se doporučuje u nových projektů, neboť podpoří psaní čistšího kódu. Dalšími kontrolami jsou:
 
-Navíc, `--strict` zneplatňuje (disables) zavrhnuté vlastnosti, činíce je zcela nedostupnými při kompilaci s flagem `--strict`. Doporučuje se při práci na novém projektu používat flag `--strict` (nebo `-s`) protože vám bude nápomocen při psaní čistšího kódu.
+- zneplatnění zavržených procedur (činíce je kompilovanému kódu zcela nedostupné)
+- varování ohledně nepoužitých importů a
+- vyvolání chybového hlášení při různých stylizačních problémech (viz výpis níže).
+
+Stylizačními problémy (issues) jsou:
+
+- míšení tabulároru a mezer (bez `--strict` zobrazí pouze varování),
+- použití importů `from __future__` (bez `--strict` zobrazí pouze varování)
+- chybějící `new line` na konci souboru,
+- opomenuté `whitespace` na konci řádků,
+- středníky na konci řádků,
+- použití příkazu `lambda` podle Pythonu,
+- dědění z entity `object` u tříd (Coconut to dělá automaticky)
+- použití `u` k označení stringů Unicoce (všechny řetězce v Coconut jsou řetězce Unicode)
+- použití zpětného lomítka k pokračování na dalším řádku (místo něj použijte [pokračování v závorkách](#enhanced-parenthetical-continuation).
 
 ## Integrace
 
@@ -1725,15 +1729,15 @@ cdef f(x):
 
 ### Vylepšené závorkové pokračování 
 
-Protože je syntaxe Coconut nadmnožinou syntaxe Python 3, podporuje Cooconut stejnou formu pokračování řádku jako Python. To znamená, že lze použít jak pokračování se zpětným lomítkem nebo implikované pokračování uvnitř kulatých, hranatých či složených závorek.
+Protože je syntaxe Coconut nadstavbou syntaxe Pythonu 3, podporuje Cooconut stejnou formu pokračování řádku jako Python. To znamená, že lze použít jak pokračování se zpětným lomítkem nebo implikované pokračování uvnitř kulatých, hranatých či složených závorek.
 
-V Pythonu je ovšem několik případů (např. víceré příkazy `with`), kde lze použít pouze pokračování se zpětným lomítkem. Ve všech těchto případech podporuje Coconut i závorkové pokračování.
+V Pythonu je ovšem několik případů (např. víceré příkazy `with`), kde lze použít pouze pokračování se zpětným lomítkem. Ve všech těchto případech podporuje Coconut i pokračování v závorkách.
 
 Podporu univerzálního použití závorkového pokračování povoluje konvence [PEP 8](https://www.python.org/dev/peps/pep-0008/) :
 
->Upřednostňovaný způsob ukončování dlouhých řádků je implikované pokračování uvnitř kulatých, hranatých či složených závorek. Dlouhé řádky mohou být uvnitř závorek rozděleny do více kratších řádků. Tento způsob má přednost před používáním zpětných lomítek pro pokračování řádků.
+>Upřednostňovaný způsob přerušování dlouhých řádků je s použitím kulatých, hranatých či složených závorek. Tento způsob má přednost před používáním zpětných lomítek pro pokračování řádků.
 
-_Note: Použití flagu `--strict` vyloučí použití zpětných lomítek._
+_Note: Použití flagu `--strict` vyloučí použití zpětných lomítek (dle konvence PEP 8)._
 
 ##### Příklad
 
