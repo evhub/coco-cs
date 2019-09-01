@@ -1685,7 +1685,7 @@ data Node(left, right) from Tree
 ```
 
 **Python:**
-_Can't be done without a series of method definitions for each data type. See the compiled code for the Python syntax._
+_Nelze provést bez definování metod pro každý datový typ. Viz kompilovaný kód pro skladbu Pythonu._
 ```
 
 ### In-line `global` a `nonlocal` přiřazení
@@ -1703,7 +1703,7 @@ global state_a, state_b = 10, 100
 ```coconut_python
 global state_a, state_b; state_a, state_b = 10, 100
 ```
-### Průchod kódu 
+### Průchod kódu kompilátorem 
 
 Kvůli kompatibilitě s jinými variantami Pythonu, jako je [Cython](http://cython.org/) nebo [Mython](http://mython.org/),
 podporuje Coconut schopnost protáhnout inertním způsobem libovolný kód kompilátorem. Cokoli umístěného mezi `\(` a `\)` projde netečně kompilátorem, stejně jako řádek, začínající `\\`, umožňující navíc následnou indentaci.
@@ -1754,6 +1754,8 @@ with open('/path/to/some/file/you/want/to/read') as file_1:
 
 
 ## Vestavěné funkce
+
+### Vylepšené vestavěné procedury
 
 Objekty `map`, `zip`, `filter`, `reversed` a `enumerate` 
 jsou vylepšené verze svých ekvivalentů v Pythonu, které podporují procedury `reversed`, `repr`, optimalizované (a iterátorové) `krájení` (slicing), `len` (vše až na `filter`) a mají přidané atributy, jež mohou subtříty použít pro přístup původním argumentům objektu:
@@ -1822,10 +1824,6 @@ print_type("This is a string.") # Raises MatchError
 
 Poslední případ ve funkci `addpattern` ovšem nemusí být `pattern-matching` funkce, mají-li se odchytit všechny zbývající případy. 
 
-##### Example
-:
-
-
 ##### Příklad
 
 **Coconut**
@@ -1841,7 +1839,7 @@ _Nelze provést bez komplikované definice dekorátoru a dlouhé řady kontrol p
 
 ##### `prepattern`
 
-**DEPRECATED:** Coconut also has a `prepattern` built-in, which adds patterns in the opposite order of `addpattern`; `prepattern` is defined as:
+**DEPRECATED:** Coconut má také vestavěnou proceduru `prepattern`, která přidává předlohy v obráceném pořadí než `addpattern`; `prepattern` je definován jako:
 
 ```coconut_python
 def prepattern(base_func):
@@ -1851,7 +1849,7 @@ def prepattern(base_func):
         return addpattern(func)(base_func)
     return pattern_prepender
 ```
-_Note: Passing `--strict` disables deprecated features._
+_Note: Zadání `--strict` znemožňuje zavržené procedury._
 
 ### `reduce` 
 
@@ -2190,7 +2188,7 @@ data Tuple(elems):
 ```
 
 **Python:**
-_Can't be done without a series of method definitions for each data type. See the compiled code for the Python syntax._
+_Nelze provést bez definování metod pro každý datový typ. Viz kompilovaný kód pro skladbu Pythonu._
 
 
 ### `fmap`
@@ -2218,7 +2216,8 @@ Nothing() |> fmap$(x -> x*2) == Nothing()
 ```
 
 **Python:**
-_Can't be done without a series of method definitions for each data type. See the compiled code for the Python syntax._
+_Nelze provést bez definování metod pro každý datový typ. Viz kompilovaný kód pro skladbu Pythonu._
+
 
 ### `starmap`
 
@@ -2344,7 +2343,7 @@ Coconut poskytuje dekorátor `recursive_iterator`, který poskytuje výraznou op
 3. vaše funkce je volána (obvykle volá samu sebe) několikrát pro tytéž argumenty.
 
 
-Setkáte-li se s `RuntimeError` následkem maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncoveho-volani), jež obojí by mělo takovým chybám zabránit.
+Setkáte-li se s `RuntimeError` v důsledku maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncoveho-volani), jež obojí by mělo takovým chybám zabránit.
 
 Nadto, `recursive_iterator` také umožňuje řešení [of nasty segmentation fault in Python's iterator logic that has never been fixed](http://bugs.python.org/issue14010). Konkrétně, místo zápisu
 ```coconut
