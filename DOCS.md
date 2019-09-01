@@ -40,13 +40,13 @@ COCONUT_PURE_PYTHON=TRUE pip install --user --upgrade coconut
 ```bash
 cmd /c "set COCONUT_PURE_PYTHON=TRUE&& pip install --user --upgrade coconut"
 ```
-což přinutí Coconut použít modul [`pyparsing`](https://github.com/pyparsing/pyparsing) místo rychlejšího modulu [`cPyparsing`](https://github.com/evhub/cpyparsing). Pokud se vám stále vrací chyba, můžete ještě zkusit [manažer conda](#using-conda).
+což přinutí Coconut použít modul [`pyparsing`](https://github.com/pyparsing/pyparsing) místo rychlejšího modulu [`cPyparsing`](https://github.com/evhub/cpyparsing). Pokud se vám stále vrací chyba, můžete ještě zkusit [manažer conda](#použití-conda).
 
 Když `pip install coconut` chodí ale nemáte přístup k příkazu `coconut`, ověřte si, že umístění instalace Coconut je uvedeno v proměnné prostředí `PATH`. V systému UNIX to je `/usr/local/bin` (bez `--user`) nebo `${HOME}/.local/bin/` (s `--user`).
  
 ### Použití Conda
 
-Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.ioo/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Instalujte [`conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
+Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https://conda.io/docs/) místo systému `pip` , můžete instalovat Coconut s použitím  nástroje `conda`. Instalujte [`conda`](https://conda.io/miniconda.html), otevřte terminál a zadejte
 ```
 conda config --add channels conda-forge
 conda install coconut
@@ -56,7 +56,7 @@ což řádně vytvoří a sestaví `conda recipe` z [`conda-forge` feedstock] (h
 
 ### Volitelné závislosti
 
-Coconut má také volitelné dependence, instalovatelné zadáním
+Coconut má také volitelné závislosti (dependence), instalovatelné zadáním
 ```
 pip install coconut [název_volitelné_závislosti]
 ```
@@ -64,7 +64,7 @@ nebo pro instalaci více dependencí,
 ```
 pip install coconut [opt_dep_1, opt_dep_2]
 ```
-Úplný seznam volitelných depencencí:
+Úplný seznam volitelných závislostí:
 
 - `all`: alias pro `jupyter, watch, jobs, mypy, asyncio`  (doporučný způsob  
    instalace úplné verze Coconut) 
