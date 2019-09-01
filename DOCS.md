@@ -51,7 +51,7 @@ Preferujete-li pro správu vašich paketů pro Python použití [`conda`](https:
 conda config --add channels conda-forge
 conda install coconut
 ```
-což řádně vytvoří a sestaví `conda recipe` z [`conda-forge` feedstock] (https://github.com/conda-forge/coconut-feedstock).
+což řádně vytvoří a sestaví předpis `conda` ze zásobníku [`conda-forge`](https://github.com/conda-forge/coconut-feedstock).
 
 
 ### Volitelné závislosti
