@@ -810,7 +810,7 @@ _Nelze provést bez definování řady metod pro každý datový typ. Viz kompil
 
 ### `match` 
 
-Coconut poskytuje plnohodotné, funkcionální `pattern-matching` (posouzení shody) prostřednictvím svých příkazů `match`.
+Coconut poskytuje plnohodotné, funkcionální `pattern-matching` (posouzení shody s předlohou) prostřednictvím svých příkazů `match`.
 
 ##### Přehled 
 
@@ -978,7 +978,7 @@ _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz komp
 
 Příkaz `case` je rozšíření příkazu `match` pro potřebu opakovaného použití příkazů `match` vůči stejné hodnotě. Na rozdíl od osamělých příkazů `match` může uvnitř bloku `case` být úspěšný pouze jeden příkaz match. Obecnější shody (matches) mají být uvedeny pod konkretnějšími shodami.
 
-Každý vzorek v bloku case je porovnáván, dokud není nalezena shoda. Poté se provede příslušné tělo a blok je ukončen. Skladba pro bloky case je
+Každá předloha v bloku case je porovnávána, dokud není nalezena shoda. Poté se provede příslušné tělo a blok je ukončen. Skladba pro bloky case je
 ```coconut
 case <value>:
     match <pattern> [if <cond>]:
@@ -989,7 +989,7 @@ case <value>:
 [else:
     <body>]
 ```
-kde `<pattern>` je jakýkoli vzorek pro hledání shody, `<value>` je porovnávaná položka, `<cond>` je volitelná kontrola a `<body>` je kód, který se provede při úspěchu záhlaví. Všimněte si nepřítomnosti `in` v příkazech `match`.
+kde `<pattern>` je jakákoli předloha pro hledání shody, `<value>` je porovnávaná položka, `<cond>` je volitelná kontrola a `<body>` je kód, který se provede při úspěchu záhlaví. Všimněte si nepřítomnosti `in` v příkazech `match`.
 
 ##### Příklad
 
@@ -1020,20 +1020,19 @@ def classify_sequence(value):
 (1,1,1) |> classify_sequence |> print
 ```
 
-**Python**
-
+**Python:**
 _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### `match data`
 
-Kromě příkazů ohledně normálních `dat` podporuje Coconut také příkazy, vztahující se k `pattern-matching` (shoda se vzorem). Pattern-matching data types look like
+Kromě příkazů ohledně normálních `dat`, podporuje Coconut také příkazy, které umožňují použití skladby `pattern-matching` (posouzení shody s předlohou) k definování konstruktoru datového typu. Tyto datové typy vypadají takto:
 ```
 [match] data <name>(<patterns>) [from <base class>]:
     <body>
 ```
 kde `<patterns>` jsou totéž jako u [pattern-matching funkcí](#pattern-matching-functions).
 
-Je důležité mít na vědomí, že `pattern-matching` datové typy se od normálních datových typů liší v mnoha věcech. Za prvé, na nesprávné argumenty reagují hlášením [`MatchError`](#matcherror) jako pattern-matching funkce místo `TypeError`.  Za druhé, `pattern-matching` datové typy neprovádí žádné speciální ošetření argumentů s hvězdičkou. Tudíž:
+Je důležité mít na vědomí, že `pattern-matching` datové typy se od normálních datových typů liší v mnoha věcech. Za prvé, na nesprávné argumenty reagují hlášením [`MatchError`](#matcherror) místo `TypeError` - stejně jako pattern-matching funkce.  Za druhé, `pattern-matching` datové typy neprovádí žádné speciální ošetření argumentů s hvězdičkou. Tudíž:
 ```
 data vec(*xs)
 ```
@@ -1052,8 +1051,7 @@ data namedpt(name is str, x is int, y is int):
 ```
 
 **Python:**
-_Can't be done without a series of method definitions for each data type. See the compiled code for the Python syntax._
-
+_Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### `where`
 
@@ -1083,7 +1081,7 @@ c = a + b
 
 ### Backslash-Escaping 
 
-Klíčová slova `data`, `match`, `case`, `async` (keyword in Python 3.5) a `await` (keyword in Python 3.5) jsou v Coconut rovněž platná jména proměnných. I když Coconut umí tyto dva případy použití rozlišit, je možné pro zvýraznění použít před takovýmto názvem proměnné zpětné lomítko.
+Klíčová slova `data`, `match`, `case`, `async` (klíčové slovo v Python 3.5) a `await` (klíčové slovo v Python 3.5) jsou v Coconut rovněž platná jména proměnných. I když Coconut umí tyto dva případy použití rozlišit, je možné pro zvýraznění použít před takovýmto názvem proměnné zpětné lomítko (backslash-escaping).
 
 ##### Příklad
 
@@ -1103,7 +1101,7 @@ print(data)
 
 ### Příkazové lambdy 
 
-Skladba příkazové lambdy je rozšířením skladby normální [lambdy](#lambda) pro podporu příkazů, nikoliv pouze výrazů.
+Skladba `příkazové lambdy` je rozšířením skladby normální [lambdy](#lambda) pro podporu příkazů, nikoliv pouze výrazů.
 
 Skadba pro příkazovou lambdu je:
 ```
@@ -1138,7 +1136,7 @@ g = def (a: int, b: int) -> a ** b
 
 ### Líné seznamy 
 
-Coconut podporuje vytváření líných seznamů (lazy lists), jejichž obsah je považován za iterátor a není vyhodnocen, dokud není zapotřebí. Líné seznamy (lazy lists) se v Coconut vytvářejí jednoduše uzavřením čárkami odděleného výčtu do specielních závorek `(|` a `|)` (takzvaných "banana brackets") místo do `[` a `]` u seznamů nebo do `(` a `)` u entic.
+Coconut podporuje vytváření líných seznamů (lazy lists), jejichž obsah je zpracován stejně jako iterátor a není vyhodnocen, dokud není zapotřebí. Líné seznamy (lazy lists) se v Coconut vytvářejí jednoduše uzavřením čárkami odděleného výčtu do specielních závorek `(|` a `|)` (takzvaných "banánků") místo do `[` a `]` u seznamů nebo do `(` a `)` u entic.
 
 Líné seznamy používají ke zlenivění stejný mechanizmus jako u iterátorového řetězení a tudíž je líný seznam `(| x, y |)` ekvivalentní výrazu iterátorového řetězení `(x,) :: (y,)`, byť líný seznam nevytváří mezilehlé entice.
 
@@ -1154,7 +1152,7 @@ Líné seznamy, jejichž sekvence jsou vyhodnocovány jen v případě potřeby,
 ```
 
 **Python:**
-_Can’t be done without a complicated iterator comprehension in place of the lazy list. See the compiled code for the Python syntax.._ 
+_Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### Implicitní částečná aplikace 
 
@@ -1185,7 +1183,7 @@ mod(5, 3)
 ```
 ### Operátorové funkce
 
-Coconut používá jednoduchou zkratku pro vyjádření operátorové funkce: obklopení operátoru kulatými závorkami. Podobně jako u [komprehencí iterátoru](http://howto.py.cz/cap13.htm), je-li operátorová funkce jediným argumentem funkce, mohou závorky pro volání funkce sloužit také jako závorky operátorové funkce.
+Coconut používá jednoduchou zkratku pro vyjádření operátorové funkce: obklopení operátoru kulatými závorkami. Podobně jako u [komprehence entice](http://howto.py.cz/cap13.htm), je-li operátorová funkce jediným argumentem funkce, mohou závorky pro volání funkce sloužit také jako závorky operátorové funkce.
 
 ##### Zdůvodnění
 
@@ -1315,7 +1313,7 @@ def int_map(
 
 ### Literály setu 
 
-Coconut umožňuje předsadit písmeno `s` před literály setu. Byť to ve většině případů nedělá nic, v případě prázdného setu to indikuje, že se jedná o `set` a nikoliv o `dictionary`. Spojení `s{}` informuje Coconut, že jde o prázdný set a nikoli o prázdný slovník. Spojení `f{}` generuje `frozenset`.
+Coconut umožňuje předsadit písmeno `s` před literály setu. Byť to ve většině případů nedělá nic, v případě prázdného setu `s{}` to indikuje, že se jedná o `set` a nikoliv o prázdný slovník. Spojení `f{}` generuje `frozenset`.
 
 ##### Příklad
 
@@ -1331,7 +1329,7 @@ empty_frozen_set = frozenset()
 
 ### Imaginární literály 
 
-Jako doplněk k notaci imaginárních literálů`<num>j` nebo `<num>J` v Pythonu, podporuje Coconut také notace `<num>i` nebo `<num>I` pro zlepšení čitelnosti imaginárních literálů při použití v matematickém kontextu.
+Jako doplněk k notaci imaginárních literálů`<num>j` nebo `<num>J` v Pythonu, podporuje Coconut také notace `<num>i` nebo `<num>I` pro zlepšení čitelnosti imaginárních literálů při použití komplexních čísel.
 
 ##### Python Docs
 
@@ -1367,7 +1365,7 @@ Coconut provede automatickou optimalizaci a eliminaci koncové rekurze u každé
 1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#prirazovaci-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
 2. nesmí to být generátor (používající `yield`) nebo asynchronní funkce (používající`async`).
 
-_Note: Optimalizace koncového voláníí (byť ne eliminace koncové rekurze) pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern)._
+_Note: Optimalizace koncového volání (byť ne eliminace koncové rekurze) pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern)._
 
 Setkáte-li se s `RuntimeError` v souvislosti s maximální hloubkou rekurze, je velmi vhodné přepsat svou funkci aby vyhověla výše uvedenému kriteriu pro optimalizaci koncovým voláním nebo odpovídajícímu kriteriu pro [`recursive_iterator`](#recursive-iterator), obojí by mělo takové chybě zabránit.
 
@@ -1463,12 +1461,12 @@ print(binexp(5))
 
 ### Funkce pro pattern matching 
 
-Tyto funkce Coconutu jsou normální funkce, kde argumenty jsou vzory k porovnávání, místo proměnných pro přiřazení hodnot.  Skladba definice porovnávací (pattern-matching) funkce je
+Porovnávací funkce jsou v Coconutu normální funkce, kde argumenty jsou předlohy k porovnávání, místo proměnných pro přiřazení hodnot.  Skladba definice porovnávací (pattern-matching) funkce je
 ```coconut
 [match] def <name>(<arg>, <arg>, ... [if <cond>]):
     <body>
 ```
-where `<arg>` je definován jako
+kde `<arg>` je definován jako
 ```coconut
 [*|**] <pattern> [= <default>]
 ```
@@ -1519,7 +1517,7 @@ _Can't be done without a complicated decorator definition and a long series of c
 
 ### Infixové funkce 
 
-Coconut umožňuje infixové volání funkce, kde je výraz, vyhodnocovaný na funkci, obklopen zpětnými apostrofy; argumenty mohou být uvedeny před nebo za funkcí. Infixové volání má prioritu mezi 'chaining and None-coalescing' (řetězením a sloučením) a je asociativní vlevo.
+Coconut umožňuje infixové volání funkce, kde je výraz, vyhodnocovaný na funkci, obklopen zpětnými apostrofy; argumenty mohou být uvedeny před nebo za funkcí. Infixové volání má prioritu před `in-between chaining` and `None-coalescing' a je asociativní vlevo. Infixové volání také podporuje lambdu jako poslední argument i když mají lambdy nižší preferenci. Výraz `func b -> c` je tedy ekvivalentní k `func(a, b -> c)`.
 
 Coconut také podporuje definování jednodušší infixové funkce:
 ```coconut
@@ -1548,7 +1546,7 @@ def mod(a, b): return a % b
 print(mod(x, 2))
 ```
 
-### Definice funkce s tečkami
+### Definice funkce s tečkovou notací
 
 Coconut umožňuje definovat funkci s použitím vytečkovaného jména pro přiřazení funkce jako methody objektu, jak je specifikováno v [PEP 542](https://www.python.org/dev/peps/pep-0542/).
 
