@@ -258,7 +258,7 @@ Textové editory, které podporují zvýraznění syntaxe Coconut, jsou tyto:
 - **Vim**: Viz [`coconut.vim`](https://github.com/manicmaniac/coconut.vim).
 - **Emacs**: Viz [`coconut-mode`](https://github.com/NickSeagull/coconut-mode).
 - **Atom**: Viz [`language-coconut`](https://github.com/enilsen16/language-coconut).
-- **IntelliJ IDEA**: See [registering file types](https://www.jetbrains.com/help/idea/creating-and-registering-file-types.html).
+- **IntelliJ IDEA**: Viz [registering file types](https://www.jetbrains.com/help/idea/creating-and-registering-file-types.html).
 - Každý editor, který podporuje Pygments (např. **Spyder**): Viz sekci Pygments níže.
 
 Případně, pokud žádný z výše uvedený editorů vám nevyhovuje, můžete v Coconut pracovat jako v Pythonu. Jednoduše nastavte svůj editor tak, aby interpretoval všechny souboury `.coco` jako soubory Pythonu, čímž by mělo být zvýraznění vašeho kódu vyhovující.
@@ -279,7 +279,7 @@ _Note: Zvýraznění syntaxe Coconutu je poskytnuto paketem [sublime-coconut](ht
 
 Tentýž příkaz `pip install coconut`, který instaluje utilitu příkazového řádku Coconutu, instaluje také lexer `coconut` Pygments. Způsob použití závisí na použité `Pygments-enabled` aplikaci ale normálně zadejte `coconut` jako zvýrazňovaný jazyk a/nebo použijte platnou extenzi souboru Coconut (`.coco`, `.coc` nebo `.coconut`) a Pygment by se měl umět zorientovat.
 
-Na příklad, tato dokumentace je generována [Sphinx](http://www.sphinx-doc.org/en/stable/) se zvýrazněním syntaxe vytvořené přidáním řádku
+Na příklad, tato dokumentace je generována ve [Sphinx](http://www.sphinx-doc.org/en/stable/) se zvýrazněním syntaxe vytvořené přidáním řádku
 ```coconut_python
 highlight_language = "coconut"
 ```
@@ -295,30 +295,28 @@ Je-li Coconut použit jako jádro (kernel), bude veškerý kód v konzoli nebo n
 
 Příkaz `coconut --jupyter notebook` (nebo `coconut --ipython notebook`) spustí notebook IPython/ Jupyter s použitím Coconut jako jádra a příkaz `coconut --jupyter console` (nebo `coconut --ipython console`) spustí konzoli IPython/ Jupyter s použitím Coconut jako jádra. Navíc, příkaz `coconut --jupyter` (nebo `coconut --ipython`) přidá Coconut jako jazykovou volbu uvnitř všech notebooků IPython/ Jupyter - i těch, které nejsou spouštěny aplikací Coconut. Tento příkaz musí být opakovaně proveden při instalaci nové verze Coconut.
 
-_Note: Coconut také podporuje příkaz `coconut --jupyter lab` pro použití s [JupyterLab](https://github.com/jupyterlab/jupyterlab) místo standardního notebooku Jupyter.
+_Note: Coconut také podporuje příkaz `coconut --jupyter lab` pro použití s [JupyterLab](https://github.com/jupyterlab/jupyterlab) místo standardního notebooku Jupyter_.
 
 #### Extenze 
 
 Je-li Coconut použit jako extenze, bude speciální "magic command" posílat útržky kódu k vyhodnocení s použitím Coconut místo IPythonu ale IPython bude stále použit jako implicitní aplikace.
 
-Řádkový magic `%load_ext coconut` načte Coconut jako extenzi, připojujíc magics `%coconut` a `%%coconut`. Řádkový magic `%coconut` spustí řádek Coconut s implicitními parametry a blokový magic `%%coconut` přijme CL (command line) argumenty z prvního řádku a vyhodnotí kód Coconut pro dané parametry ve zbytku buňky.
+Řádkový magic `%load_ext coconut` načte Coconut jako extenzi, podkyyujíví magiky `%coconut` a `%%coconut`  a připojující vestavěné procedury. Řádkový magic `%coconut` spustí řádek Coconut s implicitními parametry a blokový magic `%%coconut` přijme CL (command line) argumenty z prvního řádku a vyhodnotí kód Coconut pro dané parametry ve zbytku buňky.
 
 
 ### Integrace s MyPy
 
-Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných nástrojů Coconut. Jednoduše zadejte `--mypy` abyste umožnili integraci s MyPy, ale dejte si pozor abyste to zadali jako poslední argument, protože všechny argumenty po `--mypy` jsou poslány do `mypy`, nikoliv do Coconut.
+Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných (built-in) procedur Coconut. Jednoduše zadejte `--mypy` abyste umožnili integraci s MyPy, ale dejte si pozor abyste to zadali jako poslední argument, protože všechny argumenty po `--mypy` jsou poslány do `mypy`, nikoliv do Coconut.
 
 Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#enhanced-type-annotations) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
 
-Coconut dokonce podporuje `--mypy` v interpretu, který inteligentně skenuje každý nový řádek kódu, číhaje na nově zavedené chyby MyPy. Na příklad:
-
-Coconut dokonce podporuje `--mypy` v překladači, jenž skenuje inteligentně každý nový řádek kódu v kontextu s předchozím řádkem zda neobjeví nově zavedené chyby MyPy. Na příklad:
+Coconut dokonce podporuje `--mypy` v překladači, jenž inteligentně skenuje každý nový řádek kódu v kontextu s předchozím řádkem, zda neobjeví nově zavedené chyby MyPy. Na příklad:
 ```coconut
 >>> a: str = count()[0]
 <string>:14: error: Incompatible types in assignment (expression has type "int", variable has type "str")
 ```
 
-:Note: Někdy si MyPy nebude vědět rady s jistými konstrukty Coconut, např. s `adaptern`. V tom případě jednoduše zadejte `# type: ignore` na řádek Coconut, na jehož kompilaci si MyPy stěžuje (o který řádek se jedná, zjistíte použitím flagu `--line-numbers`).
+_Note: Někdy si MyPy nebude vědět rady s jistými konstrukty Coconut, např. s `adaptern`. V tom případě jednoduše zadejte komentář `# type: ignore` na řádek, na jehož kompilaci si MyPy stěžuje (o který řádek se jedná, zjistíte použitím flagu `--line-numbers`) a zadaný komentář bude připojen ke každému generovanému řádku_.
 
 ## Operátory 
 
@@ -344,9 +342,9 @@ a `b` c               left (captures lambda)
 |>, <|, |*>, <*|      left (captures lambda)
   |**>, <**|
 ==, !=, <, >,
-    <=, >=,
-	in, not in,
-	is, is not        n/a
+   <=, >=,
+   in, not in,
+   is, is not         n/a
 not                   unary
 and                   left (short-circuit)
 or                    left (short-circuit)
@@ -373,7 +371,7 @@ Použití funkce lambda je v Pythonu neúhledné a neohrabané, vyžadující vy
 
 ##### Python Docs
 
-Formy lambda mají totéž skladebné postavení jako obecné výrazy. Jsou zkratkou při vytváření anonymních funkcí; výraz `(arguments) -> expression` vytváří objekt funkce. Nepojmenovaný objekt se chová jako objekt funkce, definovaný:
+Formy (výrazy) lambda mají totéž skladebné postavení jako obecné výrazy. Jsou zkratkou při vytváření anonymních funkcí; výraz `(arguments) -> expression` vytváří objekt funkce. Nepojmenovaný objekt se chová jako objekt funkce, definovaný:
 ```coconut
 def <lambda>(arguments):
     return expression
@@ -395,7 +393,7 @@ print(list(dubsums))
 ```
 #### Implicitní lambdy
 
-Coconut také podporuje implicitní lambdy, které mohou mít jeden nebo žádný argument. Tvoří se obvyklým operátorem `->` v sekvenci `(-> expression)`. To je ekvivalentní k sekvenci `((_=None) -> expression)`. Argument, poskytnutý implicitní lambdě, je přiřazen k `_`, nahrazující implicitní hodnotu `None`.
+Coconut také podporuje implicitní lambdy, které mohou mít jeden nebo žádný argument. Tvoří se obvyklým operátorem `->` v uskupení `(-> expression)`. To je ekvivalentní k sekvenci `((_=None) -> expression)`. Argument, poskytnutý implicitní lambdě, je přiřazen k `_`, nahrazující implicitní hodnotu `None`.
    
 
 Níže jsou uvedeny dva příklady implicitní lambdy. První používá implicitní argument `_`, druhá nikoli.
@@ -418,15 +416,15 @@ _Note: Vnořování (nesting) implicitních lambd může vést k problémům s k
 
 Coconut používá znak `$` hned za názvem funkce, však před závorkou, použitou k volání funkce.
 
-Částečná aplikace Coconutu také podporuje použití `?` a by se přeskočilo částečné použití argumentu, odkládajíc použití tohoto argumentu až na volání částečtě aplikované funkce. To je důležité, chcete-li částečně aplikovat argumenty, které nejsou první v pořadí argumentů.
+Částečná aplikace Coconutu také podporuje použití `?` a by se přeskočilo částečné použití argumentu, odkládajíc použití tohoto argumentu až na volání částečně aplikované funkce. To je důležité, chcete-li částečně aplikovat argumenty, které nejsou první v pořadí argumentů.
 
 ##### Zdůvodnění
 
-Částečná aplikace neboli currying je ústřední pilíř funkcionálního programování a to z dobrého důvodu: umožňuje dynamickou úpravu funkce pro potřebu v místě použití. Částečná aplikace umožňuje vytvoření nové funkce ze staré pro specifikované některé argumenty.
+Částečná aplikace neboli currying je ústřední pilíř funkcionálního programování a to z dobrého důvodu: umožňuje dynamickou úpravu funkce pro potřebu v místě použití. Částečná aplikace umožňuje vytvoření nové funkce ze staré pro některé argumenty nově specifikované.
 
 ##### Python Docs
 
-Má se vrátit nový objekt `partial`, který se při volání bude chovat jako _func_  volaná s pozičními argumenty _args_ a keyword-argumenty _keywords_. Jsou-li další argumenty zadány při volání, jsou připojeny k _args_. Jsou-li další keyword-argumenty zadány, rozšiřují a přepisují _keywords_. Zhruba ekvivalentní k:
+Má se vrátit nový `partial` objekt, který se při volání bude chovat jako _func_, volaná s pozičními argumenty _args_ a klíčovými argumenty _keywords_. Jsou-li při volání zadány další argumenty, jsou připojeny k _args_. Jsou-li zadány další klíčové argumenty, rozšiřují a přepisují _keywords_. Je to zhruba ekvivalentní k:
 ```coconut_python
 def partial(func, *args, **keywords):
     def newfunc(*fargs, **fkeywords):
@@ -438,7 +436,7 @@ def partial(func, *args, **keywords):
     newfunc.keywords = keywords
     return newfunc
 ```
-Objekt `partial` je použit pro částečnou (partial) aplikaci funkce, která “zmrazí” (freezes) některé argumenty a/nebo keywords funkce, vytvářejíc tak nový objket se zjednodušenou signaturou. 
+Objekt `partial` je použit pro částečnou (partial) aplikaci funkce, která “zmrazí” (freezes) některé argumenty a/nebo klíčová slova, vytvářejíc tak nový objket se zjednodušenou signaturou. 
 
 ##### Příklad
 
@@ -455,9 +453,9 @@ expnums = map(lambda x: pow(x, 2), range(5))
 print(list(expnums))
 ```
 
-### Spojovník (pipeline) 
+### Směrovník (pipeline) 
 
-Coconut používá spojovníky (|) pro usměrnění průběhu aplikace funkcí. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
+Coconut používá směrovníkové operátory jako předpis pro postupné provedení funkce. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
 ```coconut
 (|>)    => pipe forward
 (|*>)   => multiple-argument pipe forward
@@ -466,13 +464,13 @@ Coconut používá spojovníky (|) pro usměrnění průběhu aplikace funkcí. 
 (<*|)   => multiple-argument pipe backward
 (<**|)  => keyword argument pipe backward
 ```
-Navíc, všechny spojovníkové operátory podporují lambdu jako poslední argument, přesto že má lambda nižší precedenci. Takže, `a |> x -> b |> c` je ekvivalentní s `a |> (x -> b |> c)`, nikoliv s `a |> (x -> b) |> c`.
+Navíc, všechny směrovníkové operátory podporují lambdu jako poslední argument, přesto že má lambda nižší precedenci. Takže, `a |> x -> b |> c` je ekvivalentní s `a |> (x -> b |> c)`, nikoliv s `a |> (x -> b) |> c`.
 
-_Note: Pro vizuální rozložení operací přes několik řádek použijte [parenthetical continuation](#enhanced-parenthetical-continuation)._
+_Note: Pro vizuální rozložení operací přes několik řádek použijte [závorkové pokračování](#enhanced-parenthetical-continuation)._
 
 ##### Optimalizace
 
-V Coconut je obvyklé psát kód, který používá spojovníky pro zadávaní objektu řadou [partials](#partial-application) a/nebo [implicit partials](#immplicit-partial-application), jako v
+V Coconut je obvyklé psát kód, který postupně předává objekt řadě [částečných](#partial-application) a/nebo [implicitně částečných](#immplicit-partial-application) aplikací funkce, jako v
 ```coconut
 obj |> .attribute |> .method(args) |> func$(args) |> .[index]
 ```
@@ -482,7 +480,7 @@ func(args, obj.attribute.method(args))[index]
 ```
 kde musí `func` přijít jako první.
 
-Kdyby Coconut kompiloval každou část ve spojovníkové syntaxi jako skutečný objekt částečné aplikace, stala by se skladba ve stylu Coconut výrazně pomalejší než skladba ve stylu Python, že by byla téměř nepoužitelná. Coconut tento problém obchází tím, že `partials` i `implicit partials` jsou kompilovány na skladbu ve stylu Python, nevytvářejíc tak žádné mezilehlé objekty.
+Kdyby Coconut kompiloval každou část ve směrové skladbě jako skutečný objekt částečné aplikace, stala by se skladba ve stylu Coconut výrazně pomalejší než skladba ve stylu Python. Coconut tento problém obchází tím, že `partials` i `implicit partials` jsou kompilovány na skladbu ve stylu Python, nevytvářejíc tak žádné mezilehlé objekty.
 
 ##### Příklad
 
@@ -499,15 +497,15 @@ def sq(x): return x**2
 print(sq(operator.add(1, 2)))
 ```
 
-### Skladba funkcí 
+### Skladba
 
-Coconut má tři základní operátory pro skladbu funkcí: `..`, `..>` a `<..`. Jak `..`, tak  `<..` používají "zpětnou" skladbu funkcí, kdy je první funkce volána jako poslední, zatímco `..>` používá "dopřednou"  skladbu funkcí, kde je první funkce volaná jako první.
+Coconut má tři základní skladebné (pipe) operátory pro skladbu funkcí: `..`, `..>` a `<..`. Jak `..`, tak  `<..` používají "zpětnou" skladbu, kdy je první funkce volána jako poslední, zatímco `..>` používá "dopřednou"  skladbu funkcí, kde je první funkce volaná jako první.
 
-Operátor `..` má nižší precedenci než přístup atributem, úseky (slices), volání funkce atp ale vyšší precedenci než všechny ostatní operace, zatímco spojovníkové operátroy `..>` mají precedenci vyšší než normální spojovníky.
+Operátor `..` má nižší precedenci než přístup atributem, úseky (slices), volání funkce atp ale vyšší precedenci než všechny ostatní operace, zatímco operátory `..>` mají precedenci vyšší než normální spojovníky.
 
 
 
-Kompozitní operátory pro skladbu funkcí jsou `..=`, `..>=`, `<..=`, `..*>=` a `<*..=`, `..**>`, a `..**>`.
+Kombinované skladebné (in-place) operátory pro skladbu funkcí jsou `..=`, `..>=`, `<..=`, `..*>=` a `<*..=`, `..**>`, a `..**>`.
 
 ##### Příklad
 
@@ -530,7 +528,7 @@ Coconut používá operátor `::` pro řetězení iterátoru. Toto řetězení j
 
 ##### Zdůvodnění
 
-Důležitým nástrojem pro práci s iterátory stejně snadno jako při práci se sekvencemi je schopnost líně kombinovat více iterátorů dohromady. Tato operace se nazývá řetěz (chain) a je ekvivalentní přidávání u sekvencí s tím rozdílem, že se nic nevyhodnocuje, pokud to není zapotřebí.
+Důležitým nástrojem pro stejně snadnou práci s iterátory jako se sekvencemi je schopnost líně kombinovat více iterátorů dohromady. Tato operace se nazývá řetěz (chain) a je ekvivalentní sčítání u sekvencí s tím rozdílem, že se nic nevyhodnocuje, pokud to není zapotřebí.
 
 ##### Python Docs
 
@@ -558,7 +556,7 @@ _Nelze provést bez komplikované komprehence iterátoru namísto líného řet�
 
 ### Krájení (slicing) iterátoru 
 
-K provedení iterátorového členění používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. 
+K provedení iterátorového členění (slicing) používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. 
 
 Iterátorové členění pracuje stejně jako sekvenční členění, včetně podpory negativních indexů a úseků (slices) a podpory pro objekty `úseků` stejně jako u normálního členění. Iterátorové členění však nezaručuje, že bude zachován původní iterátor (pro jeho zachování použijte [funkci`tee`](#tee) nebo [`reiterable`](#reiterable)).
 
@@ -574,9 +572,9 @@ map((x)->x*2, range(10**100))$[-1] |> print
 **Python**
 _Nelze provést bez komplikované funkce pro iterátorové členění a inspekce uživatelských objektů. Nezbytné definice v Pythonu lze nalézt v záhlaví Coconut._
 
-### Operátor none-sjednocení
+### Operátor none-coalescing
 
-Coconut poskytuje označení `??` pro operátor none-sjednocení (none-coalescing), podobný operátoru null-coalescing `??` v C# a Swiftu. Navíc, Coconut používá všechny `None` operátory, doporučené v [PEP 505](https://www.python.org/dev/peps/pep-0505/).
+Coconut poskytuje označení `??` pro operátor none-coalescing (none-sloučení), podobný operátoru null-coalescing `??` v C# a Swiftu. Navíc, Coconut používá všechny `None` operátory, doporučené v [PEP 505](https://www.python.org/dev/peps/pep-0505/).
 
 Operátor `??` vyhodnocuje levý operand, pokud jím není `None`, v tom případě vyhodnocuje pravý operand. Výraz `foo ?? bar` vyhodnocuje `foo`, pokud ono není `None`, v tom případě vyhodnotí `bar`. `None-coalescing` operátor je úspornou zkratkou, protože pokud nemá levý operand hodnotu `None`, pravý operand se nehodnotí. To umožňuje aby pravý operand obsahoval náročnou operaci bez zvýšeného nároku na nasazení CPU.
 
@@ -596,7 +594,7 @@ could_be_none() ?? calculate_default_value()
 ```
 #### Operátor koalescentního přiřazení
 
-Tento operátor (`??=`) umožňuje podmíněnou aktualizaci proměnné, pokud její původní hodnota je `None`.
+Kombinovaný operátor (`??=`) umožňuje podmíněnou aktualizaci proměnné, pokud její původní hodnota je `None`.
 
 ```coconut
 foo = 1
@@ -605,7 +603,7 @@ foo ??= 10  # foo is still 1
 bar ??= 10  # bar is now 10
 ```
 
-Jak bylo popsáno již pro standardní operátor `??`, tak i zde operutor koalescentního přiřazení nevyhodnocuje pravou stranu, pokud má levá strana hodnotu `None`.
+Jak bylo popsáno již pro standardní operátor `??`, tak i zde operátor koalescentního přiřazení nevyhodnocuje pravou stranu, pokud má levá strana hodnotu `None`.
 
 ```coconut
 baz = 0
@@ -721,7 +719,7 @@ Coconut podporuje alternativy Unicodu pro různé operátové symboly. Alternati
 
 ### `data`
 
-Klíčové slovo `data` se používá k vytvoření neměnitelných algebraických datových typů s nativní podporou pro `destructuring` [pattern-matching](#match), [`fmap`](#fmap) a typové rovnosti. 
+Klíčové slovo `data` se používá k vytvoření neměnitelných algebraických datových typů s nativní podporou pro rozklad (destructuring) [pattern-matching](#match), [`fmap`](#fmap) a typové rovnosti. 
 
 Syntaxe datového bloku `data` je něco mezi syntaxí pro funkce a syntaxí pro třídy. První řádek vypadá jako definice funkce, zatímco zbytek těla připomíná třídu, obvykle obsahující definice metod. Je to tak proto, že zatímco blok `data` vlastně v Pythonu končí jako třída, Coconut automatický vytváří specielní, neměnitelný konstruktor, založený na daných argumentech.
 
@@ -745,7 +743,7 @@ do těla subtřídy před definicemi metod nebo atributů.
 
 ##### Zdůvodnění
 
-Hlavní část funkcionálního programování, které Coconut v Pythonu zlepšuje, je použití hodnot nebo neměnitelných datových typů. Neměnitelná data jsou velmi užitečná ale vytvoření takových typů v Pythonu je velice obtížné. Coconut vytváří neměnitelné datové typy velice snadno použitím bloků typu `data`.
+Hlavní část funkcionálního programování, které Coconut v Pythonu zlepšuje, je použití hodnot nebo neměnitelných datových typů. Neměnitelná data jsou velmi užitečná ale vytvoření takových typů v Pythonu je obtížné. Coconut vytváří neměnitelné datové typy velice snadno použitím bloků typu `data`.
 
 ##### Python Docs
 
@@ -812,11 +810,11 @@ _Nelze provést bez definování řady metod pro každý datový typ. Viz kompil
 
 ### `match` 
 
-Coconut poskytuje plnohodotné, funkcionální `pattern-matching` prostřednictvím svých příkazů `match`.
+Coconut poskytuje plnohodotné, funkcionální `pattern-matching` (posouzení shody) prostřednictvím svých příkazů `match`.
 
 ##### Přehled 
 
-Příkazy `match` konvenují se základní skladbou `match <pattern> in <value>`. Příkaz match se pokusí porovnat hodnotu se vzorkem a v případě shody sváže proměnnou ve vzorku s odpovídající pozicí v hodnotě a provede následný kód za příkazem match. Příkazy match také ve své základní skladbě podporují podmínku `if <cond>`, která se vyhodnotí po nalezení shody před provedením následného kódu a příkaz `else`, který se provede, pokud ke shodě nedojde. Všechny možnosti příkazu match nemají ekvivalent v Pythonu a proto následuje vysvětlení jednotlivých specifikací.
+Příkazy `match` konvenují se základní skladbou `match <pattern> in <value>`. Příkaz match se pokusí porovnat hodnotu s předlohou a v případě shody sváže proměnnou v předloze s odpovídající pozicí v hodnotě a provede následný kód za příkazem match. Příkazy match také ve své základní skladbě podporují podmínku `if <cond>`, která se vyhodnotí po nalezení shody před provedením následného kódu a příkaz `else`, který se provede, pokud ke shodě nedojde. Všechny možnosti příkazu match nemají ekvivalent v Pythonu a proto následuje vysvětlení jednotlivých specifikací.
 
 ##### Specifikace skladby
 
@@ -827,7 +825,7 @@ match <pattern> in <value> [if <cond>]:
 [else:
     <body>]
 ```
-kde `<value>` je položka, v níž se hledá shoda, `<cond>` je volitelná dodatečná podmínka a `<body>` je kód, který se provede při splnění výše uvedeného záhlaví. Vstup `<pattern>` má svoji vlastní specifickou skladbu, definovanou zhruba takto:
+kde `<value>` je položka, s níž se hledá shoda, `<cond>` je volitelná dodatečná podmínka a `<body>` je kód, který se provede při splnění výše uvedeného záhlaví. Vstup `<pattern>` má svoji vlastní specifickou skladbu, definovanou zhruba takto:
 
 ```coconut
 pattern ::= (
@@ -881,9 +879,9 @@ pattern ::= (
 
 ##### Specifikace významů
 
-Příkaz `match` přijme vzorek a pokusí se k němu nalézt shodu v zadaných argumentech. Vzorek může obsahovat různé struktury:
-- Konstanty, čísla a řetězce: se budou shodovat se stejnou konstantou, číslem či řetězcem na stejných pozicích argumentů.
-- Proměnné: se budou shodovat a budou propojené s čímkoli - s několika výjimkami:
+Příkazy `match` přijmou své předlohy a pokusí se k ní nalézt shody, provádějíc kontroly a rozbory argumentů, specifikovaných v předlohách. Předloha může obsahovat různé struktury:
+- Konstanty, čísla a řetězce: se budou shodovat se stejnou konstantou, číslem či řetězcem na stejných pozicích v argumentech.
+- Proměnné: se budou shodovat s čímkoli a budou propojené s jakoukoli shodou - s několika výjimkami:
   * Je-li táž proměnná použita vícekrát, provede se kontrola, zda se každý výskyt shoduje se stejnou hodnotou.
   * Je-li názvem proměnné `_`, všechno se s ní bude shodovat ale nic nebude připojeno.
 - Explicitní vazby (`<pattern> as <var>`): připojí `<var>` k `<pattern>`.
