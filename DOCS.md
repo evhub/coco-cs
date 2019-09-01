@@ -246,7 +246,7 @@ Stylizačními problémy (issues) jsou:
 - použití příkazu `lambda` podle Pythonu,
 - dědění z entity `object` u tříd (Coconut to dělá automaticky)
 - použití `u` k označení stringů Unicoce (všechny řetězce v Coconut jsou řetězce Unicode)
-- použití zpětného lomítka k pokračování na dalším řádku (místo něj použijte [pokračování v závorkách](#enhanced-parenthetical-continuation).
+- použití zpětného lomítka k pokračování na dalším řádku; místo něj použijte [pokračování v závorkách](#vylepšené-závorkové-pokračování).
 
 ## Integrace
 
@@ -308,7 +308,7 @@ Je-li Coconut použit jako extenze, bude speciální "magic command" posílat ú
 
 Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných (built-in) procedur Coconut. Jednoduše zadejte `--mypy` abyste umožnili integraci s MyPy, ale dejte si pozor abyste to zadali jako poslední argument, protože všechny argumenty po `--mypy` jsou poslány do `mypy`, nikoliv do Coconut.
 
-Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#enhanced-type-annotations) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
+Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#vylepšená-anotace-typu) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
 
 Coconut dokonce podporuje `--mypy` v překladači, jenž inteligentně skenuje každý nový řádek kódu v kontextu s předchozím řádkem, zda neobjeví nově zavedené chyby MyPy. Na příklad:
 ```coconut
@@ -362,7 +362,7 @@ Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příka
 
 Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty nebo když je vyžadován jen jeden argument (vyjádřený znakem `_`).
 
-_Note: Je-li normální skladba lambdy nepostačující, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazové lambdy](#prikaz-lambda)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
+_Note: Je-li normální skladba lambdy nepostačující, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazové lambdy](#prikazova-lambda)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
 
 
 ##### Zdůvodnění
@@ -466,11 +466,11 @@ Coconut používá směrovníkové operátory jako předpis pro postupné proved
 ```
 Navíc, všechny směrovníkové operátory podporují lambdu jako poslední argument, přesto že má lambda nižší precedenci. Takže, `a |> x -> b |> c` je ekvivalentní s `a |> (x -> b |> c)`, nikoliv s `a |> (x -> b) |> c`.
 
-_Note: Pro vizuální rozložení operací přes několik řádek použijte [závorkové pokračování](#enhanced-parenthetical-continuation)._
+_Note: Pro vizuální rozložení operací přes několik řádek použijte [závorkové pokračování](#vylepsene-zavorkove-pokracovani)._
 
 ##### Optimalizace
 
-V Coconut je obvyklé psát kód, který postupně předává objekt řadě [částečných](#partial-application) a/nebo [implicitně částečných](#immplicit-partial-application) aplikací funkce, jako v
+V Coconut je obvyklé psát kód, který postupně předává objekt řadě [částečných](#castecna-aplikace) a/nebo [implicitni-castecna-aplikace](#immplicit-partial-application) aplikací funkce, jako v
 ```coconut
 obj |> .attribute |> .method(args) |> func$(args) |> .[index]
 ```
@@ -554,7 +554,7 @@ def N(n=0) = (n,) :: N(n+1) # no infinite loop because :: is lazy
 
 _Nelze provést bez komplikované komprehence iterátoru namísto líného řetězení. Viz kompilovaný kód pro skladbu Pythonu._
 
-### Krájení (slicing) iterátoru 
+### Krájení iterátoru 
 
 K provedení iterátorového členění (slicing) používá Coconut znak `$` mezi iterátorem a označením jeho úseku. Iterátorové členění pracuje stejně jako sekvenční členění v Pythonu a vypadá stejně jako částečná aplikace, avšak s hranatymi místo kulatých závorek. 
 
@@ -671,7 +671,7 @@ Aby to chodilo, lze použít explicitně úseky iterátoru, což je obecně mén
 range(10) |> filter$(i->i>3) |> .$[0]  # works
 ```
 
-Více informací o úsecích iterátoru (iterator slicing) lze získat [zde](#iterator-slicing).
+Více informací o úsecích iterátoru (iterator slicing) lze získat [zde](#krajeni-(slicing)-iteratoru).
 
 
 
@@ -731,7 +731,7 @@ data <name>(<args>) [from <inherits>]:
 
 `<name>` je název nového datového typu, `<args>` jsou argumenty jeho konstruktoru stejně jako názvy jeho atributů, `<body>` obsahuje metody datového typu a <inherits> nepovinně obsahuje libovolnou bázovou třídu.
 
-Coconut připouští aby datová pole v `<args>` měla přiřazené implicitní hodnoty a [anotace typu](#enhanced-type-annotations) a podporuje hvězdičkové parametry na konci, pro posbírání extra argumentů.
+Coconut připouští aby datová pole v `<args>` měla přiřazené implicitní hodnoty a [anotace typu](#vylepsene-anotace-typu) a podporuje hvězdičkové parametry na konci, pro posbírání extra argumentů.
 
 Konstruktory pro `datové` typy musí být vytvářeny s použitím metody `__new__` místo `__init__`. Pro snadnější psaní metod `__new__` poskytuje Coconut vestavěnou funkci [makedata](#makedata).
 
@@ -1030,7 +1030,7 @@ Kromě příkazů ohledně normálních `dat`, podporuje Coconut také příkazy
 [match] data <name>(<patterns>) [from <base class>]:
     <body>
 ```
-kde `<patterns>` jsou totéž jako u [pattern-matching funkcí](#pattern-matching-functions).
+kde `<patterns>` jsou totéž jako u [pattern-matching funkcí](#funkce-pro-pattern-matching).
 
 Je důležité mít na vědomí, že `pattern-matching` datové typy se od normálních datových typů liší v mnoha věcech. Za prvé, na nesprávné argumenty reagují hlášením [`MatchError`](#matcherror) místo `TypeError` - stejně jako pattern-matching funkce.  Za druhé, `pattern-matching` datové typy neprovádí žádné speciální ošetření argumentů s hvězdičkou. Tudíž:
 ```
@@ -1101,7 +1101,7 @@ print(data)
 
 ### Příkazové lambdy 
 
-Skladba `příkazové lambdy` je rozšířením skladby normální [lambdy](#lambda) pro podporu příkazů, nikoliv pouze výrazů.
+Skladba `příkazové lambdy` je rozšířením skladby normální [lambdy](#lambdy) pro podporu příkazů, nikoliv pouze výrazů.
 
 Skadba pro příkazovou lambdu je:
 ```
@@ -1367,7 +1367,7 @@ Coconut provede automatickou optimalizaci a eliminaci koncové rekurze u každé
 
 _Note: Optimalizace koncového volání (byť ne eliminace koncové rekurze) pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern)._
 
-Setkáte-li se s `RuntimeError` v souvislosti s maximální hloubkou rekurze, je velmi vhodné přepsat svou funkci aby vyhověla výše uvedenému kriteriu pro optimalizaci koncovým voláním nebo odpovídajícímu kriteriu pro [`recursive_iterator`](#recursive-iterator), obojí by mělo takové chybě zabránit.
+Setkáte-li se s `RuntimeError` v souvislosti s maximální hloubkou rekurze, je velmi vhodné přepsat svou funkci aby vyhověla výše uvedenému kriteriu pro optimalizaci koncovým voláním nebo odpovídajícímu kriteriu pro [`recursive_iterator`](#recursive_iterator), obojí by mělo takové chybě zabránit.
 
 
 ##### Příklad
@@ -1472,7 +1472,7 @@ kde `<arg>` je definován jako
 ```
 kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce,  `<pattern>` je definován [příkazem `match`](#match) a  `<default>` je volitelná implicitní hodnota, není-li žádný argument zadán. Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. 
 
-Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozložené přiřazení](#rozlozene-prirazeni).
+Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozkladné přiřazení](#rozkladne-prirazeni).
 
 _Note: Definice porovnávací funkce může být kombinována s definicí přiřazovací a/nebo infixové funkce._
 
@@ -1574,7 +1574,7 @@ Coconut podporuje výrazně zlepšené rozkladné přiřazení (destructuring as
 ```coconut
 [match] <pattern> = <value>
 ```
-kde `<value>` je libovolný výraz a `<pattern>` je definován  [příkazem `match`](#match). Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení rozloženého přiřazení od normálního přiřazení, které má vždy přednost. Rozložené přiřazení v Coconut je ekvivalentní příkazu `match`, jehož skladba je:
+kde `<value>` je libovolný výraz a `<pattern>` je definován  [příkazem `match`](#match). Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení rozloženého přiřazení od normálního přiřazení, které má vždy přednost. Rozkladné přiřazení v Coconut je ekvivalentní příkazu `match`, jehož skladba je:
 ```coconut
 match <pattern> in <value>:
     pass
@@ -1780,7 +1780,7 @@ _Nelze provést bez definování uživatelskéko typu `map`. Úplnou definici `m
 
 ### `addpattern` 
 
-Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#porovnavaci-funkce) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Její skladba je zhruba ekvivalentní k:
+Tato funkce přijímá argument, jenž je [pattern-matching funkcí](#funkce-pro-pattern-matching) a vrací dekorátor, který přidává předlohy z existující funkce do nové dekorované funkce, v níž je existující předloha ověřována jako první. Její skladba je zhruba ekvivalentní k:
 ```
 def addpattern(base_func):
     """Decorator to add a new case to a pattern-matching function, where the new case is checked last."""
