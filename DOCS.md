@@ -308,7 +308,7 @@ Je-li Coconut použit jako extenze, bude speciální "magic command" posílat ú
 
 Coconut se umí integrovat s [MyPy](http://mypy-lang.org/) za účelem optimální statické kontroly typů, včetně všech vestavěných (built-in) procedur Coconut. Jednoduše zadejte `--mypy` abyste umožnili integraci s MyPy, ale dejte si pozor abyste to zadali jako poslední argument, protože všechny argumenty po `--mypy` jsou poslány do `mypy`, nikoliv do Coconut.
 
-Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#vylepšená-anotace-typu) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
+Pro explicitní typovou kontrolu kódu v MyPy podporuje Coconut anotace typu funkcí v [Python 3](https://www.python.org/dev/peps/pep-0484/), anotace typu proměnných v [Python 3.6](https://www.python.org/dev/peps/pep-0526/) a dokonce vlastní [vylepšenou skladbu](#vylepšené-anotace-typu) anotace typů. Implicintě jsou všechny anotace typu kompilovány na signaturu typu, kompatibilní s Python 2, což znamená že všechny anotace chodí ve všech verzích Pythonu.
 
 Coconut dokonce podporuje `--mypy` v překladači, jenž inteligentně skenuje každý nový řádek kódu v kontextu s předchozím řádkem, zda neobjeví nově zavedené chyby MyPy. Na příklad:
 ```coconut
@@ -362,7 +362,7 @@ Coconut poskytuje jednoduchý, čistý operátor `->` jako alternativu k příka
 
 Navíc, Coconut také podporuje implicitní použití operátoru `->` ve formě `(-> expression)`, jež je ekvivalentní k `((_=None) -> expression)`, což umožňuje použití implicitní lambdy když nejsou vyžadovány žádné argumenty nebo když je vyžadován jen jeden argument (vyjádřený znakem `_`).
 
-_Note: Je-li normální skladba lambdy nepostačující, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazové lambdy](#prikazova-lambda)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
+_Note: Je-li normální skladba lambdy nepostačující, Coconut také podporuje rozšířenou skladbu lambdy ve formě  [příkazové lambdy](#příkazové-lambdy)_. Příkazové lambdy podporují anotaci typu pro jejich parametry, zatímco normální lambdy nikoliv.
 
 
 ##### Zdůvodnění
@@ -466,11 +466,11 @@ Coconut používá směrovníkové operátory jako předpis pro postupné proved
 ```
 Navíc, všechny směrovníkové operátory podporují lambdu jako poslední argument, přesto že má lambda nižší precedenci. Takže, `a |> x -> b |> c` je ekvivalentní s `a |> (x -> b |> c)`, nikoliv s `a |> (x -> b) |> c`.
 
-_Note: Pro vizuální rozložení operací přes několik řádek použijte [závorkové pokračování](#vylepsene-zavorkove-pokracovani)._
+_Note: Pro vizuální rozložení operací přes několik řádek použijte [závorkové pokračování](#vylepšené-závorkové-pokračováni)._
 
 ##### Optimalizace
 
-V Coconut je obvyklé psát kód, který postupně předává objekt řadě [částečných](#castecna-aplikace) a/nebo [implicitni-castecna-aplikace](#immplicit-partial-application) aplikací funkce, jako v
+V Coconut je obvyklé psát kód, který postupně předává objekt řadě [částečných](#částeačná-aplikace) a/nebo [implicitni-castecna-aplikace](#implicitní-částečná-aplikace) aplikací funkce, jako v
 ```coconut
 obj |> .attribute |> .method(args) |> func$(args) |> .[index]
 ```
@@ -671,7 +671,7 @@ Aby to chodilo, lze použít explicitně úseky iterátoru, což je obecně mén
 range(10) |> filter$(i->i>3) |> .$[0]  # works
 ```
 
-Více informací o úsecích iterátoru (iterator slicing) lze získat [zde](#krajeni-(slicing)-iteratoru).
+Více informací o úsecích iterátoru (iterator slicing) lze získat [zde](#krájení-iterátoru).
 
 
 
@@ -731,7 +731,7 @@ data <name>(<args>) [from <inherits>]:
 
 `<name>` je název nového datového typu, `<args>` jsou argumenty jeho konstruktoru stejně jako názvy jeho atributů, `<body>` obsahuje metody datového typu a <inherits> nepovinně obsahuje libovolnou bázovou třídu.
 
-Coconut připouští aby datová pole v `<args>` měla přiřazené implicitní hodnoty a [anotace typu](#vylepsene-anotace-typu) a podporuje hvězdičkové parametry na konci, pro posbírání extra argumentů.
+Coconut připouští aby datová pole v `<args>` měla přiřazené implicitní hodnoty a [anotace typu](#vylepšené-anotace-typu) a podporuje hvězdičkové parametry na konci, pro posbírání extra argumentů.
 
 Konstruktory pro `datové` typy musí být vytvářeny s použitím metody `__new__` místo `__init__`. Pro snadnější psaní metod `__new__` poskytuje Coconut vestavěnou funkci [makedata](#makedata).
 
@@ -899,7 +899,7 @@ Příkazy `match` přijmou své předlohy a pokusí se k ní nalézt shody, prov
 - Iterator Splits (`<list/tuple/lazy list> :: <var>` nebo `<lazy list>`): porovná počátek iteráblu (`collections.abc.Iterable`) s `<list/tuple/lazy list>`, potom připojí zbytek k `<var>` nebo ověří, že je iteráble proveden.
 - Complex String Matching (`<string> + <var> + <string>`): porovná stringy, které začínají a končí danými substringy, přiřazujíce prostředek k <`var`>.
 
-_Poznámka: Podobně jako u [krájení iterátoru](#krajeni-iteratoru), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte funkci [`tee`](#tee) nebo [`reitarable`](#reiterable))._
+_Poznámka: Podobně jako u [krájení iterátoru](#krájení-iterátoru), porovnávání iterátoru a líného seznamu nezaručují, že původní porovnávaný iterátor zůstane zachovaný (pro zachování iterátoru použijte funkci [`tee`](#tee) nebo [`reitarable`](#reiterable))._
 
 Při ověřování zda může být objekt porovnáván určitým způsobem používá Coconut abstraktní bázové třídy Pythonu. Je tedy nutné registrovat uživatelský objekt jako příslušnou bázovou třídu.
 
@@ -1362,7 +1362,7 @@ print(abs(3 + 4j))
 
 Coconut provede automatickou optimalizaci a eliminaci koncové rekurze u každé funkce, která vyhoví následujícím kriteriím:
 
-1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#prirazovaci-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
+1. musí přímo vrátit (s použitím buď `return` nebo [přiřazovací funkce](#přiřazovací-funkce)) volání sama sebe (eliminace koncového volání - nejúčinnější optimalizace) nebo jiné funkce (optimalizace koncového volání).
 2. nesmí to být generátor (používající `yield`) nebo asynchronní funkce (používající`async`).
 
 _Note: Optimalizace koncového volání (byť ne eliminace koncové rekurze) pracuje i pro 1) vzájemnou rekurzi a 2) porovnávací (pattern-matching) funkce, rozdělené do několika definicí s pouožitím [`addpattern`](#addpattern)._
@@ -1472,7 +1472,7 @@ kde `<arg>` je definován jako
 ```
 kde `<name>` je název funkce, `<cond>` je nepovinná dodatečná kontrola, `<body>` je tělo funkce,  `<pattern>` je definován [příkazem `match`](#match) a  `<default>` je volitelná implicitní hodnota, není-li žádný argument zadán. Klíčové slovo `match` na začátku je nepovinné ale je někdy nezbytné pro odlišení definice porovnávací funkce od normální definice funkce, která má vždy přednost. 
 
-Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozkladné přiřazení](#rozkladne-prirazeni).
+Je-li `<pattern>` jméno proměnné (přímo nebo s `<as>`), podporuje výsledná porovnávací funkce klíčové argumenty stejného jména. Jestliže provedení porovnávací funkce selže, vyvolá objekt [`MatchError`](#matcherror), stejně jako [rozkladné přiřazení](#rozkladné-přiřazení).
 
 _Note: Definice porovnávací funkce může být kombinována s definicí přiřazovací a/nebo infixové funkce._
 
@@ -2343,7 +2343,7 @@ Coconut poskytuje dekorátor `recursive_iterator`, který poskytuje výraznou op
 3. vaše funkce je volána (obvykle volá samu sebe) několikrát pro tytéž argumenty.
 
 
-Setkáte-li se s `RuntimeError` v důsledku maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncoveho-volani), jež obojí by mělo takovým chybám zabránit.
+Setkáte-li se s `RuntimeError` v důsledku maximální hloubky rekurze, je vhodné přepsat funkci tak, aby vyhověla buď výše uvedenému požadavku na `recursive_iterator`nebo odpovídajícím kritériím pro [optimalizaci koncového volání](#optimalizace-koncového-volání), jež obojí by mělo takovým chybám zabránit.
 
 Nadto, `recursive_iterator` také umožňuje řešení [of nasty segmentation fault in Python's iterator logic that has never been fixed](http://bugs.python.org/issue14010). Konkrétně, místo zápisu
 ```coconut
@@ -2424,7 +2424,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
 ### `MatchError` 
 
-Objekt `MatchError` je vyvolán, když selže [destructuring assignment](#rozlozene-prirazeni), načež je `MatchError` poskytnut jako vestavěná procedura pro odchycení takovýchto chyb. Objekty `MatchError` podporují dva atributy, `pattern`, což je řetězec, popisující selhávající předlohu a `value`, což je objekt, který selhal při porovnávání s předlohou.
+Objekt `MatchError` je vyvolán, když selže [destructuring assignment](#rozkladné-přiřazení), načež je `MatchError` poskytnut jako vestavěná procedura pro odchycení takovýchto chyb. Objekty `MatchError` podporují dva atributy, `pattern`, což je řetězec, popisující selhávající předlohu a `value`, což je objekt, který selhal při porovnávání s předlohou.
 
 
 ## Moduly Coconut
@@ -2498,7 +2498,7 @@ while True:
 
 `setup` lze použít pro zadání flagů příkazového řádku, použitých funkcí `parse`. Možné hodnoty flagů jsou:
 
-- _target_: `None` (default), or any [allowable target](#allowable-targets)
+- _target_: `None` (default), or any [allowable target](#přípustné-cíle)
 - _strict_: `False` (default) or `True`
 - _minify_: `False` (default) or `True`
 - _line\_numbers_: `False` (default) or `True`
@@ -2535,7 +2535,7 @@ Přináší řetězec, obsahující informaci o verzi Coconutu. Volitelný argum
 
 **coconut.convenience.auto_compilation**(**[**_on_**]**)
 
-Zapíná či vypíná [automatickou  compilaci](#automatic-compilation) (implicitně je zapnuta). Tato funkce je volána automaticky při importu `coconut.convenience`.
+Zapíná či vypíná [automatickou  compilaci](#automatická-kompilace) (implicitně je zapnuta). Tato funkce je volána automaticky při importu `coconut.convenience`.
 
 #### `CoconutException`
 
