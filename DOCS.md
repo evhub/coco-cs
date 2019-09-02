@@ -453,9 +453,9 @@ expnums = map(lambda x: pow(x, 2), range(5))
 print(list(expnums))
 ```
 
-### Směrovník (pipeline) 
+### Pipeline
 
-Coconut používá směrovníkové operátory jako předpis pro postupné provedení funkce. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
+Coconut používá směrovníkové (pipeline) operátory jako předpis pro postupné provedení funkce. Všechny operátory mají precedenci infixových evokací a jsou levostranně asociativní. Všechny operátory také podporují 'in-place versions'. Těmito operátory jsou:
 ```coconut
 (|>)    => pipe forward
 (|*>)   => multiple-argument pipe forward
