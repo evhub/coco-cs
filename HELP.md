@@ -155,22 +155,28 @@ Za tím účlem poskytuje Coconut podporu aplikace [IPython/Jupiter](DOCS.html#i
 coconut --jupyter notebook
 ```
 
+Případně lze spustit interpret Jupytera příkazem
+```
+coconut --jupyter console
+``` 
+
 ### Případové studie 
 
 Protože byl Coconut vytvořen se záměrem aby byl užitečný, bude nejlépe jej předvést v akci při řešení konkrétních problémů, které jsou v tomto tutoriálu označeny jako případové studie.
 
-Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [dokumentaci](DOCS.html). 
+Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut - ten lze nalézt v obsáhlé [Dokumentaci](DOCS.html). Jejich účelem je ukázat, jak může být Coconut použit při řešení praktických problémů.
 
-## Případová studie 1: `factorial` 
+## Případová studie 1: `factorial`
 
 V první studii budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`. 
 To je poněkud dětinský příklad, protože tuto úlohu zvládne Python snadno také ale poslouží k demonstraci některých základních vlastnoctí Coconut a jejich výhodného použití.
 
-Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři hlavní kategorie: imperativní, recurzivní, iterativní a s použitím `addpattern`.
+Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři hlavní kategorie: imperativní, rekurzivní, iterativní a s použitím `addpattern`.
 
 ### Imperativní metoda 
 
 Imperativní přístup bychom při psaní `factoriálu` použili v jazyce typu C. Imperativní přístupy zahrnují mnohé změny stavu, kdy jsou pravidelně měněny proměnné při procházení smyčkou. Imperativní přístup v Coconut k problému `factorial` vypadá nějak takto:
+
 ```coconut
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -181,13 +187,14 @@ def factorial(n):
         return acc
     else:
         raise TypeError("the argument to factorial must be an integer >= 0")
-
+	
 # Test cases:
 -1 |> factorial |> print # TypeError
 0.5 |> factorial |> print # TypeError
 0 |> factorial |> print # 1
 3 |> factorial |> print # 6
 ```
+
 Předtím, než se budeme podrobně zabývat průběhem výpočtu, prověřme si nejprve jeho testovací případy. Kdybychom psali skutečný program, uložili bychom jej do souboru, jenž bychom kompilovali ale protože si jenom zkoušíme věci, vystačíme si s překopírováním kódu do překladače. Měli bychom dostat dvakrát `TypeError`, potom `1` a `6`.
 
 Nyní, když jsme si ověřili, že nám kód chodí správně, pohleďmě o co v něm kráčí. Protože je imperativní přístup zcela nefunkcionální, Coconut nám v tomto případě příliš nepomůže. Avšak i zde použití infixové notace (vložení funkce mezi své argumenty `n` a `int`: `` n `isinstance` int `` ) činí kód čistší a čitelnější.

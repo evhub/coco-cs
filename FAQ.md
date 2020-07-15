@@ -91,4 +91,5 @@ Pokud vám to není známo, obrázek nahoře pochází z komedie [Monty Python a
 
 ### Kdo vytvořil Coconut? 
 
-[Evan Hubinger](https://github.com/evhub) is an undergraduate student studying mathematics and computer science at [Harvey Mudd College](https://www.hmc.edu/).  He can be reached by asking a question on [Coconut's Gitter chat room](https://gitter.im/evhub/coconut), through email at <evanjhub@gmail.com>, or on [LinkedIn](https://www.linkedin.com/in/ehubinger).
+[Evan Hubinger](https://github.com/evhub) is a [full-time AGI safety researcher](https://www.alignmentforum.org/users/evhub) at the [Machine Intelligence Research Institute](https://intelligence.org/).
+He can be reached by asking a question on [Coconut's Gitter chat room](https://gitter.im/evhub/coconut), through email at <evanjhub@gmail.com>, or on [LinkedIn](https://www.linkedin.com/in/ehubinger).

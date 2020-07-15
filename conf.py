@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from coconut.root import *  # NOQA
 
 from coconut.constants import (
+    univ_open
     version_str_tag,
     without_toc,
     with_toc,
@@ -42,10 +43,10 @@ source_suffix = ['.rst', '.md']
 # README:
 # -----------------------------------------------------------------------------------------------------------------------
 
-with open("README.rst", "r") as readme_file:
+with univ_open("README.rst", "r") as readme_file:
     readme = readme_file.read()
 
-with open("index.rst", "w") as index_file:
+with univ_open("index.rst", "w") as index_file:
     index_file.write(readme.replace(without_toc, with_toc))
 
 # -----------------------------------------------------------------------------------------------------------------------
@@ -68,10 +69,10 @@ html_theme_path = get_html_theme_path()
 master_doc = "index"
 exclude_patterns = ["README.*"]
 
+from recommonmark.parser import CommonMarkParser
+
 source_suffix = [".rst", ".md"]
-source_parsers = {
-    ".md": CommonMarkParser,
-}
+source_parsers = {".md": CommonMarkParser,}
 
 default_role = "code"
 
