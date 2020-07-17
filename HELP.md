@@ -45,7 +45,8 @@ Instalace Coconut je velmi jednoduchá:
 pip install coconut
 ```
 
-_Note: Setkáváte-li se s chybami, zkuste spustit výše uvedený příkaz s flagem `--user`. Ujistěte se, že umístění instalace Coconut (v Unixu `/usr/local/bin` pokud jste nepoužil `--user` nebo `${HOME}/.local/bin/`) pokud ano je uvedeno v proměnné prostředí `PATH`. Pokud se při instalaci pomocí `pip`stále vyskytují chyby, můžete instalovat Coconut pomocí `conda` podle těchto [pokynů](DOCS.html#using-conda)._
+_Note: Máte-li problém s instalací Coconut, zkuste postup uvedený v [dokumentaci o instalaci](DOCS.html#installation)._
+
 
 Pro kontrolu, že instalace proběhla správně, zkuste na příkazový řádek zadat
 ```
@@ -154,22 +155,28 @@ Za tím účlem poskytuje Coconut podporu aplikace [IPython/Jupiter](DOCS.html#i
 coconut --jupyter notebook
 ```
 
+Případně lze spustit interpret Jupytera příkazem
+```
+coconut --jupyter console
+``` 
+
 ### Případové studie 
 
 Protože byl Coconut vytvořen se záměrem aby byl užitečný, bude nejlépe jej předvést v akci při řešení konkrétních problémů, které jsou v tomto tutoriálu označeny jako případové studie.
 
-Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut. Ten lze nalézt v obsáhlé [dokumentaci](DOCS.html). 
+Tyto případové studie ovšem nepřinášejí úplný přehled všech vlastností Coconut - ten lze nalézt v obsáhlé [Dokumentaci](DOCS.html). Jejich účelem je ukázat, jak může být Coconut použit při řešení praktických problémů.
 
-## Případová studie 1: `factorial` 
+## Případová studie 1: `factorial`
 
 V první studii budeme definovat funkci `factorial`, to jest funkci, která počítá součin `n!`, kde `n` je celé číslo `>= 0`. 
 To je poněkud dětinský příklad, protože tuto úlohu zvládne Python snadno také ale poslouží k demonstraci některých základních vlastnoctí Coconut a jejich výhodného použití.
 
-Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři hlavní kategorie: imperativní, recurzivní, iterativní a s použitím `addpattern`.
+Nejprve musíme rozhodnout, jaký způsob výpočtu faktoriálu budeme chtít. Možných způsobů řešení je více ale pro jednoduchost se omezíme na čtyři hlavní kategorie: imperativní, rekurzivní, iterativní a s použitím `addpattern`.
 
 ### Imperativní metoda 
 
 Imperativní přístup bychom při psaní `factoriálu` použili v jazyce typu C. Imperativní přístupy zahrnují mnohé změny stavu, kdy jsou pravidelně měněny proměnné při procházení smyčkou. Imperativní přístup v Coconut k problému `factorial` vypadá nějak takto:
+
 ```coconut
 def factorial(n):
     """Compute n! where n is an integer >= 0."""
@@ -180,13 +187,14 @@ def factorial(n):
         return acc
     else:
         raise TypeError("the argument to factorial must be an integer >= 0")
-
+	
 # Test cases:
 -1 |> factorial |> print # TypeError
 0.5 |> factorial |> print # TypeError
 0 |> factorial |> print # 1
 3 |> factorial |> print # 6
 ```
+
 Předtím, než se budeme podrobně zabývat průběhem výpočtu, prověřme si nejprve jeho testovací případy. Kdybychom psali skutečný program, uložili bychom jej do souboru, jenž bychom kompilovali ale protože si jenom zkoušíme věci, vystačíme si s překopírováním kódu do překladače. Měli bychom dostat dvakrát `TypeError`, potom `1` a `6`.
 
 Nyní, když jsme si ověřili, že nám kód chodí správně, pohleďmě o co v něm kráčí. Protože je imperativní přístup zcela nefunkcionální, Coconut nám v tomto případě příliš nepomůže. Avšak i zde použití infixové notace (vložení funkce mezi své argumenty `n` a `int`: `` n `isinstance` int `` ) činí kód čistší a čitelnější.
@@ -373,13 +381,12 @@ def factorial(n):
         raise TypeError("the argument to factorial must be an integer >= 0")
 ```
 
-Použijeme-li vestavěnou funkci  [`addpattern`](DOCS.html#addpattern), můžeme zredukovat tři identační úrovně na jednu. Pohleďte:
+Použijeme-li syntaxi [`addpattern`](DOCS.html#addpattern), můžeme zredukovat tři identační úrovně na jednu. Pohleďte:
 ```
-def factorial(0):
-    return 1
+def factorial(0) = 1
 
-@addpattern(factorial)
-def factorial(n is int if n > 0):
+addpattern def factorial(n is int if n > 0):
+
     """Compute n! where n is an integer >= 0."""
     return range(1, n+1) |> reduce$(*)
 
@@ -395,15 +402,15 @@ Copy, paste! Tato verze by měla pracovat stejně jako předchozí, až nato že
 
 *Dále* definice porovnávací (pattern-matching) funkce. Tato definice zajišťuje provedení přesně toho, co je uvedeno v názvu - porovnání všech argumentů funkce se zadaným vzorem. Pokud se vzor neshoduje s žádným z argumentů (nebo je-li zadán nesprávný počet argumentů), vyvolá funkce chybové hlášení `MatchError`. Chcete-li explicitně deklarovat definici p-m funkce, můžete přidat `match` před `def`.
 
-*Za třetí*, `addpattern`. Dekorátor `addpattern` přijímá jako argument předtím definovanou p-m funkci a vrací dekorátor, který dekoruje novou m-p funkci přidáním nového vzoru jako další případ (case) ke starým vzorům. Dekorátor `addpattern` dělá tedy přesně to, co říká - přidává další vzor k existující p-m funkci.
+*Za třetí*, `addpattern`. Dekorátor `addpattern` vytvoří novou srovnávací funkci přidáním nového vzoru (pattern) ke staré srovnávací funkci, kterou nahrazuje. Dekorátor `addpattern` dělá tedy přesně to, co říká - přidává další vzor k existující pattern-matching funkci.
 
 
 Dekorátorem `addpattern` můžeme přepsat nejenom imperativní přístup, jak jsme právě provedli, ale můžeme také přepsat rekurzivní přístup, jak vidno zde:
 ```coconut
 def factorial(0) = 1
 
-@addpattern(factorial)
-def factorial(n is int if n > 0):
+addpattern def factorial(n is int if n > 0):
+
     """Compute n! where n is an integer >= 0."""
     return n * factorial(n - 1)
 
@@ -426,8 +433,8 @@ Nejprve `quick_sort` pro seznamy. Použijeme rekurzivní přístup založený na
 def quick_sort([]) = []
 
 
-@addpattern(quick_sort)
-def quick_sort([head] + tail) =
+@addpattern def quick_sort([head] + tail) =
+
     """Sort the input sequence using the quick sort algorithm."""
 	
     (quick_sort([x for x in tail if x < head])
@@ -577,7 +584,7 @@ Copy, paste! Nově se zde dozvídáme, jak psát konstruktory `data`. Protože j
 V tomto případě konstruktor kontroluje, zda nebylo zadáno nic jiného než další `vector`, v kterémžto případě jej vrací. Jinak vrací výsledek 
 volání výchozího konstruktoru, jehož formou je `vector(pts)`, neboť takto jsme deklarovali datový typ. Používáme sekvenční p-m ke zjištění, zda jsme zadali jediný vektor, což je pouze seznam nebo entice vzorů, s nimiž je porovnáván obsah sekvence.
 
-Dalším novým konstruktem zde použitým je operátor `|*>` neboli star-pipe, který funguje úplně stejně jako normální pojítko, kromě toho, že místo volání funkce s jedním argumentem, volá ji tolika argumenty, kolik je elementů v zadané sekvenci. Rozdíl mezi `|*>` a `|>` je analogický rozdílu mezi `f(args)` a `f(*args)`.
+Dalším novým konstruktem zde použitým je operátor `|*>` neboli star-pipe, který funguje úplně stejně jako normální pojítko, kromě toho, že místo volání funkce s jedním argumentem, volá ji tolika argumenty, kolik je elementů v zadané sekvenci. Rozdíl mezi `|>` a `|*>` je analogický rozdílu mezi `f(args)` a `f(*args)`.
 
 ### Metody pro n-vector  
 

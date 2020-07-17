@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from coconut.root import *  # NOQA
 
 from coconut.constants import (
+    univ_open,
     version_str_tag,
     without_toc,
     with_toc,
@@ -33,14 +34,19 @@ from sphinx_bootstrap_theme import get_html_theme_path
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
+source_parsers = {
+    '.md': CommonMarkParser, }
+	
+source_suffix = ['.rst', '.md']
+
 # -----------------------------------------------------------------------------------------------------------------------
 # README:
 # -----------------------------------------------------------------------------------------------------------------------
 
-with open("README.rst", "r") as readme_file:
+with univ_open("README.rst", "r") as readme_file:
     readme = readme_file.read()
 
-with open("index.rst", "w") as index_file:
+with univ_open("index.rst", "w") as index_file:
     index_file.write(readme.replace(without_toc, with_toc))
 
 # -----------------------------------------------------------------------------------------------------------------------
@@ -57,16 +63,23 @@ from coconut.constants import (  # NOQA
 version = VERSION
 release = version_str_tag
 
-html_theme = "bootstrap"
-html_theme_path = get_html_theme_path()
+with open("README.rst", "r") as readme_file:
+    readme = readme_file.read()
+
+with open("index.rst", "w") as index_file:
+    index_file.write(readme.replace(without_toc, with_toc))
+
+# -----------------------------------------------------------------------------------------------------------------------
+# DEFINITIONS:
+# -----------------------------------------------------------------------------------------------------------------------
 
 master_doc = "index"
 exclude_patterns = ["README.*"]
 
+from recommonmark.parser import CommonMarkParser
+
 source_suffix = [".rst", ".md"]
-source_parsers = {
-    ".md": CommonMarkParser,
-}
+source_parsers = {".md": CommonMarkParser,}
 
 default_role = "code"
 
