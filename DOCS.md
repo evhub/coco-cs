@@ -211,14 +211,13 @@ Konečně, zatímco se Coconut pokusí kompilovat skladbu specifickou pro Python
 
 ### Přípustné cíle 
 
-
 Je-li verze Pythonu, v níž bude kompilovaný kód běžet, známa předem, měl by být cíl určen flagem `--target`. Daný cíl (target) ovlivní pouze kompilovaný kód a zda je určitá syntaxe Pythonu 3 (viz výše) povolena. Tam, kde se standardy skladeb pro Python 3 a Python 2 liší, bude skladba Coconut vždy používat skladbu Python 3 pro všechny cíle. Podporované cíle jsou:
 
 - `universal` (default) (pracuje pro všechny níže uvedené),
 - `2`, `2.6` (pracuje pro Python `>= 2.6` ale `< 3`),
 - `2.7` (pracuje pro Python `>= 2.7` but `< 3`),
-- `3`, `32` (pracuje pro Python `>= 3.2`),
-- `3.3` (pracuje pro Python `>= 3.3`),
+- `3`, `3.2` (pracuje pro Python `>= 3.2`),
+- `3.7` (pracuje pro Python `>= 3.3`),
 - `3.4` (pracuje pro Python `>= 3.4`),
 - `3.5` (pracuje pro Python `>= 3.5`),
 - `3.6` (pracuje pro Python `>= 3.6`),
@@ -370,7 +369,7 @@ _Poznámka: Je-li normální skladba lambdy nepostačující, Coconut také podp
 
 Použití funkce lambda je v Pythonu neúhledné a neohrabané, vyžadující vypsání celého slova `lambda` pokaždé, když je vytvářena. To je dobré tehdy, jsou-li in-line funkce používány zřidka ale ve funkcionálním programování jsou in-line funkce základním nástrojem.
 
-##### Python Docs
+#### Python Docs
 
 Formy (výrazy) lambda mají totéž skladebné postavení jako obecné výrazy. Jsou zkratkou při vytváření anonymních funkcí; výraz `(arguments) -> expression` vytváří objekt funkce. Nepojmenovaný objekt se chová jako objekt funkce, definovaný:
 ```coconut
@@ -379,7 +378,7 @@ def <lambda>(arguments):
 ```
 Všimněte si, že funkce vytvořené formou lambda nemohou obsahovat příkazy nebo anotace.
 
-##### Příklad
+#### Příklad
 
 **Coconut**
 ```coconut
@@ -419,11 +418,11 @@ Coconut používá znak `$` hned za názvem funkce, však před závorkou, použ
 
 Částečná aplikace Coconutu také podporuje použití `?` a by se přeskočilo částečné použití argumentu, odkládajíc použití tohoto argumentu až na volání částečně aplikované funkce. To je důležité, chcete-li částečně aplikovat argumenty, které nejsou první v pořadí argumentů.
 
-##### Zdůvodnění
+#### Zdůvodnění
 
 Částečná aplikace neboli currying je ústřední pilíř funkcionálního programování a to z dobrého důvodu: umožňuje dynamickou úpravu funkce pro potřebu v místě použití. Částečná aplikace umožňuje vytvoření nové funkce ze staré pro některé argumenty nově specifikované.
 
-##### Python Docs
+#### Python Docs
 
 Má se vrátit nový `partial` objekt, který se při volání bude chovat jako _func_, volaná s pozičními argumenty _args_ a klíčovými argumenty _keywords_. Jsou-li při volání zadány další argumenty, jsou připojeny k _args_. Jsou-li zadány další klíčové argumenty, rozšiřují a přepisují _keywords_. Je to zhruba ekvivalentní k:
 ```coconut_python
@@ -613,10 +612,9 @@ baz ??= expensive_task()  # pravá strana není vyhodnocena
 
 ####  None-Aware operátory
 
-Coconut také umožňuje použití `none-aware` operátoru `?` před atributovým přístupem, voláním funkce, částečnou aplikací či iterátorovým indexováním pro zkrácení zbytku vyhodnocení, pokud se vše vyhodnocuje na `None`. 
-Tento otazník je někdy označován jako operátor bezpečné navigace.  
-Pro `none-aware`přístup k atributu nebo metodě
-se použije skladba `obj?.attr`, případně `obj?.method()`. Skladba `obj?.attr` je ekvivalentní k `obj.attr if obj is not None else obj`. To ale nevyloučí `AttributeError`, pokud `attr` není atribut nebo metoda části `obj`.
+Coconut také umožňuje použití jediného operátoru `?` před atributovým přístupem, voláním funkce, částečnou aplikací či iterátorovým indexováním pro zkrácení zbytku vyhodnocení, pokud se vše vyhodnocuje na `None`. Tento otazník je někdy označován jako operátor bezpečné navigace. 
+ 
+Použití `none-aware` operátoru pro přístup k prvku (buď u metody nebo atributu), má tuto skladbu: `obj?.method()` případně `obj?.attr`. Skladba `obj?.attr` je ekvivalentní k `obj.attr`, pokud `obj` není `None`. To ale nevyloučí `AttributeError`, pokud `attr` není atribut nebo metoda části `obj`.
 
 `None-aware` indexový operátor se používá stejně jako normální index s tím, že místo `[]` se použije `?[]`. Skladba `seq?[index]` je ekvivalentní k výrazu  `seq[index] is seq is not None else seq`. Použití tohoto operátoru nezabrání odezvě `IndexError`, pokud je index mimo hranice sekvence `seq`.
 
@@ -972,7 +970,6 @@ def sieve((||)) = []
 _Ukazuje, jak porovnávat vůči iterátorům, totiž že případ prázdného iterátoru (`(||)`) musí přijít jako poslední, jinak tento případ vyčerpá celý iterátor před tím, než přijde ke slovu porovnání s jakoukoli jinou předlohou._
 
 **Python**
-
 _Nelze provést bez dlouhé řady kontrol pro každý příkaz `match`. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### `case` 
@@ -1524,7 +1521,6 @@ range(5) |> last_two |> print
 ```
 
 **Python**
-
 _Nelze provést bez dlouhé řady kontrol na počátku funkce. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### Funkce `addpattern` 
@@ -1632,7 +1628,6 @@ def last_two(l):
 ```
 
 **Python**
-
 _Nelze provést bez dlouhé řady kontrol místo příkazu rozkladného přiřazení. Viz kompilovaný kód pro skladbu Pythonu._
 
 ### Dekorátory 

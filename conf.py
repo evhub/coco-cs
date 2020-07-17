@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from coconut.root import *  # NOQA
 
 from coconut.constants import (
-    univ_open
+    univ_open,
     version_str_tag,
     without_toc,
     with_toc,
